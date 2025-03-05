@@ -1,6 +1,7 @@
 package xmlmodels
 
 import (
+	"encoding/json"
 	"encoding/xml"
 
 	xmlparsing "github.com/Theodor-Springmann-Stiftung/lenz-web/xml"
@@ -14,6 +15,22 @@ type Meta struct {
 	IsDraft     xmlparsing.OptionalBool `xml:"isDraft"`
 	Sent        []Action                `xml:"sent"`
 	Recieved    []Action                `xml:"recieved"`
+}
+
+func (m Meta) Keys() []any {
+	return []any{m.Letter}
+}
+
+func (m Meta) Type() string {
+	return META
+}
+
+func (m Meta) String() string {
+	json, err := json.Marshal(m)
+	if err != nil {
+		return "Cant marshal to json, Meta: " + err.Error()
+	}
+	return string(json)
 }
 
 type Action struct {

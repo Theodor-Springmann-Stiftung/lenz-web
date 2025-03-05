@@ -9,12 +9,12 @@ import (
 
 type Resolver[T IXMLItem] struct {
 	// INFO: map[type][ID]
-	index map[string]map[string][]Resolved[T]
+	index map[string]map[any][]Resolved[T]
 	mu    sync.RWMutex
 }
 
 func NewResolver[T IXMLItem]() *Resolver[T] {
-	return &Resolver[T]{index: make(map[string]map[string][]Resolved[T])}
+	return &Resolver[T]{index: make(map[string]map[any][]Resolved[T])}
 }
 
 func (r *Resolver[T]) Add(typeName, refID string, item Resolved[T]) {
@@ -22,12 +22,12 @@ func (r *Resolver[T]) Add(typeName, refID string, item Resolved[T]) {
 	defer r.mu.Unlock()
 
 	if _, exists := r.index[typeName]; !exists {
-		r.index[typeName] = make(map[string][]Resolved[T])
+		r.index[typeName] = make(map[any][]Resolved[T])
 	}
 	r.index[typeName][refID] = append(r.index[typeName][refID], item)
 }
 
-func (r *Resolver[T]) Get(typeName, refID string) ([]Resolved[T], error) {
+func (r *Resolver[T]) Get(typeName string, refID any) ([]Resolved[T], error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 
@@ -44,5 +44,5 @@ func (r *Resolver[T]) Clear() {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	r.index = make(map[string]map[string][]Resolved[T])
+	r.index = make(map[string]map[any][]Resolved[T])
 }
