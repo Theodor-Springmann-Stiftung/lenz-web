@@ -9,6 +9,7 @@ import (
 	"sync"
 
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/helpers/functions"
+	"github.com/gofiber/fiber/v2"
 	"golang.org/x/net/websocket"
 )
 
@@ -151,7 +152,7 @@ func (e *Engine) Globals(data map[string]interface{}) {
 	}
 }
 
-func (e *Engine) Load() {
+func (e *Engine) Load() error {
 	wg := sync.WaitGroup{}
 	wg.Add(2)
 
@@ -166,6 +167,8 @@ func (e *Engine) Load() {
 	}()
 
 	wg.Wait()
+
+	return nil
 }
 
 func (e *Engine) Reload() {
@@ -197,17 +200,12 @@ func (e *Engine) AddFuncs(funcs map[string]interface{}) {
 	}
 }
 
-func (e *Engine) Render(out io.Writer, path string, ld map[string]interface{}, layout ...string) error {
+func (e *Engine) Render(out io.Writer, path string, data interface{}, layout ...string) error {
+	ld := data.(fiber.Map)
 	gd := e.GlobalData
-	if ld == nil {
-		ld = make(map[string]interface{})
-	}
-
-	// INFO: don't pollute the global data space
-	for k, v := range gd {
-		_, ok := ld[k]
-		if !ok {
-			ld[k] = v
+	if e.GlobalData != nil {
+		for k, v := range ld {
+			gd[k] = v
 		}
 	}
 

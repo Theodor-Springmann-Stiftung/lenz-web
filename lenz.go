@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/config"
-	gitprovider "github.com/Theodor-Springmann-Stiftung/lenz-web/git"
-	xmlparsing "github.com/Theodor-Springmann-Stiftung/lenz-web/xml"
+	"github.com/Theodor-Springmann-Stiftung/lenz-web/git"
+	"github.com/Theodor-Springmann-Stiftung/lenz-web/xml"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/xmlmodels"
 )
 
@@ -23,14 +23,14 @@ func main() {
 
 	dir := filepath.Join(cfg.BaseDIR, cfg.GITPath)
 
-	gp, err := gitprovider.NewGitProvider(cfg.GitURL, dir, cfg.GitBranch)
+	gp, err := gitprovider.OpenOrClone(dir, cfg.GitURL, cfg.GitBranch)
 
 	if err != nil {
 		panic(err)
 	}
 
 	lib := xmlmodels.NewLibrary()
-	lib.Parse(xmlparsing.Commit, dir, gp.Commit)
+	lib.Parse(xmlparsing.Commit, dir, gp.Hash)
 
 	fmt.Println("Library: ", lib)
 }
