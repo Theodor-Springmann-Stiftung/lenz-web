@@ -2,7 +2,9 @@ package xmlmodels
 
 import (
 	"fmt"
+	"log/slog"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -11,7 +13,7 @@ import (
 )
 
 const (
-	REFERENCES_PATH = "data/xml/akteure.xml"
+	REFERENCES_PATH = "data/xml/references.xml"
 	LETTERS_PATH    = "data/xml/briefe.xml"
 	META_PATH       = "data/xml/meta.xml"
 	TRADITIONS_PATH = "data/xml/traditions.xml"
@@ -32,7 +34,33 @@ type Library struct {
 
 func (l *Library) String() string {
 	// TODO:
-	return ""
+	sb := strings.Builder{}
+
+	sb.WriteString("Persons: ")
+	sb.WriteString(strconv.Itoa(len(l.Persons.Array)))
+	sb.WriteString("\n")
+
+	sb.WriteString("Places: ")
+	sb.WriteString(strconv.Itoa(len(l.Places.Array)))
+	sb.WriteString("\n")
+
+	sb.WriteString("AppDefs: ")
+	sb.WriteString(strconv.Itoa(len(l.AppDefs.Array)))
+	sb.WriteString("\n")
+
+	sb.WriteString("Letters: ")
+	sb.WriteString(strconv.Itoa(len(l.Letters.Array)))
+	sb.WriteString("\n")
+
+	sb.WriteString("Traditions: ")
+	sb.WriteString(strconv.Itoa(len(l.Traditions.Array)))
+	sb.WriteString("\n")
+
+	sb.WriteString("Metas: ")
+	sb.WriteString(strconv.Itoa(len(l.Metas.Array)))
+	sb.WriteString("\n")
+
+	return sb.String()
 }
 
 // INFO: this is the only place where the providers are created. There is no need for locking on access.
@@ -68,6 +96,7 @@ func (l *Library) Parse(source xmlparsing.ParseSource, baseDir, commit string) e
 		err := l.Persons.Serialize(&PersonDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
 		if err != nil {
 			metamu.Lock()
+			slog.Error("Failed to serialize persons:", "error", err)
 			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, REFERENCES_PATH))
 			metamu.Unlock()
 		}
@@ -79,6 +108,7 @@ func (l *Library) Parse(source xmlparsing.ParseSource, baseDir, commit string) e
 		err := l.Places.Serialize(&LocationDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
 		if err != nil {
 			metamu.Lock()
+			slog.Error("Failed to serialize places:", "error", err)
 			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, REFERENCES_PATH))
 			metamu.Unlock()
 		}
@@ -90,6 +120,7 @@ func (l *Library) Parse(source xmlparsing.ParseSource, baseDir, commit string) e
 		err := l.AppDefs.Serialize(&AppDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
 		if err != nil {
 			metamu.Lock()
+			slog.Error("Failed to serialize appdefs:", "error", err)
 			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, REFERENCES_PATH))
 			metamu.Unlock()
 		}
@@ -101,6 +132,7 @@ func (l *Library) Parse(source xmlparsing.ParseSource, baseDir, commit string) e
 		err := l.Letters.Serialize(&DocumentsRoot{}, filepath.Join(meta.BaseDir, LETTERS_PATH), meta)
 		if err != nil {
 			metamu.Lock()
+			slog.Error("Failed to serialize letters:", "error", err)
 			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, LETTERS_PATH))
 			metamu.Unlock()
 		}
@@ -112,6 +144,7 @@ func (l *Library) Parse(source xmlparsing.ParseSource, baseDir, commit string) e
 		err := l.Traditions.Serialize(&TraditionsRoot{}, filepath.Join(meta.BaseDir, TRADITIONS_PATH), meta)
 		if err != nil {
 			metamu.Lock()
+			slog.Error("Failed to serialize traditions:", "error", err)
 			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, TRADITIONS_PATH))
 			metamu.Unlock()
 		}
@@ -123,6 +156,7 @@ func (l *Library) Parse(source xmlparsing.ParseSource, baseDir, commit string) e
 		err := l.Metas.Serialize(&MetaRoot{}, filepath.Join(meta.BaseDir, META_PATH), meta)
 		if err != nil {
 			metamu.Lock()
+			slog.Error("Failed to serialize meta:", "error", err)
 			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, META_PATH))
 			metamu.Unlock()
 		}

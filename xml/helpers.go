@@ -3,11 +3,13 @@ package xmlparsing
 import (
 	"encoding/xml"
 	"io"
+	"log/slog"
 	"os"
 	"path/filepath"
 )
 
 func UnmarshalFile[T any](filename string, data T) error {
+	slog.Debug("Unmarshalling file: ", "file", filename)
 	xmlFile, err := os.Open(filename)
 	if err != nil {
 		return err
@@ -18,8 +20,8 @@ func UnmarshalFile[T any](filename string, data T) error {
 	if err != nil {
 		return err
 	}
-	err = xml.Unmarshal(byteValue, &data)
 
+	err = xml.Unmarshal(byteValue, &data)
 	if err != nil {
 		return err
 	}

@@ -17,8 +17,10 @@ const (
 	DEFAULT_SEARCH_CACHE_DIR = "search"
 	DEFAULT_IMG_DIR          = "data_bilder"
 
+	DEFAULT_BRANCH = "main"
+
 	DEFAULT_PORT  = "8080"
-	DEFAULT_ADDR  = "localhost"
+	DEFAULT_ADDR  = "127.0.0.1"
 	DEFAULT_HTTPS = false
 
 	ENV_PREFIX = "KGPZ"
@@ -55,7 +57,7 @@ func NewConfigProvider(files []string) *ConfigProvider {
 func (c *ConfigProvider) Read() error {
 	c.Config = &Config{}
 	for _, file := range c.Files {
-		c.Config = readSettingsFile(c.Config, file)
+		_, _ = readSettingsFile(c.Config, file)
 	}
 	c.Config = readSettingsEnv(c.Config)
 	c.Config = readDefaults(c.Config)
@@ -69,17 +71,17 @@ func (c *ConfigProvider) Validate() error {
 	return nil
 }
 
-func readSettingsFile(cfg *Config, path string) *Config {
+func readSettingsFile(cfg *Config, path string) (*Config, error) {
 	f, err := os.Open(path)
 	if err != nil {
-		return cfg
+		return cfg, err
 	}
 	defer f.Close()
 
 	dec := json.NewDecoder(f)
 	err = dec.Decode(cfg)
 
-	return cfg
+	return cfg, err
 }
 
 func readSettingsEnv(cfg *Config) *Config {
@@ -90,6 +92,10 @@ func readSettingsEnv(cfg *Config) *Config {
 func readDefaults(cfg *Config) *Config {
 	if strings.TrimSpace(cfg.BaseDIR) == "" {
 		cfg.BaseDIR = DEFAULT_DIR
+	}
+
+	if strings.TrimSpace(cfg.GitBranch) == "" {
+		cfg.GitBranch = DEFAULT_BRANCH
 	}
 
 	if strings.TrimSpace(cfg.GITPath) == "" {

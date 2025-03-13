@@ -4,22 +4,16 @@ import "encoding/xml"
 
 type MetaRoot struct {
 	XMLName xml.Name `xml:"opus"`
-	Metas   []Meta   `xml:"letterDesc"`
+	Metas   []Meta   `xml:"descriptions>letterDesc"`
 }
 
 func (m MetaRoot) Children() []Meta {
 	return m.Metas
 }
 
-type DefinitionsRoot struct {
-	XMLName     xml.Name     `xml:"definitions"`
-	Persons     PersonDefs   `xml:"personDefs"`
-	Locations   LocationDefs `xml:"locationDefs"`
-	Apparatuses AppDefs      `xml:"appDefs"`
-}
-
 type PersonDefs struct {
-	Persons []PersonDef `xml:"personDef"`
+	xml.Name `xml:"opus"`
+	Persons  []PersonDef `xml:"definitions>personDefs>personDef"`
 }
 
 func (p PersonDefs) Children() []PersonDef {
@@ -27,7 +21,8 @@ func (p PersonDefs) Children() []PersonDef {
 }
 
 type LocationDefs struct {
-	Locations []LocationDef `xml:"locationDef"`
+	xml.Name  `xml:"opus"`
+	Locations []LocationDef `xml:"definitions>locationDefs>locationDef"`
 }
 
 func (l LocationDefs) Children() []LocationDef {
@@ -35,7 +30,8 @@ func (l LocationDefs) Children() []LocationDef {
 }
 
 type AppDefs struct {
-	Apps []AppDef `xml:"appDef"`
+	xml.Name `xml:"opus"`
+	Apps     []AppDef `xml:"definitions>appDefs>appDef"`
 }
 
 func (a AppDefs) Children() []AppDef {
@@ -43,8 +39,8 @@ func (a AppDefs) Children() []AppDef {
 }
 
 type TraditionsRoot struct {
-	XMLName    xml.Name    `xml:"traditions"`
-	Traditions []Tradition `xml:"tradition"`
+	xml.Name   `xml:"opus"`
+	Traditions []Tradition `xml:"traditions>letterTradition"`
 }
 
 func (t TraditionsRoot) Children() []Tradition {
@@ -52,10 +48,10 @@ func (t TraditionsRoot) Children() []Tradition {
 }
 
 type DocumentsRoot struct {
-	XMLName   xml.Name `xml:"document"`
-	Documents []Letter `xml:"letterText"`
+	xml.Name `xml:"opus"`
+	Document []Letter `xml:"document>letterText"`
 }
 
 func (d DocumentsRoot) Children() []Letter {
-	return d.Documents
+	return d.Document
 }
