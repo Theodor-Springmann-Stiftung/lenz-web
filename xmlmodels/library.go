@@ -37,27 +37,37 @@ func (l *Library) String() string {
 	sb := strings.Builder{}
 
 	sb.WriteString("Persons: ")
-	sb.WriteString(strconv.Itoa(len(l.Persons.Array)))
+	sb.WriteString(strconv.Itoa(l.Persons.Count()))
 	sb.WriteString("\n")
 
 	sb.WriteString("Places: ")
-	sb.WriteString(strconv.Itoa(len(l.Places.Array)))
+	sb.WriteString(strconv.Itoa(l.Places.Count()))
 	sb.WriteString("\n")
 
 	sb.WriteString("AppDefs: ")
-	sb.WriteString(strconv.Itoa(len(l.AppDefs.Array)))
+	sb.WriteString(strconv.Itoa(l.AppDefs.Count()))
 	sb.WriteString("\n")
 
 	sb.WriteString("Letters: ")
-	sb.WriteString(strconv.Itoa(len(l.Letters.Array)))
+	sb.WriteString(strconv.Itoa(l.Letters.Count()))
+	filter := func(item Letter) bool {
+		return len(item.Hands) > 0
+	}
+	hands := 0
+	for l := range l.Letters.Filter(filter) {
+		hands += 1
+		sb.WriteString("\n")
+		sb.WriteString(strconv.Itoa(l.Letter) + ": ")
+		sb.WriteString(strconv.Itoa(len(l.Hands)) + " Hände, No " + strconv.Itoa(hands))
+	}
 	sb.WriteString("\n")
 
 	sb.WriteString("Traditions: ")
-	sb.WriteString(strconv.Itoa(len(l.Traditions.Array)))
+	sb.WriteString(strconv.Itoa(l.Traditions.Count()))
 	sb.WriteString("\n")
 
 	sb.WriteString("Metas: ")
-	sb.WriteString(strconv.Itoa(len(l.Metas.Array)))
+	sb.WriteString(strconv.Itoa(l.Metas.Count()))
 	sb.WriteString("\n")
 
 	return sb.String()

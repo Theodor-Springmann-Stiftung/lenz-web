@@ -1,6 +1,7 @@
 package xmlparsing
 
 import (
+	"iter"
 	"slices"
 	"sync"
 	"time"
@@ -36,7 +37,6 @@ type XMLParser[T IXMLItem] struct {
 	// INFO: map is type map[string]*T
 	Items sync.Map
 	// INFO: map is type [string]ItemInfo
-	// It keeps information about parsing status of the items.
 	Infos sync.Map
 
 	// INFO: Resolver is used to resolve references (back-links) between XML items.
@@ -44,8 +44,7 @@ type XMLParser[T IXMLItem] struct {
 
 	mu sync.RWMutex
 	// TODO: This array is meant to be for iteration purposes, since iteration over the sync.Map is slow.
-	// It is best for this array to be sorted by key of the corresponding item.
-	Array []T
+	array []T
 }
 
 func NewXMLParser[T IXMLItem]() *XMLParser[T] {
@@ -59,7 +58,7 @@ func (p *XMLParser[T]) Prepare() {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 
-	p.Array = make([]T, 0, len(p.Array))
+	p.array = make([]T, 0, len(p.array))
 	p.Resolver.Clear()
 }
 
@@ -82,7 +81,7 @@ func (p *XMLParser[T]) Serialize(dataholder XMLRootElement[T], path string, late
 
 	p.mu.Lock()
 	defer p.mu.Unlock()
-	p.Array = append(p.Array, newItems...)
+	p.array = append(p.array, newItems...)
 	return nil
 }
 
@@ -118,7 +117,7 @@ func (p *XMLParser[T]) Cleanup(latest ParseMeta) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	for _, item := range toappend {
-		p.Array = append(p.Array, *item)
+		p.array = append(p.array, *item)
 		p.addResolvable(*item)
 	}
 }
@@ -151,8 +150,10 @@ func (p *XMLParser[T]) ReverseLookup(item IXMLItem) []Resolved[T] {
 }
 
 func (a *XMLParser[T]) String() string {
+	a.RLock()
+	defer a.RUnlock()
 	var s string
-	for _, item := range a.Array {
+	for _, item := range a.array {
 		s += item.String()
 	}
 	return s
@@ -176,23 +177,41 @@ func (p *XMLParser[T]) Item(id string) *T {
 	return i
 }
 
-func (p *XMLParser[T]) Find(fn func(*T) bool) []T {
-	p.mu.RLock()
-	defer p.mu.RUnlock()
-	var items []T
-	for _, item := range p.Array {
-		if fn(&item) {
-			items = append(items, item)
+func (p *XMLParser[T]) Filter(f func(T) bool) iter.Seq[T] {
+	return func(yield func(T) bool) {
+		p.mu.RLock()
+		defer p.mu.RUnlock()
+		for _, v := range p.array {
+			if f(v) && !yield(v) {
+				return
+			}
 		}
 	}
-	return items
 }
 
-// INFO: These are only reading locks.
-func (p *XMLParser[T]) Lock() {
+func (p *XMLParser[T]) Iterate() iter.Seq[T] {
+	return func(yield func(T) bool) {
+		p.mu.RLock()
+		defer p.mu.RUnlock()
+		for _, v := range p.array {
+			if !yield(v) {
+				return
+			}
+		}
+	}
+}
+
+func (p *XMLParser[T]) Count() int {
+	p.RLock()
+	defer p.RUnlock()
+	return len(p.array)
+}
+
+// INFO: These are reading locks.
+func (p *XMLParser[T]) RLock() {
 	p.mu.RLock()
 }
 
-func (p *XMLParser[T]) Unlock() {
+func (p *XMLParser[T]) RUnlock() {
 	p.mu.RUnlock()
 }

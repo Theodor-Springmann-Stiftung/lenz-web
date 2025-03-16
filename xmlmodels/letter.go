@@ -6,11 +6,12 @@ import (
 )
 
 type Letter struct {
-	XMLName xml.Name     `xml:"letterText"`
-	Letter  int          `xml:"letter,attr"`
-	Pages   []Page       `xml:"page"`
-	Hands   []RefElement `xml:"hand"`
-	Content string       `xml:",innerxml"`
+	XMLName  xml.Name     `xml:"letterText"`
+	Letter   int          `xml:"letter,attr"`
+	Pages    []Page       `xml:"page"`
+	Hands    []RefElement `xml:"hand"`
+	Content  string       `xml:",innerxml"`
+	Chardata string       `xml:",chardata"`
 }
 
 func (l Letter) Keys() []any {
