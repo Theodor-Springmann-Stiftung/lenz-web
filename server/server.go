@@ -8,7 +8,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/gofiber/storage/memory/v2"
 )
 
 const (
@@ -18,8 +17,7 @@ const (
 	SERVER_TIMEOUT  = 120 * time.Second
 
 	// INFO: Maybe this is too long/short?
-	CACHE_TIME        = 24 * time.Hour
-	CACHE_GC_INTERVAL = 120 * time.Second
+	CACHE_TIME = 24 * time.Hour
 )
 
 const (
@@ -31,21 +29,16 @@ const (
 type Server struct {
 	Engine *templating.Engine
 	Server *fiber.App
-	Cache  *memory.Storage
+	Cache  fiber.Storage
 }
 
-func New(engine *templating.Engine, debug bool) Server {
-	c := memory.New(memory.Config{
-		GCInterval: CACHE_GC_INTERVAL,
-	})
-
+func New(engine *templating.Engine, storage fiber.Storage, debug bool) Server {
 	server := fiber.New(fiber.Config{
 		AppName:           "Lenz",
 		CaseSensitive:     false,
 		ErrorHandler:      fiber.DefaultErrorHandler,
 		WriteTimeout:      REQUEST_TIMEOUT,
 		ReadTimeout:       REQUEST_TIMEOUT,
-		PassLocalsToViews: true,
 		Views:             engine,
 		EnablePrintRoutes: debug,
 		ViewsLayout:       templating.DEFAULT_LAYOUT_NAME,
@@ -63,20 +56,30 @@ func New(engine *templating.Engine, debug bool) Server {
 			Next:         CacheFunc,
 			Expiration:   CACHE_TIME,
 			CacheControl: false,
-			Storage:      c,
+			Storage:      storage,
 		}))
 	} else {
 		server.Use(cache.New(cache.Config{
 			Next:         CacheFunc,
 			Expiration:   CACHE_TIME,
 			CacheControl: true,
-			Storage:      c,
+			Storage:      storage,
 		}))
 	}
 
 	return Server{
 		Engine: engine,
 		Server: server,
-		Cache:  c,
+		Cache:  storage,
 	}
+}
+
+func (s *Server) Start(addr string) error {
+	s.Cache.Reset()
+	return s.Server.Listen(addr)
+}
+
+func (s *Server) Stop() error {
+	s.Cache.Close()
+	return s.Server.Shutdown()
 }
