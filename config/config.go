@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	DEFAULT_DIR              = "cache"
+	DEFAULT_DIR              = "_cache"
 	DEFAULT_GIT_CACHE_DIR    = "git"
 	DEFAULT_GND_CACHE_DIR    = "gnd"
 	DEFAULT_GEO_CACHE_DIR    = "geo"
