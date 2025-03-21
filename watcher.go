@@ -2,7 +2,7 @@ package main
 
 import (
 	"io/fs"
-	"log"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"time"
@@ -19,7 +19,7 @@ type Watcher struct {
 	*fsnotify.Watcher
 }
 
-func RefreshWatcher(fn func()) (*Watcher, error) {
+func New(fn func()) (*Watcher, error) {
 	watcher := Watcher{}
 	w, err := fsnotify.NewWatcher()
 	if err != nil {
@@ -40,7 +40,7 @@ func RefreshWatcher(fn func()) (*Watcher, error) {
 						reloadTimer.Stop()
 					}
 					reloadTimer = time.AfterFunc(WATCHER_DEBOUNCE, func() {
-						log.Println("Changes detected, reloading templates...")
+						slog.Debug("Changes detected, reloading templates...")
 						fn()
 					})
 				}
@@ -49,13 +49,13 @@ func RefreshWatcher(fn func()) (*Watcher, error) {
 					fi, statErr := os.Stat(event.Name)
 					if statErr == nil && fi.IsDir() {
 						_ = watcher.Add(event.Name)
-						log.Printf("Now watching new directory: %s", event.Name)
+						slog.Debug("Now watching new directory", "path", event.Name)
 					}
 				}
 
 			case err := <-watcher.Errors:
 				if err != nil {
-					log.Printf("fsnotify error: %v\n", err)
+					slog.Error("fsnotify error", "error", err)
 				}
 
 			case <-done:
@@ -78,7 +78,7 @@ func (w *Watcher) AddRecursive(root string) error {
 			if werr != nil {
 				return werr
 			}
-			log.Printf("Now watching directory: %s", path)
+			slog.Debug("Now watching directory", "path", path)
 		}
 		return nil
 	})

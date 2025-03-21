@@ -4,8 +4,9 @@ import (
 	"html/template"
 	"io"
 	"io/fs"
-	"log"
+	"log/slog"
 	"net/http"
+	"strconv"
 	"sync"
 
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/helpers/functions"
@@ -15,6 +16,7 @@ import (
 
 const (
 	ASSETS_URL_PREFIX = "/assets"
+	WS_SERVER         = 9000
 	RELOAD_TEMPLATE   = `
 <script type="module">
 (function () {
@@ -73,7 +75,7 @@ type Engine struct {
 
 // INFO: We pass the app here to be able to access the config and other data for functions
 // which also means we must reload the engine if the app changes
-func NewEngine(layouts, templates *fs.FS) *Engine {
+func New(layouts, templates *fs.FS) *Engine {
 	e := Engine{
 		regmu:            &sync.Mutex{},
 		mu:               &sync.Mutex{},
@@ -100,9 +102,9 @@ func (e *Engine) startWsServerOnPort9000() {
 	mux := http.NewServeMux()
 	mux.Handle("/pb/reload", websocket.Handler(e.ws.Handler))
 
-	log.Println("[Engine Debug] Starting separate WebSocket server on :9000 for live reload...")
-	if err := http.ListenAndServe(":9000", mux); err != nil {
-		log.Println("[Engine Debug] WebSocket server error:", err)
+	slog.Info("Starting separate WebSocket server for live reload...", "port", WS_SERVER)
+	if err := http.ListenAndServe(":"+strconv.Itoa(WS_SERVER), mux); err != nil {
+		slog.Debug("WebSocket server error", "error", err)
 	}
 }
 
@@ -112,30 +114,6 @@ func (e *Engine) funcs() error {
 
 	// Passing HTML
 	e.AddFunc("Safe", functions.Safe)
-	// Creating an array or dict (to pass to a template)
-	// e.AddFunc("Arr", functions.Arr)
-	// e.AddFunc("Dict", functions.Dict)
-
-	// Datatype Functions
-	// e.AddFunc("HasPrefix", strings.HasPrefix)
-	// e.AddFunc("Contains", functions.Contains)
-	// e.AddFunc("Add", functions.Add)
-	// e.AddFunc("Len", functions.Length)
-
-	// String Functions
-	// e.AddFunc("Lower", functions.Lower)
-	// e.AddFunc("Upper", functions.Upper)
-	// e.AddFunc("First", functions.First)
-	// e.AddFunc("ReplaceSlashParen", functions.ReplaceSlashParen)
-	// e.AddFunc("ReplaceSlashParenSlash", functions.ReplaceSlashParenSlash)
-	// e.AddFunc("LinksAnnotation", functions.LinksAnnotation)
-	//
-	// Time & Date Functions
-	// e.AddFunc("Today", functions.Today)
-	// e.AddFunc("GetMonth", functions.GetMonth)
-	//
-	// // TOC
-	// e.AddFunc("TOCFromHTML", functions.TOCFromHTML)
 
 	return nil
 }
