@@ -10,7 +10,6 @@ import (
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/server"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/templating"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/views"
-	xmlparsing "github.com/Theodor-Springmann-Stiftung/lenz-web/xml"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/xmlmodels"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/storage/memory/v2"
@@ -37,16 +36,16 @@ func main() {
 
 	dir := filepath.Join(cfg.BaseDIR, cfg.GITPath)
 
-	gp, err := gitprovider.OpenOrClone(dir, cfg.GitURL, cfg.GitBranch)
-
+	commit, err := gitprovider.OpenOrClone(dir, cfg.GitURL, cfg.GitBranch)
 	if err != nil {
 		panic(err)
 	}
 
-	// INFO: the lib, engine and storage objects passed to the server are not made to
-	// be recreated.
-	lib := xmlmodels.NewLibrary()
-	lib.Parse(xmlparsing.Commit, dir, gp.Hash)
+	// INFO: the lib, engine and storage objects passed to the server are not made to be recreated.
+	err = xmlmodels.New(dir, commit.Hash)
+	if err != nil {
+		panic(err)
+	}
 
 	engine := templating.New(&views.LayoutFS, &views.RoutesFS)
 	storage := memory.New(memory.Config{

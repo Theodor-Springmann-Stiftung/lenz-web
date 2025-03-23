@@ -5,6 +5,7 @@ import (
 	"io"
 	"io/fs"
 	"log/slog"
+	"maps"
 	"net/http"
 	"strconv"
 	"sync"
@@ -15,9 +16,8 @@ import (
 )
 
 const (
-	ASSETS_URL_PREFIX = "/assets"
-	WS_SERVER         = 9000
-	RELOAD_TEMPLATE   = `
+	WS_SERVER       = 9000
+	RELOAD_TEMPLATE = `
 <script type="module">
 (function () {
 	let relto = -1;
@@ -59,45 +59,52 @@ const (
 )
 
 type Engine struct {
-	regmu  *sync.Mutex
 	debug  bool
 	ws     *WsServer
 	onceWS sync.Once
 
 	// NOTE: LayoutRegistry and TemplateRegistry have their own syncronization & cache and do not require a mutex here
+	regmu            *sync.RWMutex
 	LayoutRegistry   *LayoutRegistry
 	TemplateRegistry *TemplateRegistry
 
-	mu         *sync.Mutex
+	mu         *sync.RWMutex
 	FuncMap    template.FuncMap
-	GlobalData map[string]interface{}
+	GlobalData map[string]any
 }
 
 // INFO: We pass the app here to be able to access the config and other data for functions
 // which also means we must reload the engine if the app changes
 func New(layouts, templates *fs.FS) *Engine {
 	e := Engine{
-		regmu:            &sync.Mutex{},
-		mu:               &sync.Mutex{},
+		regmu:            &sync.RWMutex{},
+		mu:               &sync.RWMutex{},
 		LayoutRegistry:   NewLayoutRegistry(*layouts),
 		TemplateRegistry: NewTemplateRegistry(*templates),
 		FuncMap:          make(template.FuncMap),
-		GlobalData:       make(map[string]interface{}),
+		GlobalData:       make(map[string]any),
 	}
 	e.funcs()
 	return &e
 }
 
 func (e *Engine) Debug() {
-	e.debug = true
-
+	e.setDebugData()
 	e.onceWS.Do(func() {
 		e.ws = NewWsServer()
-		go e.startWsServerOnPort9000()
+		go e.startWSServer()
 	})
 }
 
-func (e *Engine) startWsServerOnPort9000() {
+func (e *Engine) setDebugData() {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	e.debug = true
+	e.GlobalData["debug"] = true
+	e.GlobalData["debugport"] = WS_SERVER
+}
+
+func (e *Engine) startWSServer() {
 	// We'll create a basic default mux here and mount /pb/reload
 	mux := http.NewServeMux()
 	mux.Handle("/pb/reload", websocket.Handler(e.ws.Handler))
@@ -118,19 +125,20 @@ func (e *Engine) funcs() error {
 	return nil
 }
 
-func (e *Engine) Globals(data map[string]interface{}) {
+func (e *Engine) Globals(data map[string]any) {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	if e.GlobalData == nil {
 		e.GlobalData = data
 	} else {
-		for k, v := range data {
-			(e.GlobalData)[k] = v
-		}
+		maps.Copy(e.GlobalData, data)
 	}
 }
 
 func (e *Engine) Load() error {
+	e.regmu.Lock()
+	defer e.regmu.Unlock()
+
 	wg := sync.WaitGroup{}
 	wg.Add(2)
 
@@ -164,33 +172,22 @@ func (e *Engine) Refresh() {
 }
 
 // INFO: fn is a function that returns either one value or two values, the second one being an error
-func (e *Engine) AddFunc(name string, fn interface{}) {
+func (e *Engine) AddFunc(name string, fn any) {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	e.FuncMap[name] = fn
 }
 
-func (e *Engine) AddFuncs(funcs map[string]interface{}) {
-	e.mu.Lock()
-	defer e.mu.Unlock()
-	for k, v := range funcs {
-		e.FuncMap[k] = v
-	}
-}
-
-func (e *Engine) Render(out io.Writer, path string, data interface{}, layout ...string) error {
+func (e *Engine) Render(out io.Writer, path string, data any, layout ...string) error {
+	e.mu.RLock()
 	ld := data.(fiber.Map)
-	gd := e.GlobalData
 	if e.GlobalData != nil {
-		for k, v := range ld {
-			gd[k] = v
-		}
+		maps.Copy(ld, e.GlobalData)
 	}
+	e.mu.RUnlock()
 
-	e.mu.Lock()
-	defer e.mu.Unlock()
-	e.regmu.Lock()
-	defer e.regmu.Unlock()
+	e.regmu.RLock()
+	defer e.regmu.RUnlock()
 	var l *template.Template
 	if layout == nil || len(layout) == 0 {
 		lay, err := e.LayoutRegistry.Default(&e.FuncMap)
