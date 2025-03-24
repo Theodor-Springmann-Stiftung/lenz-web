@@ -1,0 +1,52 @@
+<!-- Mark selected anchor location for CSS & Assistive Technology -->
+<script type="module">
+	const hash = window.location.hash;
+	if (hash) {
+		const stripped = hash.slice(1);
+		const element = document.getElementById(stripped);
+		if (element) {
+			element.setAttribute("aria-current", "location");
+		}
+	}
+</script>
+
+{{ if .isDev }}
+	<!-- Reload script for development -->
+	<script type="module">
+		(function () {
+			let relto = -1;
+			const scheme = location.protocol === "https:" ? "wss" : "ws";
+			// Hardcode port 9000 here:
+			const url = scheme + "://" + location.hostname + ":9000/pb/reload";
+
+			function connect() {
+				const socket = new WebSocket(url);
+
+				socket.addEventListener("open", function () {
+					console.log("Reload socket connected (port 9000).");
+				});
+
+				socket.addEventListener("message", function (evt) {
+					if (evt.data === "reload") {
+						console.log("Received reload signal. Reloading...");
+						if (relto !== -1) clearTimeout(relto);
+						relto = setTimeout(() => location.reload(), 0);
+					}
+				});
+
+				socket.addEventListener("close", function () {
+					console.log("Reload socket closed. Reconnecting in 3 seconds...");
+					setTimeout(connect, 3000);
+				});
+
+				socket.addEventListener("error", function (err) {
+					console.error("Reload socket error:", err);
+					// We'll let onclose handle reconnection.
+				});
+			}
+
+			// Initiate the first connection attempt.
+			connect();
+		})();
+	</script>
+{{ end }}

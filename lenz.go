@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/config"
+	"github.com/Theodor-Springmann-Stiftung/lenz-web/controllers"
 	gitprovider "github.com/Theodor-Springmann-Stiftung/lenz-web/git"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/server"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/templating"
@@ -41,7 +42,7 @@ func main() {
 		panic(err)
 	}
 
-	// INFO: the lib, engine and storage objects passed to the server are not made to be recreated.
+	// INFO: the lib, engine and storage objects passed to the server should never be recreated.
 	err = xmlmodels.New(dir, commit.Hash)
 	if err != nil {
 		panic(err)
@@ -57,6 +58,7 @@ func main() {
 	}
 
 	server := server.New(engine, storage, cfg.Debug)
+	controllers.Register(server)
 
 	server.Start(cfg.Address + ":" + cfg.Port)
 }
@@ -92,11 +94,13 @@ func SetupReloadWatcher(storage fiber.Storage, engine *templating.Engine) {
 }
 
 func ResetFunction(storage fiber.Storage, engine *templating.Engine) {
+	slog.Debug("Resetting storage and reloading engine")
 	storage.Reset()
 	engine.Reload()
 }
 
 func RefreshFunction(storage fiber.Storage, engine *templating.Engine) {
+	slog.Debug("Resetting storage and sending refresh signal")
 	storage.Reset()
 	engine.Refresh()
 }

@@ -40,7 +40,7 @@ func New(fn func()) (*Watcher, error) {
 						reloadTimer.Stop()
 					}
 					reloadTimer = time.AfterFunc(WATCHER_DEBOUNCE, func() {
-						slog.Debug("Changes detected, reloading templates...")
+						slog.Debug("Changes detected...")
 						fn()
 					})
 				}

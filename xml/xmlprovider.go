@@ -134,9 +134,8 @@ func (p *XMLParser[T]) addResolvable(item T) {
 	}
 }
 
-func (p *XMLParser[T]) ReverseLookup(item IXMLItem) []Resolved[T] {
+func (p *XMLParser[T]) ReverseLookup(item IXMLItem) (ret []Resolved[T]) {
 	// INFO: this runs just once for the first key
-	ret := make([]Resolved[T], 0)
 	keys := item.Keys()
 
 	for _, key := range keys {
@@ -146,17 +145,16 @@ func (p *XMLParser[T]) ReverseLookup(item IXMLItem) []Resolved[T] {
 		}
 	}
 
-	return ret
+	return
 }
 
-func (a *XMLParser[T]) String() string {
+func (a *XMLParser[T]) String() (s string) {
 	a.RLock()
 	defer a.RUnlock()
-	var s string
 	for _, item := range a.array {
 		s += item.String()
 	}
-	return s
+	return
 }
 
 func (p *XMLParser[T]) Info(id string) ItemInfo {

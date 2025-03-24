@@ -42,7 +42,7 @@ func Iterate[T any](xmlData string, initialState T) iter.Seq2[*TokenResult[T], e
 	decoder := xml.NewDecoder(strings.NewReader(xmlData))
 	stack := []Element{}
 	state := initialState
-	return iter.Seq2[*TokenResult[T], error](func(yield func(*TokenResult[T], error) bool) {
+	return func(yield func(*TokenResult[T], error) bool) {
 		for {
 			token, err := decoder.Token()
 			if err == io.EOF {
@@ -117,7 +117,7 @@ func Iterate[T any](xmlData string, initialState T) iter.Seq2[*TokenResult[T], e
 				return
 			}
 		}
-	})
+	}
 }
 
 // mapAttributes converts xml.Attr to a map[string]string.

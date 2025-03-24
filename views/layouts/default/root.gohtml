@@ -21,14 +21,8 @@
 		{{ end }}
 
 
-		<script src="/assets/js/alpine.min.js" defer></script>
-		<script src="/assets/js/htmx.min.js" defer></script>
-		<script src="/assets/js/htmx-response-targets.js" defer></script>
-		<script src="/assets/js/mark.min.js" defer></script>
-
 		<script type="module" src="/assets/scripts.js"></script>
 		<link href="/assets/css/remixicon.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="/assets/css/fonts.css" />
 		<link rel="stylesheet" type="text/css" href="/assets/style.css" />
 
 		<script type="module">
@@ -67,17 +61,10 @@
 				<!-- Default scripts... -->
 			{{ end }}
 
+			{{ block "_globalscripts" . }}
+				<!-- Default global scripts... -->
+			{{ end }}
 
-			<script type="module">
-				const hash = window.location.hash;
-				if (hash) {
-					const stripped = hash.slice(1);
-					const element = document.getElementById(stripped);
-					if (element) {
-						element.setAttribute("aria-current", "location");
-					}
-				}
-			</script>
 		</div>
 	</body>
 </html>

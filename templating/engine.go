@@ -100,7 +100,7 @@ func (e *Engine) setDebugData() {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	e.debug = true
-	e.GlobalData["debug"] = true
+	e.GlobalData["isDev"] = true
 	e.GlobalData["debugport"] = WS_SERVER
 }
 
@@ -121,6 +121,8 @@ func (e *Engine) funcs() error {
 
 	// Passing HTML
 	e.AddFunc("Safe", functions.Safe)
+	e.AddFunc("Today", functions.Today)
+	e.AddFunc("GetMonth", functions.GetMonth)
 
 	return nil
 }
@@ -159,9 +161,9 @@ func (e *Engine) Load() error {
 
 func (e *Engine) Reload() {
 	e.regmu.Lock()
-	defer e.regmu.Unlock()
 	e.LayoutRegistry = e.LayoutRegistry.Reset()
 	e.TemplateRegistry = e.TemplateRegistry.Reset()
+	e.regmu.Unlock()
 	e.Load()
 }
 
