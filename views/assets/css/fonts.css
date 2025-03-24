@@ -35,7 +35,7 @@
 	font-style: normal;
 	font-weight: 500;
 	font-display: swap;
-	src: url(/assets/fonts/LinBiolinum_R_G) format("truetype");
+	src: url(/assets/fonts/LinBiolinum_R_G.ttf) format("truetype");
 }
 
 @font-face {
@@ -43,7 +43,7 @@
 	font-style: italic;
 	font-weight: 500;
 	font-display: swap;
-	src: url(/assets/fonts/LinBiolinum_RI_G) format("truetype");
+	src: url(/assets/fonts/LinBiolinum_RI_G.ttf) format("truetype");
 }
 
 @font-face {
@@ -51,5 +51,5 @@
 	font-style: normal;
 	font-weight: bold;
 	font-display: swap;
-	src: url(/assets/fonts/LinBiolinum_RB_G) format("truetype")
+	src: url(/assets/fonts/LinBiolinum_RB_G.ttf) format("truetype");
 }

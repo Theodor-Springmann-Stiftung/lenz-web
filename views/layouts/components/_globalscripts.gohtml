@@ -10,6 +10,18 @@
 	}
 </script>
 
+<!-- HTMX Error Handling -->
+<script type="module">
+	document.body.addEventListener("htmx:responseError", function (event) {
+		const config = event.detail.requestConfig;
+		if (config.boosted) {
+			document.body.innerHTML = event.detail.xhr.responseText;
+			const newUrl = event.detail.xhr.responseURL || config.url;
+			window.history.pushState(null, "", newUrl);
+		}
+	});
+</script>
+
 {{ if .isDev }}
 	<!-- Reload script for development -->
 	<script type="module">

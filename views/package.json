@@ -22,6 +22,7 @@
   "author": "Simon Martens",
   "license": "MIT",
   "devDependencies": {
+    "@laynezh/vite-plugin-lib-assets": "^1.1.0",
     "@tailwindcss/postcss": "^4.0.0",
     "daisyui": "^5.0.0-beta.8",
     "postcss": "^8.4.47",

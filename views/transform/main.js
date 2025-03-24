@@ -1,8 +1,10 @@
 // INFO: We import this so vite processes the stylesheet
 import "../public/css/fonts.css";
 import "./site.css";
+import "../public/css/remixicon.css";
 import "../public/js/alpine.min.js";
 import "../public/js/htmx.min.js";
+import "../public/js/htmx-response-targets.js";
 
 const ATTR_XSLT_ONLOAD = "script[xslt-onload]";
 const ATTR_XSLT_TEMPLATE = "xslt-template";

@@ -1,8 +1,8 @@
 @import "tailwindcss";
 @theme {
 	--font-script: Rancho, ui-serif;
-	--font-sans: "Source Sans 3", "Merriweather Sans", ui-sans-serif;
-	--font-serif: "Merriweather", ui-serif;
+	--font-sans: "Linux Biolinum", "Merriweather Sans", ui-sans-serif;
+	--font-serif: "Linux Libertine", ui-serif;
 
 	--color-background: oklch(0.985 0.001 106.423);
 	--color-background-darker: oklch(0.97 0.001 106.424);
@@ -62,5 +62,4 @@
 	body {
 		@apply bg-stone-50;
 	}
-
 }
