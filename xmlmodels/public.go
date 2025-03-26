@@ -27,14 +27,14 @@ func Get() *Library {
 	return lib
 }
 
-func New(dir, hash string) error {
-	Set(NewLibrary())
-	return Parse(dir, hash)
-}
-
-func Parse(dir, hash string) error {
-	if hash == "" {
-		return lib.Parse(xmlparsing.Path, dir, hash)
+func Parse(dir, hash string) (*Library, error) {
+	if lib == nil {
+		Set(NewLibrary())
 	}
-	return lib.Parse(xmlparsing.Commit, dir, hash)
+
+	if hash == "" {
+		return Get(), lib.Parse(xmlparsing.Path, dir, hash)
+	}
+
+	return Get(), lib.Parse(xmlparsing.Commit, dir, hash)
 }

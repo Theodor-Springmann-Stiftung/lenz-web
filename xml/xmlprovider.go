@@ -89,13 +89,13 @@ func (p *XMLParser[T]) Serialize(dataholder XMLRootElement[T], path string, late
 // It deletes all items that have not been parsed in the last commit,
 // and whose filepath has not been marked as failed.
 func (p *XMLParser[T]) Cleanup(latest ParseMeta) {
-	todelete := make([]string, 0)
+	todelete := make([]any, 0)
 	toappend := make([]*T, 0)
 	p.Infos.Range(func(key, value interface{}) bool {
 		info := value.(ItemInfo)
 		if !info.Parse.Equals(latest) {
 			if !latest.Failed(info.Source) {
-				todelete = append(todelete, key.(string))
+				todelete = append(todelete, key)
 			} else {
 				item, ok := p.Items.Load(key)
 				if ok {
@@ -165,7 +165,7 @@ func (p *XMLParser[T]) Info(id string) ItemInfo {
 	return info.(ItemInfo)
 }
 
-func (p *XMLParser[T]) Item(id string) *T {
+func (p *XMLParser[T]) Item(id any) *T {
 	item, ok := p.Items.Load(id)
 	if !ok {
 		return nil

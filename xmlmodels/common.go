@@ -17,3 +17,23 @@ type Date struct {
 	Cert      string             `xml:"cert,attr"`
 	Text      string             `xml:",chardata"`
 }
+
+func (d *Date) Sort() *xmlparsing.XSDDate {
+	if d.NotBefore.Validate() {
+		return &d.NotBefore
+	}
+	if d.From.Validate() {
+		return &d.From
+	}
+	if d.When.Validate() {
+		return &d.When
+	}
+	if d.To.Validate() {
+		return &d.To
+	}
+	if d.NotAfter.Validate() {
+		return &d.NotAfter
+	}
+
+	return nil
+}

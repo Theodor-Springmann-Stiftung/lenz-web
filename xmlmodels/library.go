@@ -2,8 +2,11 @@ package xmlmodels
 
 import (
 	"fmt"
+	"html/template"
 	"log/slog"
+	"maps"
 	"path/filepath"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -30,6 +33,8 @@ type Library struct {
 	Letters    *xmlparsing.XMLParser[Letter]
 	Traditions *xmlparsing.XMLParser[Tradition]
 	Metas      *xmlparsing.XMLParser[Meta]
+
+	cache sync.Map
 }
 
 func (l *Library) String() string {
@@ -89,6 +94,7 @@ func (l *Library) Parse(source xmlparsing.ParseSource, baseDir, commit string) e
 	// INFO: this lock prevents multiple parses from happening at the same time.
 	l.mu.Lock()
 	defer l.mu.Unlock()
+	l.cache.Clear()
 
 	wg := sync.WaitGroup{}
 	meta := xmlparsing.ParseMeta{
@@ -232,4 +238,74 @@ func (l *Library) cleanup(meta xmlparsing.ParseMeta) {
 	}()
 
 	wg.Wait()
+}
+
+func (l *Library) Years() ([]int, map[int][]Meta) {
+	if years, ok := l.cache.Load("years"); ok {
+		if yearmap, ok := l.cache.Load("yearmap"); ok {
+			return years.([]int), yearmap.(map[int][]Meta)
+		}
+	}
+
+	mapYears := make(map[int][]Meta)
+	for item := range l.Metas.Iterate() {
+		earliest := item.Earliest()
+		if earliest != nil {
+			mapYears[earliest.Sort().Year] = append(mapYears[earliest.Sort().Year], item)
+		}
+	}
+
+	ret := slices.Collect(maps.Keys(mapYears))
+	slices.Sort(ret)
+
+	for _, items := range mapYears {
+		slices.SortFunc(items, func(a, b Meta) int {
+			return a.Earliest().Sort().Compare(b.Earliest().Sort())
+		})
+	}
+	l.cache.Store("years", ret)
+	l.cache.Store("yearmap", mapYears)
+	return ret, mapYears
+}
+
+func (l *Library) LettersForYear(year int) (ret []Meta) {
+	for l := range l.Metas.Filter(func(item Meta) bool {
+		return item.Earliest().Sort().Year == year
+	}) {
+		ret = append(ret, l)
+	}
+	return
+}
+
+func (l *Library) Person(id int) (ret *PersonDef) {
+	ret = l.Persons.Item(id)
+	return
+}
+
+func (l *Library) Place(id int) (ret *LocationDef) {
+	ret = l.Places.Item(id)
+	return
+}
+
+func (l *Library) GetPersons(id []int) (ret []*PersonDef) {
+	for _, i := range id {
+		ret = append(ret, l.Person(i))
+	}
+	return
+}
+
+func (l *Library) GetPlaces(id []int) (ret []*LocationDef) {
+	for _, i := range id {
+		ret = append(ret, l.Place(i))
+	}
+	return
+}
+
+func (l *Library) FuncMap() template.FuncMap {
+	return template.FuncMap{
+		"Person":  l.Person,
+		"Place":   l.Place,
+		"Persons": l.GetPersons,
+		"Places":  l.GetPlaces,
+	}
 }

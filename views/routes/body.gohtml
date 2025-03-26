@@ -1,1 +1,15 @@
-Hello from body! What!
+{{ $model := . }}
+
+{{- if .years -}}
+	{{- range $y := .years -}}
+		<div>
+			{{- printf "%d " $y -}}
+			{{- $letters := index $model.yearmap $y -}}
+			{{- len $letters }}
+			{{ range $l := $letters -}}
+				<div>{{ $l.Letter }}</div>
+				<div>{{ $l.Earliest.Text -}}</div>
+			{{- end -}}
+		</div>
+	{{- end -}}
+{{- end -}}

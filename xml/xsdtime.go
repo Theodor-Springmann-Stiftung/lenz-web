@@ -231,17 +231,17 @@ func (xsdd XSDDate) Type() XSDDatetype {
 }
 
 func (xsdd *XSDDate) Validate() bool {
-	if xsdd.error {
+	if xsdd.error || len(xsdd.base) == 0 {
 		xsdd.state = Invalid
 		return false
 	}
 
 	xsdd.state = xsdd.inferState()
-	if xsdd.state != Invalid {
-		return true
+	if xsdd.state == Invalid {
+		return false
 	}
 
-	return false
+	return true
 }
 
 func (xsdd *XSDDate) parseError(s string) error {
@@ -307,6 +307,56 @@ func (xsdd XSDDate) inferState() XSDDatetype {
 	}
 
 	return Invalid
+}
+
+func (xsdd XSDDate) Before(other XSDDate) bool {
+	if xsdd.Year < other.Year {
+		return true
+	} else if xsdd.Year > other.Year {
+		return false
+	}
+
+	if xsdd.Month < other.Month {
+		return true
+	} else if xsdd.Month > other.Month {
+		return false
+	}
+
+	if xsdd.Day < other.Day {
+		return true
+	}
+
+	return false
+}
+
+func (xsddate *XSDDate) Compare(other *XSDDate) int {
+	if !xsddate.Validate() {
+		return -1
+	}
+
+	if !other.Validate() {
+		return 1
+	}
+
+	if xsddate.Year < other.Year {
+		return -1
+	} else if xsddate.Year > other.Year {
+		return 1
+	}
+
+	if xsddate.Month < other.Month {
+		return -1
+	} else if xsddate.Month > other.Month {
+		return 1
+	}
+
+	if xsddate.Day < other.Day {
+		return -1
+	} else if xsddate.Day > other.Day {
+		return 1
+	}
+
+	return 0
 }
 
 func validDay(i int) bool {

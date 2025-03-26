@@ -8,6 +8,9 @@ import (
 const DEFAULT_YEAR = 1765
 
 func GetIndex(fiber *fiber.Ctx) error {
-	_ = xmlmodels.Get()
-	return fiber.Render("/", nil)
+	lib := xmlmodels.Get()
+	// Years
+	years, yearmap := lib.Years()
+
+	return fiber.Render("/", map[string]any{"years": years, "yearmap": yearmap})
 }

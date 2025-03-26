@@ -43,12 +43,14 @@ func main() {
 	}
 
 	// INFO: the lib, engine and storage objects passed to the server should never be recreated.
-	err = xmlmodels.New(dir, commit.Hash)
+	lib, err := xmlmodels.Parse(dir, commit.Hash)
 	if err != nil {
 		panic(err)
 	}
 
 	engine := templating.New(&views.LayoutFS, &views.RoutesFS)
+	engine.AddFuncs(lib.FuncMap())
+
 	storage := memory.New(memory.Config{
 		GCInterval: 24 * time.Hour,
 	})
