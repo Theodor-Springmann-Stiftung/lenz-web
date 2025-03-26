@@ -20,7 +20,7 @@ var tests = []Test{
 	{"--12-31", XSDDate{Month: 12, Day: 31}, GMonthDay},
 }
 
-func TestParse(t *testing.T) {
+func TestXSDTimeParse(t *testing.T) {
 	for _, test := range tests {
 		dt, err := New(test.Input)
 		if err != nil {
@@ -54,7 +54,7 @@ func TestParse(t *testing.T) {
 	}
 }
 
-func TestString(t *testing.T) {
+func TestXSDTimeString(t *testing.T) {
 	for _, test := range tests {
 		dt, err := New(test.Input)
 		if err != nil {

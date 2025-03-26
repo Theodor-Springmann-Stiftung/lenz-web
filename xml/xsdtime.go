@@ -3,8 +3,8 @@ package xmlparsing
 import (
 	"errors"
 	"fmt"
+	"math"
 	"strconv"
-	"strings"
 )
 
 // An implementation of the xsd 1.1 datatypes:
@@ -40,7 +40,7 @@ const (
 )
 
 type XSDDate struct {
-	base string
+	base []byte
 
 	Year  int
 	Month int
@@ -79,8 +79,8 @@ type XSDDate struct {
 //
 
 func New(s string) (XSDDate, error) {
-	dt := XSDDate{base: s}
-	err := dt.Parse(s)
+	dt := XSDDate{base: []byte(s)}
+	err := dt.Parse(dt.base)
 	return dt, err
 }
 
@@ -124,15 +124,14 @@ func (d XSDDate) String() string {
 }
 
 func (d *XSDDate) UnmarshalText(text []byte) error {
-	return d.Parse(string(text))
+	return d.Parse(text)
 }
 
 func (d XSDDate) MarshalText() ([]byte, error) {
 	return []byte(d.String()), nil
 }
 
-func (xsdd *XSDDate) Parse(s string) error {
-	s = strings.TrimSpace(s)
+func (xsdd *XSDDate) Parse(s []byte) error {
 	xsdd.base = s
 
 	// The smallest possible date is 4 chars long
@@ -160,7 +159,7 @@ func (xsdd *XSDDate) Parse(s string) error {
 			}
 		}
 
-		yint, err := strconv.Atoi(s[:i])
+		yint, err := Btoi(s[:i])
 		if err != nil {
 			return xsdd.parseError(fmt.Sprintf("Invalid year: %v", s[:i]))
 		}
@@ -179,7 +178,7 @@ func (xsdd *XSDDate) Parse(s string) error {
 	// Left are 02 (Month), -02 (Day), 02-02 (Date)
 	if s[0] != SEPERATOR {
 		mstr := s[:2]
-		mint, err := strconv.Atoi(mstr)
+		mint, err := Btoi(mstr)
 		if err != nil {
 			return xsdd.parseError(fmt.Sprintf("Invalid month: %v", mstr))
 		}
@@ -197,7 +196,7 @@ func (xsdd *XSDDate) Parse(s string) error {
 	s = s[1:]
 
 	// Left is 02 Day
-	dint, err := strconv.Atoi(s)
+	dint, err := Btoi(s)
 	if err != nil {
 		return xsdd.parseError(fmt.Sprintf("Invalid day: %v", s))
 	}
@@ -219,7 +218,7 @@ func (xsdd XSDDate) Weekday() int {
 	return (y + y/4 - y/100 + y/400 + WD_CALC_MATRIX[xsdd.Month-1] + xsdd.Day) % 7
 }
 
-func (xsdd XSDDate) Base() string {
+func (xsdd XSDDate) Base() []byte {
 	return xsdd.base
 }
 
@@ -251,18 +250,18 @@ func (xsdd *XSDDate) parseError(s string) error {
 	return errors.New(s)
 }
 
-func (xsdd *XSDDate) parseTimezone(s string) error {
+func (xsdd *XSDDate) parseTimezone(s []byte) error {
 	// INFO: We assume the check for 'Z' has already been done
 	if len(s) != 6 || s[3] != COLON || (s[0] != PLUS && s[0] != SIGN) {
 		return fmt.Errorf("Invalid timezone")
 	}
 
-	h, err := strconv.Atoi(s[:3])
+	h, err := Btoi(s[:3])
 	if err != nil {
 		return fmt.Errorf("Invalid hour: %v", s[:3])
 	}
 
-	m, err := strconv.Atoi(s[4:])
+	m, err := Btoi(s[4:])
 	if err != nil {
 		return fmt.Errorf("Invalid minute: %v", s[4:])
 	}
@@ -368,4 +367,58 @@ func validDayMonthYear(y int, m int, d int) bool {
 	}
 
 	return true
+}
+
+var ErrNoNumber = errors.New("Byte input is NaN")
+var ErrOverflow = errors.New("Byte input overflows int")
+
+// INFO: converts ASCII []byte to the integer represented by the string w/o alloc.
+func Btoi(bs []byte) (int, error) {
+	l := len(bs)
+	if l == 0 {
+		return 0, ErrNoNumber
+	}
+
+	// slow path for large numbers (-> strconv.Atoi):
+	if strconv.IntSize == 32 && l > 9 || strconv.IntSize == 64 && l > 18 {
+		i, err := strconv.ParseInt(string(bs), 10, 64)
+		if err != nil {
+			return 0, err
+		}
+
+		if strconv.IntSize == 32 {
+			if i > int64(math.MaxInt32) || i < int64(math.MinInt32) {
+				return 0, ErrOverflow
+			}
+		} else {
+			if i > int64(math.MaxInt64) || i < int64(math.MinInt64) {
+				return 0, ErrOverflow
+			}
+		}
+
+		return int(i), nil
+	}
+
+	var ret int
+	m := false
+	if bs[0] == '+' {
+		bs = bs[1:]
+	} else if bs[0] == '-' {
+		bs = bs[1:]
+		m = true
+	}
+
+	for _, b := range bs {
+		if b < '0' || b > '9' {
+			return 0, ErrNoNumber
+		}
+
+		ret = ret*10 + int(b-'0')
+	}
+
+	if m {
+		ret *= -1
+	}
+
+	return ret, nil
 }
