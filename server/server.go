@@ -49,7 +49,9 @@ func New(engine *templating.Engine, storage fiber.Storage, debug bool) Server {
 		server.Use(logger.New())
 	}
 
-	server.Use(recover.New())
+	if !debug {
+		server.Use(recover.New())
+	}
 
 	if debug {
 		server.Use(cache.New(cache.Config{

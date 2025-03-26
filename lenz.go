@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log/slog"
 	"path/filepath"
 	"time"
@@ -37,6 +38,7 @@ func main() {
 
 	dir := filepath.Join(cfg.BaseDIR, cfg.GITPath)
 
+	fmt.Printf("Starting Lenz with config: %v", cfg)
 	commit, err := gitprovider.OpenOrClone(dir, cfg.GitURL, cfg.GitBranch)
 	if err != nil {
 		panic(err)
@@ -60,7 +62,7 @@ func main() {
 	}
 
 	server := server.New(engine, storage, cfg.Debug)
-	controllers.Register(server)
+	controllers.Register(server, cfg)
 
 	server.Start(cfg.Address + ":" + cfg.Port)
 }

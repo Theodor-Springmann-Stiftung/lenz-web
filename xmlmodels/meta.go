@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"iter"
+	"slices"
 
 	xmlparsing "github.com/Theodor-Springmann-Stiftung/lenz-web/xml"
 )
@@ -15,7 +16,7 @@ type Meta struct {
 	IsProofread xmlparsing.OptionalBool `xml:"isProofread"`
 	IsDraft     xmlparsing.OptionalBool `xml:"isDraft"`
 	Sent        []Action                `xml:"sent"`
-	Recieved    []Action                `xml:"recieved"`
+	Recieved    []Action                `xml:"received"`
 }
 
 func (m *Meta) Earliest() *Date {
@@ -56,14 +57,23 @@ func (m Meta) String() string {
 	return string(json)
 }
 
-func (m Meta) SendRecieved() iter.Seq2[*Action, *Action] {
-	return func(yield func(*Action, *Action) bool) {
+type SendRecievedPair struct {
+	Sent     *Action
+	Received *Action
+}
+
+func (m Meta) SendReceivedPairs() []SendRecievedPair {
+	return slices.Collect(m.SendRecieved())
+}
+
+func (m Meta) SendRecieved() iter.Seq[SendRecievedPair] {
+	return func(yield func(SendRecievedPair) bool) {
 		for i, sent := range m.Sent {
 			var rec *Action
 			if i < len(m.Recieved) {
 				rec = &m.Recieved[i]
 			}
-			if !yield(&sent, rec) {
+			if !yield(SendRecievedPair{Sent: &sent, Received: rec}) {
 				return
 			}
 		}

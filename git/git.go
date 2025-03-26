@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/go-git/go-git/v5"
@@ -15,6 +16,9 @@ var InvalidStateError = errors.New("The GitProvider is not in a valid state. Fix
 var NoURLProvidedError = errors.New("Missing URL.")
 var NoPathProvidedError = errors.New("Missing path.")
 var NoBranchProvidedError = errors.New("Missing branch name.")
+
+var mu sync.Mutex
+var repo *git.Repository
 
 type Commit struct {
 	Path   string
@@ -29,7 +33,11 @@ func IsValidRepository(path, url, branch string) *Commit {
 	return commit
 }
 
+// WARNING: Only OpenOrClone() and Pull() should be used externally.
 func OpenOrClone(path, url, branch string) (*Commit, error) {
+	mu.Lock()
+	defer mu.Unlock()
+
 	commit := IsValidRepository(path, url, branch)
 	if commit == nil {
 		if _, err := os.Stat(path); err == nil {
@@ -50,6 +58,9 @@ func OpenOrClone(path, url, branch string) (*Commit, error) {
 }
 
 func Pull(path, url, branch string) (*Commit, error) {
+	mu.Lock()
+	defer mu.Unlock()
+
 	if url == "" {
 		return nil, NoURLProvidedError
 	}
@@ -63,12 +74,19 @@ func Pull(path, url, branch string) (*Commit, error) {
 	}
 
 	br := plumbing.NewBranchReferenceName(branch)
-	repo, err := git.PlainOpen(path)
-	if err != nil {
-		return nil, err
+
+	var r *git.Repository
+	if repo == nil {
+		rep, err := git.PlainOpen(path)
+		if err != nil {
+			return nil, err
+		}
+		r = rep
+	} else {
+		r = repo
 	}
 
-	wt, err := repo.Worktree()
+	wt, err := r.Worktree()
 	if err != nil {
 		return nil, err
 	}
@@ -81,6 +99,8 @@ func Pull(path, url, branch string) (*Commit, error) {
 		return nil, err
 	}
 	defer wt.Clean(&git.CleanOptions{Dir: true})
+
+	repo = r
 
 	return latestCommit(repo, path, branch, url)
 }
@@ -98,14 +118,20 @@ func Read(path, branch, url string) (*Commit, error) {
 		return nil, NoURLProvidedError
 	}
 
-	repo, err := git.PlainOpen(path)
-	if err != nil {
-		return nil, err
+	var r *git.Repository
+	if repo == nil {
+		rep, err := git.PlainOpen(path)
+		if err != nil {
+			return nil, err
+		}
+		r = rep
+	} else {
+		r = repo
 	}
 
-	if err := ValidateBranch(repo, branch); err != nil {
+	if err := ValidateBranch(r, branch); err != nil {
 		br := plumbing.NewBranchReferenceName(branch)
-		wt, err := repo.Worktree()
+		wt, err := r.Worktree()
 		if err != nil {
 			return nil, err
 		}
@@ -123,7 +149,8 @@ func Read(path, branch, url string) (*Commit, error) {
 		}
 	}
 
-	return latestCommit(repo, path, branch, url)
+	repo = r
+	return latestCommit(r, path, branch, url)
 }
 
 func Clone(path, url, branch string) (*Commit, error) {
@@ -141,7 +168,7 @@ func Clone(path, url, branch string) (*Commit, error) {
 
 	br := plumbing.NewBranchReferenceName(branch)
 
-	repo, err := git.PlainClone(path, false, &git.CloneOptions{
+	r, err := git.PlainClone(path, false, &git.CloneOptions{
 		URL:      url,
 		Progress: os.Stdout,
 	})
@@ -150,7 +177,7 @@ func Clone(path, url, branch string) (*Commit, error) {
 		return nil, err
 	}
 
-	wt, err := repo.Worktree()
+	wt, err := r.Worktree()
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +190,8 @@ func Clone(path, url, branch string) (*Commit, error) {
 		return nil, err
 	}
 
-	return latestCommit(repo, path, branch, url)
+	repo = r
+	return latestCommit(r, path, branch, url)
 }
 
 func (g Commit) String() string {
