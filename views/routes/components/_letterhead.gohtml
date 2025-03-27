@@ -1,0 +1,34 @@
+{{ $model := . }}
+<div>{{ $model.Letter }}</div>
+<div>{{ $model.Earliest.Text -}}</div>
+{{- range $sr := $model.SendReceivedPairs -}}
+	<div>
+		<div>
+			{{- range $i, $p := $sr.Sent.Persons -}}
+				<div>
+					{{- if $i -}}
+						,
+					{{ end -}}
+					{{- $person := Person $p.Reference -}}
+					{{- $person.Name -}}
+				</div>
+			{{- end -}}
+		</div>
+		<div>an</div>
+		{{- if $sr.Received -}}
+			<div>
+				{{- range $i, $p := $sr.Received.Persons -}}
+					<div>
+						{{- if $i -}}
+							,
+						{{ end -}}
+						{{- $person := Person $p.Reference -}}
+						{{- $person.Name -}}
+					</div>
+				{{- end -}}
+			</div>
+		{{- else -}}
+			<div>Unbekannt</div>
+		{{- end -}}
+	</div>
+{{- end -}}

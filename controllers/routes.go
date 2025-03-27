@@ -10,21 +10,25 @@ import (
 )
 
 const ASSETS_URL = "/assets"
-const WBHOOK_URL = "/webhook"
+const INDEX_URL = "/"
+const YEAR_PARAM = "year"
+const LETTER_PARAM = "letter"
+
+var INDEX_YEAR_URL = "/:" + YEAR_PARAM
+var LETTER_URL = "/brief/:" + LETTER_PARAM
 
 func Register(server server.Server, cfg config.Config) {
 	server.Server.Use(ASSETS_URL, compress.New(compress.Config{
 		Level: compress.LevelBestSpeed,
 	}))
 	server.Server.Use(ASSETS_URL, middleware.StaticHandler(&views.StaticFS))
-	server.Server.Get("/", GetIndex)
+	server.Server.Get(INDEX_URL, GetIndex)
+	server.Server.Get(INDEX_YEAR_URL, GetIndexYear)
+	server.Server.Get(LETTER_URL, GetLetter)
 
+	// INFO: we map the webhook when a secret was provided
 	if cfg.WebHookSecret != "" {
-		whurl := WBHOOK_URL
-		if cfg.WebHookEndpoint != "" {
-			whurl = cfg.WebHookEndpoint
-		}
-		server.Server.Post(whurl, PostWebhook(cfg))
+		server.Server.Post(cfg.WebHookEndpoint, PostWebhook(cfg))
 	}
 
 }

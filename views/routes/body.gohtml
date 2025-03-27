@@ -1,46 +1,39 @@
 {{ $model := . }}
 
-{{- if .years -}}
+
+<div>
 	{{- range $y := .years -}}
-		<div>
-			{{- printf "%d " $y -}}
-			{{- $letters := index $model.yearmap $y -}}
-			{{- len $letters }}
-			{{ range $l := $letters -}}
-				<div>{{ $l.Letter }}</div>
-				<div>{{ $l.Earliest.Text -}}</div>
-				{{- range $sr := $l.SendReceivedPairs -}}
-					<div>
-						<div>
-							{{- range $i, $p := $sr.Sent.Persons -}}
-								<div>
-									{{- if $i -}}
-										,
-									{{ end -}}
-									{{- $person := Person $p.Reference -}}
-									{{- $person.Name -}}
-								</div>
-							{{- end -}}
-						</div>
-						<div>an</div>
-						{{- if $sr.Received -}}
-							<div>
-								{{- range $i, $p := $sr.Received.Persons -}}
-									<div>
-										{{- if $i -}}
-											,
-										{{ end -}}
-										{{- $person := Person $p.Reference -}}
-										{{- $person.Name -}}
-									</div>
-								{{- end -}}
-							</div>
-						{{- else -}}
-							<div>Unbekannt</div>
-						{{- end -}}
-					</div>
-				{{- end -}}
-			{{- end -}}
+		<a class="inline-block px-0.5" href="/{{ $y }}">{{ $y }}</a>
+	{{- end -}}
+	<a class="inline-block px-0.5" href="/all">Alle</a>
+</div>
+
+{{- if .years -}}
+	{{- if .year -}}
+		{{- $letters := index $model.yearmap $model.year -}}
+		<div class="flex flex-row gap-x-1">
+			<div>{{- .year }}</div>
+			<div>({{- len $letters }})</div>
 		</div>
+		{{ range $l := $letters -}}
+			<a href="/brief/{{ $l.Letter }}" class="">
+				{{- template "_letterhead" $l -}}
+			</a>
+		{{- end -}}
+	{{- end -}}
+
+	{{- if .all -}}
+		{{- range $y := .years -}}
+			<div>
+				{{- $y -}}
+				{{- $letters := index $model.yearmap $y -}}
+				{{- len $letters }}
+				{{ range $l := $letters -}}
+					<a href="/brief/{{ $l.Letter }}" class="">
+						{{- template "_letterhead" $l -}}
+					</a>
+				{{- end -}}
+			</div>
+		{{- end -}}
 	{{- end -}}
 {{- end -}}
