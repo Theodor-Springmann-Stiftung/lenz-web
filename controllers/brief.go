@@ -19,9 +19,10 @@ func GetLetter(c *fiber.Ctx) error {
 	if meta == nil {
 		return c.SendStatus(fiber.StatusNotFound)
 	}
+	np := lib.NextPrev(meta)
 
 	text := lib.Letters.Item(letter)
 	tradition := lib.Traditions.Item(letter)
 
-	return c.Render("/brief/", map[string]any{"meta": meta, "text": text, "tradition": tradition})
+	return c.Render("/brief/", map[string]any{"meta": meta, "text": text, "tradition": tradition, "next": np.Next, "prev": np.Prev})
 }

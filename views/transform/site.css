@@ -62,4 +62,16 @@
 	body {
 		@apply bg-stone-50;
 	}
+
+	.container-normal {
+		@apply w-full max-w-(--breakpoint-xl) mx-auto px-3 py-4 relative;
+	}
+
+	.stdlink {
+		@apply underline decoration-dotted;
+	}
+
+	nav a[aria-current="page"] {
+		@apply font-bold text-red-500;
+	}
 }

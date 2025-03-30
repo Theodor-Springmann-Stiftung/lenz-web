@@ -43,6 +43,8 @@ func New(engine *templating.Engine, storage fiber.Storage, debug bool) Server {
 		EnablePrintRoutes: debug,
 		ViewsLayout:       templating.DEFAULT_LAYOUT_NAME,
 		UnescapePath:      true,
+		// BUG: does not work rn:
+		PassLocalsToViews: true,
 	})
 
 	if debug {

@@ -23,6 +23,7 @@
 
 		<script type="module" src="/assets/scripts.js"></script>
 		<link rel="stylesheet" type="text/css" href="/assets/style.css" />
+		<link rel="stylesheet" type="text/css" href="/assets/css/remixicon.css" />
 	</head>
 
 	<body class="w-full text-lg" hx-ext="response-targets" hx-boost="true">
@@ -33,7 +34,7 @@
 				{{ end }}
 			</header>
 
-			<main class="grow">
+			<main class="grow container-normal" id="main">
 				{{ block "body" . }}
 					<!-- Default app body... -->
 				{{ end }}

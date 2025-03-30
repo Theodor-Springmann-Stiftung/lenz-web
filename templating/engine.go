@@ -188,12 +188,17 @@ func (e *Engine) AddFuncs(funcs template.FuncMap) {
 }
 
 func (e *Engine) Render(out io.Writer, path string, data any, layout ...string) error {
+	slog.Debug("Rendering template", "path", path, "layout", layout, "data", data)
 	e.mu.RLock()
 	ld := data.(map[string]any)
 	if e.GlobalData != nil {
 		maps.Copy(ld, e.GlobalData)
 	}
 	e.mu.RUnlock()
+
+	if e.debug {
+		slog.Debug("Rendering template", "path", path, "layout", layout, "data", ld)
+	}
 
 	e.regmu.RLock()
 	defer e.regmu.RUnlock()

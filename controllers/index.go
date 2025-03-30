@@ -10,7 +10,7 @@ import (
 const DEFAULT_YEAR = 1765
 
 func GetIndex(c *fiber.Ctx) error {
-	return c.Redirect("/" + strconv.Itoa(DEFAULT_YEAR))
+	return c.Redirect(JAHRGAENGE_URL + "/" + strconv.Itoa(DEFAULT_YEAR))
 }
 
 func GetIndexYear(c *fiber.Ctx) error {
@@ -23,5 +23,5 @@ func GetIndexYear(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusNotFound)
 	}
 
-	return c.Render("/", map[string]any{"years": years, "yearmap": yearmap, "year": year, "all": y == "all"})
+	return c.Render(JAHRGAENGE_URL+"/", map[string]any{"years": years, "yearmap": yearmap, "year": year, "all": y == "all"})
 }

@@ -1,7 +1,6 @@
 // INFO: We import this so vite processes the stylesheet
 import "../public/css/fonts.css";
 import "./site.css";
-import "../public/css/remixicon.css";
 import "../public/js/alpine.min.js";
 import "../public/js/htmx.min.js";
 import "../public/js/htmx-response-targets.js";

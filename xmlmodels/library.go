@@ -240,6 +240,39 @@ func (l *Library) cleanup(meta xmlparsing.ParseMeta) {
 	wg.Wait()
 }
 
+type NextPrev struct {
+	Next, Prev *Meta
+}
+
+func (l *Library) NextPrev(meta *Meta) *NextPrev {
+	year := meta.Earliest().Sort().Year
+	years, yearmap := l.Years()
+	var next, prev *Meta
+	for i, y := range yearmap[year] {
+		if y.Letter == meta.Letter {
+			if i > 0 {
+				prev = &yearmap[year][i-1]
+			} else {
+				index := slices.Index(years, year)
+				if index > 0 {
+					prev = &yearmap[years[index-1]][len(yearmap[years[index-1]])-1]
+				}
+			}
+			if i < len(yearmap[year])-1 {
+				next = &yearmap[year][i+1]
+			} else {
+				index := slices.Index(years, year)
+				if index < len(years)-1 {
+					next = &yearmap[years[index+1]][0]
+				}
+			}
+			break
+		}
+	}
+
+	return &NextPrev{Next: next, Prev: prev}
+}
+
 func (l *Library) Years() ([]int, map[int][]Meta) {
 	if years, ok := l.cache.Load("years"); ok {
 		if yearmap, ok := l.cache.Load("yearmap"); ok {

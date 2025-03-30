@@ -1,1 +1,8 @@
 {{- template "_letterhead" .meta -}}
+
+{{ if .prev }}
+	<a href="/brief/{{ .prev.Letter }}" class="stdlink">Vorheriger</a>
+{{ end }}
+{{ if .next }}
+	<a href="/brief/{{ .next.Letter }}" class="stdlink">Nächster</a>
+{{ end }}

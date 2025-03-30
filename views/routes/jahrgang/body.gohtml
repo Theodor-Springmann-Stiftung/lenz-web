@@ -1,12 +1,22 @@
 {{ $model := . }}
 
 
-<div>
+<nav>
 	{{- range $y := .years -}}
-		<a class="inline-block px-0.5" href="/{{ $y }}">{{ $y }}</a>
+		<a
+			class="inline-block stdlink px-0.5"
+			href="/jahrgang/{{ $y }}"
+			{{ if eq $model.year $y -}}aria-current="page"{{- end }}
+			>{{ $y }}</a
+		>
 	{{- end -}}
-	<a class="inline-block px-0.5" href="/all">Alle</a>
-</div>
+	<a
+		class="inline-block stdlink px-0.5"
+		href="/jahrgang/all"
+		{{ if .all -}}aria-current="page"{{- end }}
+		>Alle</a
+	>
+</nav>
 
 {{- if .years -}}
 	{{- if .year -}}
