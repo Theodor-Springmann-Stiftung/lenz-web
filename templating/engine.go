@@ -11,6 +11,7 @@ import (
 	"sync"
 
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/helpers/functions"
+	"github.com/gofiber/fiber/v2"
 	"golang.org/x/net/websocket"
 )
 
@@ -188,17 +189,13 @@ func (e *Engine) AddFuncs(funcs template.FuncMap) {
 }
 
 func (e *Engine) Render(out io.Writer, path string, data any, layout ...string) error {
-	slog.Debug("Rendering template", "path", path, "layout", layout, "data", data)
+	slog.Debug("Rendering", "path", path, "layout", layout, "data", data)
 	e.mu.RLock()
-	ld := data.(map[string]any)
+	ld := data.(fiber.Map)
 	if e.GlobalData != nil {
 		maps.Copy(ld, e.GlobalData)
 	}
 	e.mu.RUnlock()
-
-	if e.debug {
-		slog.Debug("Rendering template", "path", path, "layout", layout, "data", ld)
-	}
 
 	e.regmu.RLock()
 	defer e.regmu.RUnlock()

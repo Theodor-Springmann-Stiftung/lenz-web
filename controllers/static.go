@@ -11,6 +11,6 @@ func Static(url string) fiber.Handler {
 		url += "/"
 	}
 	return func(c *fiber.Ctx) error {
-		return c.Render(url, map[string]any{})
+		return c.Render(url, fiber.Map{"Was": "Static"})
 	}
 }

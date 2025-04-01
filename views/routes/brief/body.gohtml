@@ -6,3 +6,5 @@
 {{ if .next }}
 	<a href="/brief/{{ .next.Letter }}" class="stdlink">Nächster</a>
 {{ end }}
+
+{{- Safe (ParseGeneric .text.Content) -}}

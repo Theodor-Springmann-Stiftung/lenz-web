@@ -9,6 +9,7 @@ import (
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/config"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/controllers"
 	gitprovider "github.com/Theodor-Springmann-Stiftung/lenz-web/git"
+	"github.com/Theodor-Springmann-Stiftung/lenz-web/helpers/functions"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/server"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/templating"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/views"
@@ -52,7 +53,7 @@ func main() {
 
 	engine := templating.New(&views.LayoutFS, &views.RoutesFS)
 	engine.AddFuncs(lib.FuncMap())
-
+	engine.AddFunc("ParseGeneric", functions.ParseGeneric)
 	storage := memory.New(memory.Config{
 		GCInterval: 24 * time.Hour,
 	})

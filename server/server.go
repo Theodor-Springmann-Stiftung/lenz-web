@@ -48,27 +48,23 @@ func New(engine *templating.Engine, storage fiber.Storage, debug bool) Server {
 	})
 
 	if debug {
-		server.Use(logger.New())
-	}
-
-	if !debug {
-		server.Use(recover.New())
-	}
-
-	if debug {
 		server.Use(cache.New(cache.Config{
 			Next:         CacheFunc,
 			Expiration:   CACHE_TIME,
 			CacheControl: false,
 			Storage:      storage,
 		}))
-	} else {
+		server.Use(logger.New())
+	}
+
+	if !debug {
 		server.Use(cache.New(cache.Config{
 			Next:         CacheFunc,
 			Expiration:   CACHE_TIME,
 			CacheControl: true,
 			Storage:      storage,
 		}))
+		server.Use(recover.New())
 	}
 
 	return Server{

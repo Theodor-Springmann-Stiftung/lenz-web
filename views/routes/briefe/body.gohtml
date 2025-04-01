@@ -5,14 +5,14 @@
 	{{- range $y := .years -}}
 		<a
 			class="inline-block stdlink px-0.5"
-			href="/jahrgang/{{ $y }}"
+			href="/briefe?year={{ $y }}"
 			{{ if eq $model.year $y -}}aria-current="page"{{- end }}
 			>{{ $y }}</a
 		>
 	{{- end -}}
 	<a
 		class="inline-block stdlink px-0.5"
-		href="/jahrgang/all"
+		href="/briefe?year=all"
 		{{ if .all -}}aria-current="page"{{- end }}
 		>Alle</a
 	>

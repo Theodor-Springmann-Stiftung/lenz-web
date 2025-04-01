@@ -24,5 +24,5 @@ func GetLetter(c *fiber.Ctx) error {
 	text := lib.Letters.Item(letter)
 	tradition := lib.Traditions.Item(letter)
 
-	return c.Render("/brief/", map[string]any{"meta": meta, "text": text, "tradition": tradition, "next": np.Next, "prev": np.Prev})
+	return c.Render("/brief/", fiber.Map{"meta": meta, "text": text, "tradition": tradition, "next": np.Next, "prev": np.Prev})
 }
