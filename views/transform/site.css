@@ -77,7 +77,6 @@
 
 	.text {
 		@apply font-serif max-w-[80ch] relative;
-		overflow: auto;
 	}
 
 	.text .page,
@@ -95,7 +94,7 @@
 	.text .del,
 	.text .fn,
 	.text .anchor {
-		@apply inline-block;
+		@apply inline;
 	}
 
 	.text .aq {
@@ -103,12 +102,11 @@
 	}
 
 	.text .line {
-		@apply w-0;
-		font-size: 0 !important;
+		@apply inline;
 	}
 
 	.text .line.tab-1 {
-		@apply w-4;
+		@apply inline-block w-4;
 	}
 
 	.text br.index-1 {
@@ -141,7 +139,8 @@
 	}
 
 	.text .align.pos-center {
-		width: max-content;
+		@apply text-center inline-block;
+		width: w-full;
 		position: relative;
 		left: 50%;
 		transform: translateX(-50%);
@@ -175,5 +174,9 @@
 		content: "";
 		@apply absolute inset-x-0 top-1/2 h-px bg-black;
 		top: 55%;
+	}
+
+	.text .note {
+		@apply w-full bg-slate-100 italic;
 	}
 }
