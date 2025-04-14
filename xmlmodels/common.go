@@ -22,17 +22,21 @@ func (d *Date) Sort() *xmlparsing.XSDDate {
 	if d.NotBefore.Validate() {
 		return &d.NotBefore
 	}
-	if d.From.Validate() {
-		return &d.From
+
+	if d.NotAfter.Validate() {
+		return &d.NotAfter
 	}
-	if d.When.Validate() {
-		return &d.When
-	}
+
 	if d.To.Validate() {
 		return &d.To
 	}
-	if d.NotAfter.Validate() {
-		return &d.NotAfter
+
+	if d.When.Validate() {
+		return &d.When
+	}
+
+	if d.From.Validate() {
+		return &d.From
 	}
 
 	return nil

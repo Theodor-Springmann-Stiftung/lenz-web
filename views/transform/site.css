@@ -74,4 +74,106 @@
 	nav a[aria-current="page"] {
 		@apply font-bold text-red-500;
 	}
+
+	.text {
+		@apply font-serif max-w-[80ch] relative;
+		overflow: auto;
+	}
+
+	.text .page,
+	.text .line,
+	.text .aq,
+	.text .ul,
+	.text .dul,
+	.text .it,
+	.text .pe,
+	.text .gr,
+	.text .hb,
+	.text .nr,
+	.text .align,
+	.text .insertion,
+	.text .del,
+	.text .fn,
+	.text .anchor {
+		@apply inline-block;
+	}
+
+	.text .aq {
+		@apply font-sans;
+	}
+
+	.text .line {
+		@apply w-0;
+		font-size: 0 !important;
+	}
+
+	.text .line.tab-1 {
+		@apply w-4;
+	}
+
+	.text br.index-1 {
+		@apply hidden;
+	}
+
+	.text .page {
+		@apply font-sans text-sm text-gray-500;
+	}
+
+	.text .page.index-1 {
+		@apply hidden;
+	}
+
+	.text .ul {
+		@apply underline;
+	}
+
+	.text .dul {
+		@apply underline decoration-double;
+	}
+
+	.text .it {
+		@apply italic;
+	}
+
+	.text .align.pos-right {
+		@apply text-right;
+		float: right;
+	}
+
+	.text .align.pos-center {
+		width: max-content;
+		position: relative;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.text .insertion::before {
+		content: "⌞";
+	}
+
+	.text .insertion::after {
+		content: "⌟";
+	}
+
+	.text .nr::before {
+		content: "⸰";
+	}
+
+	.text .nr::after {
+		content: "⸰";
+	}
+
+	.text .pe {
+		@apply text-stone-600;
+	}
+
+	.text .del {
+		@apply line-through;
+	}
+
+	.text .del .del::before {
+		content: "";
+		@apply absolute inset-x-0 top-1/2 h-px bg-black;
+		top: 55%;
+	}
 }

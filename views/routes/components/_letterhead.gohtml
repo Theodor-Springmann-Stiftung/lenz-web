@@ -1,34 +1,40 @@
 {{ $model := . }}
-<div>{{ $model.Letter }}</div>
-<div>{{ $model.Earliest.Text -}}</div>
-{{- range $sr := $model.SendReceivedPairs -}}
-	<div>
-		<div>
-			{{- range $i, $p := $sr.Sent.Persons -}}
+
+
+<div class="flex flex-row">
+	<div class="mr-4 text-6xl">{{ $model.Letter }}</div>
+	<div class="pt-0.5">
+		<div>{{ $model.Earliest.Text -}}</div>
+		{{- range $sr := $model.SendReceivedPairs -}}
+			<div class="flex flex-row">
 				<div>
-					{{- if $i -}}
-						,
-					{{ end -}}
-					{{- $person := Person $p.Reference -}}
-					{{- $person.Name -}}
+					{{- range $i, $p := $sr.Sent.Persons -}}
+						<div class="inline-block">
+							{{- if $i -}}
+								,
+							{{ end -}}
+							{{- $person := Person $p.Reference -}}
+							{{- $person.Name -}}
+						</div>
+					{{- end -}}
 				</div>
-			{{- end -}}
-		</div>
-		<div>an</div>
-		{{- if $sr.Received -}}
-			<div>
-				{{- range $i, $p := $sr.Received.Persons -}}
+				<div class="mx-2"><i class="ri-arrow-right-long-line"></i></div>
+				{{- if $sr.Received -}}
 					<div>
-						{{- if $i -}}
-							,
-						{{ end -}}
-						{{- $person := Person $p.Reference -}}
-						{{- $person.Name -}}
+						{{- range $i, $p := $sr.Received.Persons -}}
+							<div class="inline-block">
+								{{- if $i -}}
+									,
+								{{ end -}}
+								{{- $person := Person $p.Reference -}}
+								{{- $person.Name -}}
+							</div>
+						{{- end -}}
 					</div>
+				{{- else -}}
+					<div>Unbekannt</div>
 				{{- end -}}
 			</div>
-		{{- else -}}
-			<div>Unbekannt</div>
 		{{- end -}}
 	</div>
-{{- end -}}
+</div>

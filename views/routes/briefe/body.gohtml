@@ -25,24 +25,16 @@
 			<div>{{- .year }}</div>
 			<div>({{- len $letters }})</div>
 		</div>
-		{{ range $l := $letters -}}
-			<a href="/brief/{{ $l.Letter }}" class="">
-				{{- template "_letterhead" $l -}}
-			</a>
-		{{- end -}}
+		{{ template "_letterlist" $letters -}}
 	{{- end -}}
 
 	{{- if .all -}}
 		{{- range $y := .years -}}
-			<div>
+			<div class="">
 				{{- $y -}}
 				{{- $letters := index $model.yearmap $y -}}
-				{{- len $letters }}
-				{{ range $l := $letters -}}
-					<a href="/brief/{{ $l.Letter }}" class="">
-						{{- template "_letterhead" $l -}}
-					</a>
-				{{- end -}}
+				<div>({{- len $letters }})</div>
+				{{ template "_letterlist" $letters -}}
 			</div>
 		{{- end -}}
 	{{- end -}}

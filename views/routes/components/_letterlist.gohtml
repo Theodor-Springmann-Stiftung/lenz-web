@@ -1,0 +1,7 @@
+{{- $letters := . }}
+
+{{ range $l := $letters -}}
+	<a class="block mb-2" href="/brief/{{ $l.Letter }}">
+		{{- template "_letterhead" $l -}}
+	</a>
+{{- end -}}
