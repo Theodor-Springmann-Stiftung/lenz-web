@@ -53,6 +53,7 @@ func New(engine *templating.Engine, storage fiber.Storage, debug bool) Server {
 			Expiration:   CACHE_TIME,
 			CacheControl: false,
 			Storage:      storage,
+			KeyGenerator: KeyGenerator,
 		}))
 		server.Use(logger.New())
 	}

@@ -74,9 +74,11 @@ func Iterate[T any](xmlData string, initialState T) iter.Seq2[*TokenResult[T], e
 				}
 				customToken = Token{Name: t.Name.Local, Inner: t, Type: EndElement}
 			case xml.CharData:
-				text := strings.TrimSpace(string(t))
+				text := string(t)
 				if text != "" && len(stack) > 0 {
-					stack[len(stack)-1].CharData += text + " "
+					for i := range stack {
+						stack[i].CharData += text
+					}
 				}
 				customToken = Token{
 					Name:  "CharData",
@@ -110,7 +112,7 @@ func Iterate[T any](xmlData string, initialState T) iter.Seq2[*TokenResult[T], e
 			result := &TokenResult[T]{
 				State: state,
 				Token: customToken,
-				Stack: append([]Element{}, stack...),
+				Stack: stack,
 			}
 
 			if !yield(result, nil) {

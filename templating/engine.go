@@ -189,7 +189,7 @@ func (e *Engine) AddFuncs(funcs template.FuncMap) {
 }
 
 func (e *Engine) Render(out io.Writer, path string, data any, layout ...string) error {
-	slog.Debug("Rendering", "path", path, "layout", layout, "data", data)
+	// slog.Debug("Rendering", "path", path, "layout", layout, "data", data)
 	e.mu.RLock()
 	ld := data.(fiber.Map)
 	if e.GlobalData != nil {
