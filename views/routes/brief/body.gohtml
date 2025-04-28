@@ -1,12 +1,21 @@
-{{- template "_letterhead" .meta -}}
+<div class="flex flex-row w-full border-b pb-2 mb-3">
+	{{- template "_letterhead" .meta -}}
 
-{{ if .prev }}
-	<a href="/brief/{{ .prev.Letter }}" class="stdlink">Vorheriger</a>
-{{ end }}
-{{ if .next }}
-	<a href="/brief/{{ .next.Letter }}" class="stdlink">Nächster</a>
-{{ end }}
 
+	<div class="self-end justify-self-end grow-0 ">
+		{{ if .prev }}
+			<a href="/brief/{{ .prev.Letter }}" class="stdlink"
+				><i class="ri-arrow-left-long-line"></i
+			></a>
+		{{ end }}
+		<span class="mx-1 font-variant-small-caps">LKB</span>
+		{{ if .next }}
+			<a href="/brief/{{ .next.Letter }}" class="stdlink"
+				><i class="ri-arrow-right-long-line"></i
+			></a>
+		{{ end }}
+	</div>
+</div>
 
 <div class="text">
 	{{- Safe (ParseGeneric .text.Content) -}}

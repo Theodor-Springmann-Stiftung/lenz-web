@@ -68,13 +68,12 @@
 	}
 
 	.stdlink {
-		@apply underline decoration-dotted;
+		@apply underline decoration-dotted hover:decoration-solid;
 	}
 
 	nav a[aria-current="page"] {
 		@apply font-bold text-red-500;
 	}
-
 	.text {
 		@apply font-serif max-w-[80ch] relative;
 	}
@@ -107,6 +106,34 @@
 
 	.text .line.tab-1 {
 		@apply inline-block w-4;
+	}
+
+	.text .line.tab-2 {
+		@apply inline-block w-8;
+	}
+
+	.text .line.tab-3 {
+		@apply inline-block w-12;
+	}
+
+	.text .line.tab-4 {
+		@apply inline-block w-16;
+	}
+
+	.text .line.tab-5 {
+		@apply inline-block w-20;
+	}
+
+	.text .line.tab-6 {
+		@apply inline-block w-24;
+	}
+
+	.text .line.tab-7 {
+		@apply inline-block w-28;
+	}
+
+	.text .line.tab-8 {
+		@apply inline-block w-32;
 	}
 
 	.text br.index-1 {
@@ -176,7 +203,23 @@
 		top: 55%;
 	}
 
-	.text .note {
-		@apply w-full bg-slate-100 italic;
+	.text .note,
+	.text .hand-person,
+	.text .sidenote-note,
+	.text .sidenote-page,
+	.text .sidenote-pos {
+		@apply inline px-2 mr-2 w-full bg-gray-100 font-bold text-gray-700;
+	}
+
+	.text .sidenote-page::before {
+		content: "S. ";
+	}
+
+	.text .sidenote-pos::before {
+		content: "Pos: ";
+	}
+
+	.text .hand {
+		@apply inline text-blue-950;
 	}
 }

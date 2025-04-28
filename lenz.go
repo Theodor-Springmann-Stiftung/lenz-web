@@ -53,7 +53,7 @@ func main() {
 
 	engine := templating.New(&views.LayoutFS, &views.RoutesFS)
 	engine.AddFuncs(lib.FuncMap())
-	engine.AddFunc("ParseGeneric", functions.ParseGeneric)
+	engine.AddFunc("ParseGeneric", functions.Parse(lib))
 	storage := memory.New(memory.Config{
 		GCInterval: 24 * time.Hour,
 	})
