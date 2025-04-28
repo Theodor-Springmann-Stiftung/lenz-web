@@ -203,6 +203,10 @@
 		top: 55%;
 	}
 
+	.text .sidenote {
+		@apply block border-l-4 border-slate-200 pl-2 my-1;
+	}
+
 	.text .note,
 	.text .hand-person,
 	.text .sidenote-note,
