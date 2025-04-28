@@ -8,6 +8,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/etag"
 )
 
 const (
@@ -27,6 +28,7 @@ func Register(server server.Server, cfg config.Config) {
 	server.Server.Use(ASSETS_URL, compress.New(compress.Config{
 		Level: compress.LevelBestSpeed,
 	}))
+	server.Server.Use(ASSETS_URL, etag.New())
 	server.Server.Use(ASSETS_URL, middleware.StaticHandler(&views.StaticFS))
 
 	server.Server.Use(func(ctx *fiber.Ctx) error {

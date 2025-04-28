@@ -1,5 +1,4 @@
 TODO
-- <b> <i>
 - Überlieferung 
 - Nummern weg
 
@@ -15,6 +14,6 @@ TODO
 extent bei nr
 Mouseover hand sidenote
 
-HAND ANDERE TYPE
 NOTE ANDERS
+-Tab ist falsch
 

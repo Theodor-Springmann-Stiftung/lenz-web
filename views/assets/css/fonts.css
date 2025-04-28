@@ -53,3 +53,35 @@
 	font-display: swap;
 	src: url(/assets/fonts/LinBiolinum_RB_G.ttf) format("truetype");
 }
+
+@font-face {
+	font-family: "Playfair";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url(/assets/fonts/PlayfairDisplay-Regular.ttf) format("truetype");
+}
+
+@font-face {
+	font-family: "Playfair";
+	font-style: italic;
+	font-weight: 500;
+	font-display: swap;
+	src: url(/assets/fonts/PlayfairDisplay-Italic.ttf) format("truetype");
+}
+
+@font-face {
+	font-family: "Playfair";
+	font-style: normal;
+	font-weight: bold;
+	font-display: swap;
+	src: url(/assets/fonts/PlayfairDisplay-Bold.ttf) format("truetype");
+}
+
+@font-face {
+	font-family: "Playfair";
+	font-style: italic;
+	font-weight: bold;
+	font-display: swap;
+	src: url(/assets/fonts/PlayfairDisplay-BoldItalic.ttf) format("truetype");
+}

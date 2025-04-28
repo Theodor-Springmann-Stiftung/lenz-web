@@ -2,9 +2,11 @@
 
 
 <div class="flex flex-row grow">
+	<!--
 	<div class="mr-4 text-6xl">{{ $model.Letter }}</div>
+	-->
 	<div class="pt-0.5">
-		<div>{{ $model.Earliest.Text -}}</div>
+		<div class="italic">{{ $model.Earliest.Text -}}</div>
 		{{- range $sr := $model.SendReceivedPairs -}}
 			<div class="flex flex-row">
 				<div>
