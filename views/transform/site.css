@@ -80,7 +80,7 @@
 		@apply font-bold text-red-500;
 	}
 	.text {
-		@apply font-serif max-w-[80ch] relative;
+		@apply font-serif max-w-[80ch] print:max-w-[60ch] relative;
 	}
 
 	.text .page,
@@ -92,6 +92,7 @@
 	.text .pe,
 	.text .gr,
 	.text .hb,
+	.text .ru,
 	.text .nr,
 	.text .align,
 	.text .b,
@@ -175,6 +176,13 @@
 		@apply italic;
 	}
 
+	.traditions,
+	.tradition,
+	.text,
+	.text * {
+		clear: both;
+	}
+
 	.text .align.pos-right {
 		@apply text-right;
 		float: right;
@@ -225,10 +233,8 @@
 
 	.text .note,
 	.text .hand-person,
-	.text .sidenote-note,
-	.text .sidenote-page,
-	.text .sidenote-pos {
-		@apply inline px-2 mr-2 w-full bg-gray-100 font-bold text-gray-700;
+	.text .sidenote-meta {
+		@apply absolute right-[-45ch] w-[40ch] px-2 mr-2 bg-gray-100 italic text-sm text-gray-700 font-sans;
 	}
 
 	.text .sidenote-page::before {

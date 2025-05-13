@@ -10,6 +10,11 @@ import (
 
 type outType int
 
+var endDivToken = outToken{
+	Type: EndElement,
+	Name: "div",
+}
+
 const (
 	NA outType = iota
 	Text
@@ -132,6 +137,12 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 						Classes: []string{"sidenote"},
 					}
 					ps.Out = append(ps.Out, nt)
+					metatoken := outToken{
+						Type:    Element,
+						Name:    "div",
+						Classes: []string{"sidenote-meta"},
+					}
+					ps.Out = append(ps.Out, metatoken)
 					if elem.Token.Attributes["annotation"] != "" {
 						note := outToken{
 							Type:    Element,
@@ -142,11 +153,7 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 							Type:  Text,
 							Value: elem.Token.Attributes["annotation"],
 						}
-						noteend := outToken{
-							Type: EndElement,
-							Name: "div",
-						}
-						ps.Out = append(ps.Out, note, notecontent, noteend)
+						ps.Out = append(ps.Out, note, notecontent, endDivToken)
 					}
 					if elem.Token.Attributes["page"] != "" {
 						note := outToken{
@@ -158,11 +165,7 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 							Type:  Text,
 							Value: elem.Token.Attributes["page"],
 						}
-						noteend := outToken{
-							Type: EndElement,
-							Name: "div",
-						}
-						ps.Out = append(ps.Out, note, notecontent, noteend)
+						ps.Out = append(ps.Out, note, notecontent, endDivToken)
 					}
 					if elem.Token.Attributes["pos"] != "" {
 						note := outToken{
@@ -174,12 +177,16 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 							Type:  Text,
 							Value: elem.Token.Attributes["pos"],
 						}
-						noteend := outToken{
-							Type: EndElement,
-							Name: "div",
-						}
-						ps.Out = append(ps.Out, note, notecontent, noteend)
+						ps.Out = append(ps.Out, note, notecontent, endDivToken)
 					}
+					ps.Out = append(ps.Out, endDivToken)
+				case "note":
+					nt := outToken{
+						Type:    Element,
+						Name:    "div",
+						Classes: []string{"note-anchor"},
+					}
+					ps.Out = append(ps.Out, nt, endDivToken)
 				case "hand":
 					nt := outToken{
 						Type:    Element,
@@ -205,11 +212,7 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 					if person != nil {
 						defhand.Value = person.Name
 					}
-					handend := outToken{
-						Type: EndElement,
-						Name: "div",
-					}
-					ps.Out = append(ps.Out, handtok, defhand, handend)
+					ps.Out = append(ps.Out, handtok, defhand, endDivToken)
 				case "line":
 					nt := outToken{
 						Type: EmptyElement,
