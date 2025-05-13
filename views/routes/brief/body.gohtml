@@ -1,8 +1,11 @@
+{{ $model := . }}
+
+
 <div class="flex flex-row w-full border-b pb-2 mb-3">
 	{{- template "_letterhead" .meta -}}
 
 
-	<div class="self-end justify-self-end grow-0 ">
+	<div class="self-end justify-self-end grow-0 print:hidden">
 		{{ if .prev }}
 			<a href="/brief/{{ .prev.Letter }}" class="stdlink"
 				><i class="ri-arrow-left-long-line"></i
@@ -19,4 +22,8 @@
 
 <div class="text">
 	{{- Safe (ParseGeneric .text.Content) -}}
+</div>
+
+<div class="traditions mt-12 pt-3 border-t-gray-200 border-t-1 max-w-[90ch] print:border-none">
+	{{ template "_lettertrad" $model.meta -}}
 </div>

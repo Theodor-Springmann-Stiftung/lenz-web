@@ -1,7 +1,7 @@
 {{ $model := . }}
 
 
-<nav>
+<nav class="print:hidden">
 	{{- range $y := .years -}}
 		<a
 			class="inline-block stdlink px-0.5"
@@ -22,7 +22,7 @@
 	{{- if .year -}}
 		{{- $letters := index $model.yearmap $model.year -}}
 		<div class="flex flex-row gap-x-1">
-			<div>{{- .year }}</div>
+			<div>Briefe für das Jahr {{- .year }}</div>
 			<div>({{- len $letters }})</div>
 		</div>
 		{{ template "_letterlist" $letters -}}

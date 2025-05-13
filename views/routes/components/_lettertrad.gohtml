@@ -1,0 +1,11 @@
+{{ $model := . }}
+{{- range $i, $trad := (Tradition $model.Letter) -}}
+	<div class="traditioncategory mb-6">
+		<div class="tradition-header font-bold">
+			{{- (App $trad.Reference).Name -}}
+		</div>
+		<div class="tradition-text">
+			{{- Safe (ParseGeneric $trad.Content) -}}
+		</div>
+	</div>
+{{- end -}}

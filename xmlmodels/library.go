@@ -315,9 +315,23 @@ func (l *Library) Person(id int) (ret *PersonDef) {
 	return
 }
 
+func (l *Library) App(id int) (ret *AppDef) {
+	ret = l.AppDefs.Item(id)
+	return
+}
+
 func (l *Library) Place(id int) (ret *LocationDef) {
 	ret = l.Places.Item(id)
 	return
+}
+
+func (l *Library) Tradition(letter int) (ret []App) {
+	item := l.Traditions.Item(letter)
+	if item == nil {
+		return []App{}
+	}
+
+	return item.Apps
 }
 
 func (l *Library) GetPersons(id []int) (ret []*PersonDef) {
@@ -336,9 +350,11 @@ func (l *Library) GetPlaces(id []int) (ret []*LocationDef) {
 
 func (l *Library) FuncMap() template.FuncMap {
 	return template.FuncMap{
-		"Person":  l.Person,
-		"Place":   l.Place,
-		"Persons": l.GetPersons,
-		"Places":  l.GetPlaces,
+		"Person":    l.Person,
+		"Place":     l.Place,
+		"Persons":   l.GetPersons,
+		"Places":    l.GetPlaces,
+		"App":       l.App,
+		"Tradition": l.Tradition,
 	}
 }
