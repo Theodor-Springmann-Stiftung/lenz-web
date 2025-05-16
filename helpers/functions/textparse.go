@@ -1,6 +1,7 @@
 package functions
 
 import (
+	"math/rand"
 	"strconv"
 	"strings"
 
@@ -8,12 +9,17 @@ import (
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/xmlmodels"
 )
 
-type outType int
+const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-var endDivToken = outToken{
-	Type: EndElement,
-	Name: "div",
+func RandString(length int) string {
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = charset[rand.Intn(len(charset))]
+	}
+	return string(b)
 }
+
+type outType int
 
 const (
 	NA outType = iota
@@ -24,11 +30,58 @@ const (
 )
 
 type outToken struct {
-	Type    outType
-	Name    string
-	Classes []string
-	Id      string
-	Value   string
+	Type       outType
+	Name       string
+	Classes    []string
+	Id         string
+	Value      string
+	Attributes map[string]string
+}
+
+func (o outToken) String() string {
+	switch o.Type {
+	case Text:
+		return o.Value
+
+	case Element:
+		builder := strings.Builder{}
+		builder.WriteString("<")
+		builder.WriteString(o.Name)
+		if len(o.Classes) > 0 {
+			builder.WriteString(" class=\"")
+			builder.WriteString(strings.Join(o.Classes, " "))
+			builder.WriteString("\"")
+		}
+		if len(o.Id) > 0 {
+			builder.WriteString(" id=\"")
+			builder.WriteString(o.Id)
+			builder.WriteString("\"")
+		}
+		builder.WriteString(">")
+		return builder.String()
+
+	case EndElement:
+		return "</" + o.Name + ">"
+
+	case EmptyElement:
+		builder := strings.Builder{}
+		builder.WriteString("<")
+		builder.WriteString(o.Name)
+		if len(o.Classes) > 0 {
+			builder.WriteString(" class=\"")
+			builder.WriteString(strings.Join(o.Classes, " "))
+			builder.WriteString("\"")
+		}
+
+		if len(o.Id) > 0 {
+			builder.WriteString(" id=\"")
+			builder.WriteString(o.Id)
+			builder.WriteString("\"")
+		}
+		builder.WriteString("/>")
+	}
+
+	return ""
 }
 
 func (o *outToken) ClassesFromAttrs(attrs map[string]string) {
@@ -67,43 +120,67 @@ type LenzParseState struct {
 func (s *LenzParseState) String() string {
 	builder := strings.Builder{}
 	for _, token := range s.Out {
-		switch token.Type {
-		case Text:
-			builder.WriteString(token.Value)
-		case Element:
-			builder.WriteString("<")
-			builder.WriteString(token.Name)
-			if len(token.Classes) > 0 {
-				builder.WriteString(" class=\"")
-				builder.WriteString(strings.Join(token.Classes, " "))
-				builder.WriteString("\"")
-			}
-			if len(token.Id) > 0 {
-				builder.WriteString(" id=\"")
-				builder.WriteString(token.Id)
-				builder.WriteString("\"")
-			}
-			builder.WriteString(">")
-		case EndElement:
-			builder.WriteString("</div>")
-		case EmptyElement:
-			builder.WriteString("<")
-			builder.WriteString(token.Name)
-			if len(token.Classes) > 0 {
-				builder.WriteString(" class=\"")
-				builder.WriteString(strings.Join(token.Classes, " "))
-				builder.WriteString("\"")
-			}
-
-			if len(token.Id) > 0 {
-				builder.WriteString(" id=\"")
-				builder.WriteString(token.Id)
-				builder.WriteString("\"")
-			}
-			builder.WriteString("/>")
-		}
+		builder.WriteString(token.String())
 	}
 	return builder.String()
+}
+
+func (s *LenzParseState) AppendDefaultElement(token xmlparsing.Token, ids ...string) {
+	t := Default(token)
+	if len(ids) > 0 {
+		t.Id = ids[0]
+	}
+
+	s.Out = append(s.Out, t)
+}
+
+func (s *LenzParseState) AppendEndElement() {
+	for i := len(s.Out) - 1; i >= 0; i-- {
+		if s.Out[i].Type == Element {
+			s.Out = append(s.Out, outToken{
+				Name: s.Out[i].Name,
+				Type: EndElement,
+			})
+			return
+		}
+	}
+}
+
+func (s *LenzParseState) AppendDivElement(id string, classes ...string) {
+	s.Out = append(s.Out, outToken{
+		Name:    "div",
+		Id:      id,
+		Classes: classes,
+	})
+}
+
+func (s *LenzParseState) AppendEmptyElement(name string, id string, classes ...string) {
+	s.Out = append(s.Out, outToken{
+		Name:    name,
+		Id:      id,
+		Classes: classes,
+		Type:    EmptyElement,
+	})
+}
+
+func (s *LenzParseState) AppendLink(href string, classes ...string) {
+	s.Out = append(s.Out, outToken{
+		Name:       "a",
+		Attributes: map[string]string{"href": href},
+		Classes:    classes,
+		Type:       Element,
+	})
+}
+
+func (s *LenzParseState) AppendText(text string) {
+	s.Out = append(s.Out, outToken{
+		Type:  Text,
+		Value: text,
+	})
+}
+
+func (s *LenzParseState) Append(token outToken) {
+	s.Out = append(s.Out, token)
 }
 
 func Parse(lib *xmlmodels.Library) func(s string) string {
@@ -120,124 +197,87 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 			}
 
 			if elem.Token.Type < 3 {
-				if !ps.CloseElement && elem.Token.Type == xmlparsing.EndElement {
-					ps.CloseElement = true
-					continue
-				} else if elem.Token.Type == xmlparsing.EndElement {
-					ps.Out = append(ps.Out, Default(elem.Token))
+				if elem.Token.Type == xmlparsing.EndElement {
+					if ps.CloseElement {
+						ps.AppendEndElement()
+					} else {
+						ps.CloseElement = true
+					}
 					continue
 				}
 
-				defaultToken := Default(elem.Token)
 				switch elem.Token.Name {
+
 				case "sidenote":
-					nt := outToken{
-						Type:    Element,
-						Name:    "div",
-						Classes: []string{"sidenote"},
+					id := RandString(8)
+					if elem.Token.Attributes["annotation"] != "" ||
+						elem.Token.Attributes["page"] != "" ||
+						elem.Token.Attributes["pos"] != "" {
+						ps.AppendLink("#"+id, "nanchor-sidenote")
+						ps.AppendEndElement()
+						ps.AppendDivElement(id, "note-sidenote-meta")
+						if elem.Token.Attributes["annotation"] != "" {
+							ps.AppendDivElement("", "sidenote-note")
+							ps.AppendText(elem.Token.Attributes["annotation"])
+							ps.AppendEndElement()
+						}
+						if elem.Token.Attributes["page"] != "" {
+							ps.AppendDivElement("", "sidenote-page")
+							ps.AppendText(elem.Token.Attributes["page"])
+							ps.AppendEndElement()
+						}
+						if elem.Token.Attributes["pos"] != "" {
+							ps.AppendDivElement("", "sidenote-pos")
+							ps.AppendText(elem.Token.Attributes["pos"])
+							ps.AppendEndElement()
+						}
+						ps.AppendEndElement() // sidenote-meta
 					}
-					ps.Out = append(ps.Out, nt)
-					metatoken := outToken{
-						Type:    Element,
-						Name:    "div",
-						Classes: []string{"sidenote-meta"},
-					}
-					ps.Out = append(ps.Out, metatoken)
-					if elem.Token.Attributes["annotation"] != "" {
-						note := outToken{
-							Type:    Element,
-							Name:    "div",
-							Classes: []string{"sidenote-note"},
-						}
-						notecontent := outToken{
-							Type:  Text,
-							Value: elem.Token.Attributes["annotation"],
-						}
-						ps.Out = append(ps.Out, note, notecontent, endDivToken)
-					}
-					if elem.Token.Attributes["page"] != "" {
-						note := outToken{
-							Type:    Element,
-							Name:    "div",
-							Classes: []string{"sidenote-page"},
-						}
-						notecontent := outToken{
-							Type:  Text,
-							Value: elem.Token.Attributes["page"],
-						}
-						ps.Out = append(ps.Out, note, notecontent, endDivToken)
-					}
-					if elem.Token.Attributes["pos"] != "" {
-						note := outToken{
-							Type:    Element,
-							Name:    "div",
-							Classes: []string{"sidenote-pos"},
-						}
-						notecontent := outToken{
-							Type:  Text,
-							Value: elem.Token.Attributes["pos"],
-						}
-						ps.Out = append(ps.Out, note, notecontent, endDivToken)
-					}
-					ps.Out = append(ps.Out, endDivToken)
+					ps.AppendDefaultElement(elem.Token, id)
+
 				case "note":
-					nt := outToken{
-						Type:    Element,
-						Name:    "div",
-						Classes: []string{"note-anchor"},
-					}
-					ps.Out = append(ps.Out, nt, endDivToken)
+					id := RandString(8)
+					ps.AppendLink("#"+id, "nanchor-note")
+					ps.AppendEndElement()
+					ps.AppendDivElement(id, "note", "note-note")
+
 				case "hand":
-					nt := outToken{
-						Type:    Element,
-						Name:    "div",
-						Classes: []string{"hand"},
-					}
-					ps.Out = append(ps.Out, nt)
 					id := elem.Token.Attributes["ref"]
 					idno, err := strconv.Atoi(id)
 					var person *xmlmodels.PersonDef
 					if err == nil {
 						person = lib.Persons.Item(idno)
 					}
-					handtok := outToken{
-						Type:    Element,
-						Name:    "div",
-						Classes: []string{"hand-person"},
-					}
-					defhand := outToken{
-						Type:  Text,
-						Value: "N/A",
-					}
+					ps.AppendLink("#"+id, "nanchor-hand")
+					ps.AppendEndElement()
+					ps.AppendDivElement(id, "note-hand")
+					hand := "N/A"
 					if person != nil {
-						defhand.Value = person.Name
+						hand = person.Name
 					}
-					ps.Out = append(ps.Out, handtok, defhand, endDivToken)
+					ps.AppendText(hand)
+					ps.AppendEndElement()
+					ps.AppendDefaultElement(elem.Token)
+
 				case "line":
-					nt := outToken{
-						Type: EmptyElement,
-						Name: "br",
-					}
 					if val := elem.Token.Attributes["type"]; val != "empty" {
-						ps.Out = append(ps.Out, nt)
 						ps.LC += 1
-						ps.Out = append(ps.Out, defaultToken)
+						ps.AppendEmptyElement("br", ps.PC+"-"+strconv.Itoa(ps.LC))
+						ps.AppendDefaultElement(elem.Token) // This is for indents, must be closed
 					} else {
-						nt.Classes = []string{"empty"}
-						ps.Out = append(ps.Out, nt)
-						ps.CloseElement = false
+						ps.AppendEmptyElement("br", "", "empty")
+						ps.CloseElement = false // Here Indents make no sense, so we dont open an element
 					}
+
 				case "page":
-					ps.LC = 0
 					ps.PC = elem.Token.Attributes["index"]
-					ps.Out = append(ps.Out, defaultToken)
-					nt := outToken{
-						Type:  Text,
-						Value: "[" + ps.PC + "]",
-					}
-					ps.Out = append(ps.Out, nt)
+					ps.AppendLink("#"+ps.PC, "eanchor-page")
+					ps.AppendEndElement()
+					ps.AppendDivElement(ps.PC, "page")
+					ps.AppendText(ps.PC)
+
 				default:
-					ps.Out = append(ps.Out, defaultToken)
+					ps.AppendDefaultElement(elem.Token)
 				}
 			}
 		}
