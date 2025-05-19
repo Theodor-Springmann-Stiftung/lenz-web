@@ -19,7 +19,7 @@ const (
 
 	DEFAULT_BRANCH = "main"
 
-	DEFAULT_PORT  = "8080"
+	DEFAULT_PORT  = "8085"
 	DEFAULT_ADDR  = "127.0.0.1"
 	DEFAULT_HTTPS = false
 

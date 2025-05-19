@@ -1,0 +1,10 @@
+name: lenz-briefe
+services:
+  all:
+    build: .
+    ports:
+      - "8085:8085"
+    volumes:
+      - lenz_briefe:/app/data
+volumes:
+  lenz_briefe:
