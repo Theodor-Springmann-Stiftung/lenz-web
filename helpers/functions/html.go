@@ -122,6 +122,10 @@ type Tokens struct {
 	Out []outToken
 }
 
+func (s *Tokens) Prepend(token outToken) {
+	s.Out = append([]outToken{token}, s.Out...)
+}
+
 func (s *Tokens) AppendDefaultElement(token xmlparsing.Token, ids ...string) {
 	t := Default(token)
 	if len(ids) > 0 {
@@ -129,6 +133,18 @@ func (s *Tokens) AppendDefaultElement(token xmlparsing.Token, ids ...string) {
 	}
 
 	s.Out = append(s.Out, t)
+}
+
+func (s *Tokens) AppendCustomAttribute(name, value string) {
+	if len(s.Out) == 0 {
+		return
+	}
+
+	if s.Out[len(s.Out)-1].Attributes == nil {
+		s.Out[len(s.Out)-1].Attributes = make(map[string]string)
+	}
+
+	s.Out[len(s.Out)-1].Attributes[name] = value
 }
 
 func (s *Tokens) AppendEndElement() {

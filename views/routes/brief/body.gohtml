@@ -20,10 +20,59 @@
 	</div>
 </div>
 
-<div class="text">
+<div class="text flex flex-row">
 	{{- Safe (ParseGeneric .text.Content) -}}
 </div>
 
 <div class="traditions mt-12 pt-3 border-t-gray-200 border-t-1 max-w-[90ch] print:border-none">
 	{{ template "_lettertrad" $model.meta -}}
 </div>
+
+<script type="module">
+	function alignSidenotes() {
+		const text = document.querySelector(".text");
+		if (!text) return;
+		const notes = text.querySelectorAll(".note-sidenote-meta,.note-hand");
+
+		// Only do margin notes if wide enough and not printing
+		// if (window.innerWidth < 900 || window.matchMedia("print").matches) return;
+		// Reset all notes for fallback
+		notes.forEach((note) => {
+			note.classList.remove("margin-note");
+			note.style.top = "";
+		});
+
+		notes.forEach((note) => {
+			const noteId = note.id;
+			if (!noteId) return;
+			const anchor = text.querySelector(
+				`.sidenote[aria-describedby="${noteId}"], .hand[aria-describedby="${noteId}"]`,
+			);
+			if (!anchor) return;
+
+			console.log(anchor);
+			// Mark as margin note
+			note.classList.add("margin-note");
+			// Position: relative to .text
+			const textRect = text.getBoundingClientRect();
+			const anchorRect = anchor.getBoundingClientRect();
+			// Get scroll offset for window
+			const top = anchorRect.top - textRect.top;
+			note.style.top = `${top}px`;
+		});
+	}
+
+	// Run on load, resize, and before/after print
+	alignSidenotes();
+	window.addEventListener("resize", alignSidenotes);
+	window.addEventListener("scroll", alignSidenotes); // If container is scrollable
+
+	// Revert to fallback for print, reapply after
+	window.matchMedia("print").addEventListener("change", (e) => {
+		if (e.matches) {
+			alignSidenotes(); // fallback mode (will un-absolute)
+		} else {
+			setTimeout(alignSidenotes, 100); // recalc after print closes
+		}
+	});
+</script>

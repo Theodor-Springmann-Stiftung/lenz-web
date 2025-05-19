@@ -30,15 +30,21 @@ type LenzParseState struct {
 	LC           int
 	PC           string
 	CloseElement bool
+	Break        bool
 	PageBreak    bool
+	LineBreak    bool
 }
 
 func (s *LenzParseState) String() string {
 	builder := strings.Builder{}
+	s.Tokens.Prepend(outToken{Name: "div", Classes: []string{"fulltext"}, Type: Element})
+	s.Tokens.AppendEndElement()
 	builder.WriteString(s.Tokens.String())
+	builder.WriteString(outToken{Name: "div", Classes: []string{"notes"}, Type: Element}.String())
 	for _, note := range s.Notes {
 		builder.WriteString(note.Tokens.String())
 	}
+	builder.WriteString(outToken{Name: "div", Classes: []string{"notes"}, Type: EndElement}.String())
 	return builder.String()
 }
 
@@ -61,6 +67,9 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 
 			if elem.Token.Type < 3 {
 				if elem.Token.Type == xmlparsing.EndElement {
+					if elem.Token.Name == "sidenote" {
+						ps.LineBreak = true
+					}
 					if ps.CloseElement {
 						ps.Tokens.AppendEndElement()
 					} else {
@@ -73,12 +82,12 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 
 				case "sidenote":
 					id := RandString(8)
-					ps.Tokens.AppendDefaultElement(elem.Token, id)
+					ps.Tokens.AppendDefaultElement(elem.Token)
+					ps.Break = false
+					ps.Tokens.AppendCustomAttribute("aria-describedby", id)
 					if elem.Token.Attributes["annotation"] != "" ||
 						elem.Token.Attributes["page"] != "" ||
 						elem.Token.Attributes["pos"] != "" {
-						ps.Tokens.AppendLink("#"+id, "nanchor-sidenote")
-						ps.Tokens.AppendEndElement()
 						note := Note{Id: id}
 						note.Tokens.AppendDivElement(id, "note-sidenote-meta")
 						if elem.Token.Attributes["annotation"] != "" {
@@ -113,8 +122,6 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 					if err == nil {
 						person = lib.Persons.Item(idno)
 					}
-					ps.Tokens.AppendLink("#"+id, "nanchor-hand")
-					ps.Tokens.AppendEndElement()
 					note := Note{Id: id}
 					note.Tokens.AppendDivElement(id, "note-hand")
 					hand := "N/A"
@@ -124,26 +131,46 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 					note.Tokens.AppendText(hand)
 					note.Tokens.AppendEndElement()
 					ps.AppendNote(note)
-					ps.Tokens.AppendDefaultElement(elem.Token)
+					ps.Tokens.AppendDivElement("", "hand")
+					ps.Tokens.AppendCustomAttribute("aria-describedby", id)
 
 				case "line":
 					if val := elem.Token.Attributes["type"]; val != "empty" {
 						ps.LC += 1
-						ps.Tokens.AppendEmptyElement("br", ps.PC+"-"+strconv.Itoa(ps.LC))
+						if ps.Break {
+							ps.Tokens.AppendEmptyElement("br", ps.PC+"-"+strconv.Itoa(ps.LC))
+						}
 						ps.Tokens.AppendDefaultElement(elem.Token) // This is for indents, must be closed
 					} else {
 						ps.Tokens.AppendEmptyElement("br", "", "empty")
 						ps.CloseElement = false // Here Indents make no sense, so we dont open an element
 					}
+					ps.LineBreak = true
 
 				case "page":
 					ps.PC = elem.Token.Attributes["index"]
-					ps.Tokens.AppendLink("#"+ps.PC, "eanchor-page")
-					ps.Tokens.AppendEndElement()
-					ps.Tokens.AppendDivElement(ps.PC, "page")
-					ps.Tokens.AppendText(ps.PC)
+					ps.PageBreak = true
+					ps.CloseElement = false
 
 				default:
+					if !ps.Break && elem.Token.Type == xmlparsing.CharData && strings.TrimSpace(elem.Token.Data) != "" {
+						ps.Break = true
+					}
+					if ps.PageBreak && elem.Token.Type == xmlparsing.CharData && strings.TrimSpace(elem.Token.Data) != "" {
+						ps.PageBreak = false
+						if !ps.LineBreak {
+							ps.Tokens.AppendLink("#"+ps.PC, "eanchor-page")
+							ps.Tokens.AppendEndElement()
+						}
+						ps.Tokens.AppendDivElement(ps.PC, "page")
+						ps.Tokens.AppendText(ps.PC)
+						ps.Tokens.AppendEndElement()
+						strings.TrimLeft(elem.Token.Data, " \t\n\r")
+					}
+					if ps.LineBreak && elem.Token.Type == xmlparsing.CharData && strings.TrimSpace(elem.Token.Data) != "" {
+						strings.TrimLeft(elem.Token.Data, " \t\n\r")
+						ps.LineBreak = false
+					}
 					ps.Tokens.AppendDefaultElement(elem.Token)
 				}
 			}

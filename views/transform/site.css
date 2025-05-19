@@ -87,7 +87,15 @@
 	}
 
 	.text {
-		@apply font-serif max-w-[80ch] relative;
+		@apply font-serif relative;
+	}
+
+	.text .fulltext {
+		@apply max-w-[80ch] mr-8;
+	}
+
+	.text .notes {
+		@apply relative max-w-[80ch] pr-4;
 	}
 
 	.text .page,
@@ -170,12 +178,12 @@
 	}
 
 	.text .page {
-		@apply font-sans text-sm text-gray-500 absolute left-0 ml-[-5%] w-[2%] mt-[0.4rem] leading-[1.2];
+		@apply font-sans text-sm text-slate-600 absolute -left-[2rem] w-[1rem] mt-[0.4rem] leading-[1.2];
 	}
 
 	.text .eanchor-page::before {
-		content: " | ";
-		@apply text-gray-500 font-sans text-sm relative bottom-[0.1rem];
+		content: "|";
+		@apply text-slate-600 font-sans text-sm relative bottom-[0.1rem] pr-0.5;
 	}
 
 	/* .text .page + br { */
@@ -255,7 +263,7 @@
 	}
 
 	.text .note-note {
-		@apply inline text-sm text-gray-500 relative left-[0.1rem] -top-[0.1rem];
+		@apply inline text-sm text-gray-500 relative left-[0.1rem];
 	}
 
 	.text .sidenote {
@@ -263,14 +271,26 @@
 	}
 
 	.text .sidenote-page::before {
-		content: "| S. ";
+		content: "; S. ";
 	}
 
-	.text .sidenote-pos {
+	.text .note-sidenote-meta > div {
+		@apply inline;
+	}
+
+	.text .note-sidenote-meta .sidenote-pos {
 		@apply !hidden;
 	}
 
 	.text .hand {
-		@apply inline text-blue-950 font-didone;
+		@apply inline text-blue-950 font-didone text-[0.9rem];
+	}
+
+	.text .margin-note {
+		@apply absolute w-[13rem] text-sm;
+	}
+
+	.text .note-hand {
+		@apply text-blue-950;
 	}
 }
