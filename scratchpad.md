@@ -12,8 +12,7 @@ TODO
 <subst><del>gelösche</del><insertion>hinz</insertion></subst>
 <tl> text loss
 extent bei nr
-Mouseover hand sidenote
-
+mouseover hand sidenote 
 NOTE ANDERS
 -Tab ist falsch
 

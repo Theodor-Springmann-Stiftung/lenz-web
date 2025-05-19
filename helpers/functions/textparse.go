@@ -90,14 +90,14 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 						elem.Token.Attributes["pos"] != "" {
 						note := Note{Id: id}
 						note.Tokens.AppendDivElement(id, "note-sidenote-meta")
-						if elem.Token.Attributes["annotation"] != "" {
-							note.Tokens.AppendDivElement("", "sidenote-note")
-							note.Tokens.AppendText(elem.Token.Attributes["annotation"])
-							note.Tokens.AppendEndElement()
-						}
 						if elem.Token.Attributes["page"] != "" {
 							note.Tokens.AppendDivElement("", "sidenote-page")
 							note.Tokens.AppendText(elem.Token.Attributes["page"])
+							note.Tokens.AppendEndElement()
+						}
+						if elem.Token.Attributes["annotation"] != "" {
+							note.Tokens.AppendDivElement("", "sidenote-note")
+							note.Tokens.AppendText(elem.Token.Attributes["annotation"])
 							note.Tokens.AppendEndElement()
 						}
 						if elem.Token.Attributes["pos"] != "" {
@@ -161,8 +161,10 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 						if !ps.LineBreak {
 							ps.Tokens.AppendLink("#"+ps.PC, "eanchor-page")
 							ps.Tokens.AppendEndElement()
+							ps.Tokens.AppendDivElement(ps.PC, "page", "page-inside")
+						} else {
+							ps.Tokens.AppendDivElement(ps.PC, "page", "page-outside")
 						}
-						ps.Tokens.AppendDivElement(ps.PC, "page")
 						ps.Tokens.AppendText(ps.PC)
 						ps.Tokens.AppendEndElement()
 						strings.TrimLeft(elem.Token.Data, " \t\n\r")

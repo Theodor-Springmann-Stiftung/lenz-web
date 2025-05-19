@@ -183,7 +183,7 @@
 
 	.text .eanchor-page::before {
 		content: "|";
-		@apply text-slate-600 font-sans text-sm relative bottom-[0.1rem] pr-0.5;
+		@apply text-slate-600 font-sans text-sm relative bottom-[0.15rem] pr-[1ch];
 	}
 
 	/* .text .page + br { */
@@ -231,20 +231,24 @@
 	}
 
 	.text .insertion::before {
+		@apply text-slate-700;
 		margin-right: -0.2em;
 		content: "⌞";
 	}
 
 	.text .insertion::after {
+		@apply text-slate-700;
 		margin-left: -0.2em;
 		content: "⌟";
 	}
 
 	.text .nr::before {
+		@apply text-slate-700;
 		content: "⸰";
 	}
 
 	.text .nr::after {
+		@apply text-slate-700;
 		content: "⸰";
 	}
 
@@ -262,16 +266,24 @@
 		top: 55%;
 	}
 
-	.text .note-note {
-		@apply inline text-sm text-gray-500 relative left-[0.1rem];
-	}
-
 	.text .sidenote {
 		@apply border-l-4 border-slate-200 pl-2 my-1;
 	}
 
+	.text .hand {
+		@apply inline text-blue-950 font-didone text-[0.9rem];
+	}
+
 	.text .sidenote-page::before {
-		content: "; S. ";
+		content: "S. ";
+	}
+
+	.text .note-sidenote-meta.margin-note {
+		@apply mt-1;
+	}
+
+	.text .sidenote-page::after {
+		content: "; ";
 	}
 
 	.text .note-sidenote-meta > div {
@@ -282,15 +294,24 @@
 		@apply !hidden;
 	}
 
-	.text .hand {
-		@apply inline text-blue-950 font-didone text-[0.9rem];
+	.text .note-note {
+		@apply block;
 	}
 
 	.text .margin-note {
 		@apply absolute w-[13rem] text-sm;
 	}
 
+	.text div[class^="note-"],
+	.text div[class*=" note-"] {
+		@apply text-sm text-slate-800;
+	}
+
 	.text .note-hand {
 		@apply text-blue-950;
+	}
+
+	.text .note-hand.margin-note {
+		@apply -mt-1;
 	}
 }
