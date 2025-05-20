@@ -91,15 +91,15 @@
 	}
 
 	.text .count {
-		@apply hidden lg:block print:block min-w-[4ch] max-w-[10ch] shrink grow-0 relative;
+		@apply print:hidden hidden lg:block min-w-[4ch] max-w-[10ch] shrink grow-0 relative;
 	}
 
 	.text .fulltext {
-		@apply max-w-[80ch] mr-8 grow;
+		@apply max-w-[80ch] mr-8 grow relative;
 	}
 
 	.text .notes {
-		@apply relative max-w-[80ch] pr-4;
+		@apply relative max-w-[80ch] pr-4 shrink grow-0 print:hidden;
 	}
 
 	.text .eanchor-page,
@@ -273,11 +273,13 @@
 		content: "; ";
 	}
 
-	.text .note-sidenote-meta > div {
+	.text .note-sidenote-meta > div,
+	.text .inline-sidenote-meta > div {
 		@apply inline;
 	}
 
-	.text .note-sidenote-meta .sidenote-pos {
+	.text .note-sidenote-meta .sidenote-pos,
+	.text .inline-sidenote-meta .sidenote-pos {
 		@apply !hidden;
 	}
 
@@ -286,7 +288,12 @@
 	}
 
 	.text .margin-note {
-		@apply absolute w-[13rem] text-sm;
+		@apply absolute;
+	}
+
+	.text .margin-note.note-sidenote-meta,
+	.text .margin-note.note-hand {
+		@apply w-[13rem];
 	}
 
 	.text div[class^="note-"],
@@ -308,6 +315,27 @@
 
 	.text .eanchor-page-inside::before {
 		content: "|";
-		@apply text-slate-600 font-sans text-sm relative bottom-[0.15rem] pr-[1ch];
+		@apply text-slate-600 font-sans text-sm relative bottom-[0.15rem] pr-[1ch] print:hidden;
+	}
+
+	.text .page-counter {
+		@apply hidden text-slate-600 font-sans text-sm relative bottom-[0.15rem] pr-[1ch] print:inline;
+	}
+
+	.text .inline-sidenote-meta,
+	.text .inline-hand {
+		@apply text-sm text-slate-800 hidden print:block;
+	}
+
+	.text .page-counter::before {
+		content: "[";
+	}
+
+	.text .page-counter::after {
+		content: "]";
+	}
+
+	@page {
+		size: A4;
 	}
 }

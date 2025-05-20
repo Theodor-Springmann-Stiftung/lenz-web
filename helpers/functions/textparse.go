@@ -96,22 +96,33 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 						elem.Token.Attributes["pos"] != "" {
 						note := Note{Id: id}
 						note.Tokens.AppendDivElement(id, "note-sidenote-meta")
+						ps.Tokens.AppendDivElement(id, "inline-sidenote-meta")
 						if elem.Token.Attributes["page"] != "" {
 							note.Tokens.AppendDivElement("", "sidenote-page")
 							note.Tokens.AppendText(elem.Token.Attributes["page"])
 							note.Tokens.AppendEndElement()
+							ps.Tokens.AppendDivElement("", "sidenote-page")
+							ps.Tokens.AppendText(elem.Token.Attributes["page"])
+							ps.Tokens.AppendEndElement()
 						}
 						if elem.Token.Attributes["annotation"] != "" {
 							note.Tokens.AppendDivElement("", "sidenote-note")
 							note.Tokens.AppendText(elem.Token.Attributes["annotation"])
 							note.Tokens.AppendEndElement()
+							ps.Tokens.AppendDivElement("", "sidenote-note")
+							ps.Tokens.AppendText(elem.Token.Attributes["annotation"])
+							ps.Tokens.AppendEndElement()
 						}
 						if elem.Token.Attributes["pos"] != "" {
 							note.Tokens.AppendDivElement("", "sidenote-pos")
 							note.Tokens.AppendText(elem.Token.Attributes["pos"])
 							note.Tokens.AppendEndElement()
+							ps.Tokens.AppendDivElement("", "sidenote-pos")
+							ps.Tokens.AppendText(elem.Token.Attributes["pos"])
+							ps.Tokens.AppendEndElement()
 						}
 						note.Tokens.AppendEndElement() // sidenote-meta
+						ps.Tokens.AppendEndElement()
 						ps.AppendNote(note)
 					}
 
@@ -130,12 +141,15 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 					}
 					note := Note{Id: id}
 					note.Tokens.AppendDivElement(id, "note-hand")
+					ps.Tokens.AppendDivElement(id, "inline-hand")
 					hand := "N/A"
 					if person != nil {
 						hand = person.Name
 					}
 					note.Tokens.AppendText(hand)
+					ps.Tokens.AppendText(hand)
 					note.Tokens.AppendEndElement()
+					ps.Tokens.AppendEndElement()
 					ps.AppendNote(note)
 					ps.Tokens.AppendDivElement("", "hand")
 					ps.Tokens.AppendCustomAttribute("aria-describedby", id)
@@ -171,6 +185,9 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 						}
 						ps.Tokens.AppendDivElement("", "eanchor-page", "eanchor-page-"+quality)
 						ps.Tokens.AppendCustomAttribute("aria-describedby", ps.PC)
+						ps.Tokens.AppendEndElement()
+						ps.Tokens.AppendDivElement("", "page-counter", "page-"+quality)
+						ps.Tokens.AppendText(ps.PC)
 						ps.Tokens.AppendEndElement()
 						note.Tokens.AppendDivElement(ps.PC, "page", "page-"+quality)
 						note.Tokens.AppendText(ps.PC)
