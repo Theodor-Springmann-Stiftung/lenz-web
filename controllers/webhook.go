@@ -30,24 +30,16 @@ func PostWebhook(cfg config.Config) fiber.Handler {
 
 		commit, err := gitprovider.Pull(dir, cfg.GitURL, cfg.GitBranch)
 		if err != nil {
-			panic(err)
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 
 		_, err = xmlmodels.Parse(dir, commit.Hash)
 		if err != nil {
-			panic(err)
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 
 		return c.SendStatus(fiber.StatusOK)
 	}
-}
-
-func sign256(secret, body []byte) []byte {
-	computed := hmac.New(sha256.New, secret)
-	computed.Write(body)
-	return []byte(computed.Sum(nil))
 }
 
 func verifySignature256(secret, payload []byte, header string) bool {

@@ -16,6 +16,7 @@ const (
 	DEFAULT_GEO_CACHE_DIR    = "geo"
 	DEFAULT_SEARCH_CACHE_DIR = "search"
 	DEFAULT_IMG_DIR          = "data_bilder"
+	DEFAULT_WEBHOOK_ENDPOINT = "/webhook"
 
 	DEFAULT_BRANCH = "main"
 
@@ -112,6 +113,10 @@ func readDefaults(cfg *Config) *Config {
 
 	if strings.TrimSpace(cfg.Address) == "" {
 		cfg.Address = DEFAULT_ADDR
+	}
+
+	if strings.TrimSpace(cfg.WebHookEndpoint) == "" {
+		cfg.WebHookEndpoint = DEFAULT_WEBHOOK_ENDPOINT
 	}
 
 	if strings.TrimSpace(cfg.Port) == "" {
