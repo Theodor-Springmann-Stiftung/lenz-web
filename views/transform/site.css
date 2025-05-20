@@ -90,15 +90,19 @@
 		@apply font-serif relative;
 	}
 
+	.text .count {
+		@apply hidden lg:block print:block min-w-[4ch] max-w-[10ch] shrink grow-0 relative;
+	}
+
 	.text .fulltext {
-		@apply max-w-[80ch] mr-8;
+		@apply max-w-[80ch] mr-8 grow;
 	}
 
 	.text .notes {
 		@apply relative max-w-[80ch] pr-4;
 	}
 
-	.text .page,
+	.text .eanchor-page,
 	.text .line,
 	.text .aq,
 	.text .ul,
@@ -175,23 +179,6 @@
 
 	.text br.index-1 {
 		@apply hidden;
-	}
-
-	.text .page {
-		@apply font-sans text-sm text-slate-600 absolute -left-[2rem] w-[1rem] mt-[0.4rem] leading-[1.2];
-	}
-
-	.text .eanchor-page::before {
-		content: "|";
-		@apply text-slate-600 font-sans text-sm relative bottom-[0.15rem] pr-[1ch];
-	}
-
-	/* .text .page + br { */
-	/* 	@apply hidden; */
-	/* } */
-
-	.text .page::before {
-		content: "";
 	}
 
 	.text .page.index-1 {
@@ -313,5 +300,14 @@
 
 	.text .note-hand.margin-note {
 		@apply -mt-1;
+	}
+
+	.text .page {
+		@apply font-sans text-sm text-slate-600;
+	}
+
+	.text .eanchor-page-inside::before {
+		content: "|";
+		@apply text-slate-600 font-sans text-sm relative bottom-[0.15rem] pr-[1ch];
 	}
 }

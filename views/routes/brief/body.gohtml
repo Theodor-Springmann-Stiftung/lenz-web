@@ -32,7 +32,7 @@
 	function alignSidenotes() {
 		const text = document.querySelector(".text");
 		if (!text) return;
-		const notes = text.querySelectorAll(".note-sidenote-meta,.note-hand");
+		const notes = text.querySelectorAll(".note-sidenote-meta,.note-hand,.page");
 
 		// Only do margin notes if wide enough and not printing
 		// if (window.innerWidth < 900 || window.matchMedia("print").matches) return;
@@ -46,7 +46,8 @@
 			const noteId = note.id;
 			if (!noteId) return;
 			const anchor = text.querySelector(
-				`.sidenote[aria-describedby="${noteId}"], .hand[aria-describedby="${noteId}"]`,
+				`.sidenote[aria-describedby="${noteId}"], .hand[aria-describedby="${noteId}"],
+				.eanchor-page[aria-describedby="${noteId}"]`,
 			);
 			if (!anchor) return;
 

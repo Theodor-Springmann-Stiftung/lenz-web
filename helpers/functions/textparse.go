@@ -27,6 +27,7 @@ type Note struct {
 type LenzParseState struct {
 	Tokens       Tokens
 	Notes        []Note
+	Count        []Note
 	LC           int
 	PC           string
 	CloseElement bool
@@ -37,6 +38,11 @@ type LenzParseState struct {
 
 func (s *LenzParseState) String() string {
 	builder := strings.Builder{}
+	builder.WriteString(outToken{Name: "div", Classes: []string{"count"}, Type: Element}.String())
+	for _, c := range s.Count {
+		builder.WriteString(c.Tokens.String())
+	}
+	builder.WriteString(outToken{Name: "div", Classes: []string{"count"}, Type: EndElement}.String())
 	s.Tokens.Prepend(outToken{Name: "div", Classes: []string{"fulltext"}, Type: Element})
 	s.Tokens.AppendEndElement()
 	builder.WriteString(s.Tokens.String())
@@ -156,17 +162,20 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 					if !ps.Break && elem.Token.Type == xmlparsing.CharData && strings.TrimSpace(elem.Token.Data) != "" {
 						ps.Break = true
 					}
-					if ps.PageBreak && elem.Token.Type == xmlparsing.CharData && strings.TrimSpace(elem.Token.Data) != "" {
+					if ps.PageBreak && ps.PC != "1" && elem.Token.Type == xmlparsing.CharData && strings.TrimSpace(elem.Token.Data) != "" {
 						ps.PageBreak = false
+						note := Note{Id: ps.PC}
+						quality := "outside"
 						if !ps.LineBreak {
-							ps.Tokens.AppendLink("#"+ps.PC, "eanchor-page")
-							ps.Tokens.AppendEndElement()
-							ps.Tokens.AppendDivElement(ps.PC, "page", "page-inside")
-						} else {
-							ps.Tokens.AppendDivElement(ps.PC, "page", "page-outside")
+							quality = "inside"
 						}
-						ps.Tokens.AppendText(ps.PC)
+						ps.Tokens.AppendDivElement("", "eanchor-page", "eanchor-page-"+quality)
+						ps.Tokens.AppendCustomAttribute("aria-describedby", ps.PC)
 						ps.Tokens.AppendEndElement()
+						note.Tokens.AppendDivElement(ps.PC, "page", "page-"+quality)
+						note.Tokens.AppendText(ps.PC)
+						note.Tokens.AppendEndElement()
+						ps.Count = append(ps.Count, note)
 						strings.TrimLeft(elem.Token.Data, " \t\n\r")
 					}
 					if ps.LineBreak && elem.Token.Type == xmlparsing.CharData && strings.TrimSpace(elem.Token.Data) != "" {
