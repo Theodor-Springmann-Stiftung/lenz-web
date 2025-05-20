@@ -115,6 +115,7 @@
 	.text .ru,
 	.text .nr,
 	.text .align,
+	.text .er,
 	.text .b,
 	.text .i,
 	.text .subst,
@@ -262,7 +263,12 @@
 	}
 
 	.text .hand {
-		@apply inline text-blue-950 font-didone text-[0.9rem];
+		@apply inline text-blue-950 !font-didone text-[0.9rem];
+	}
+
+	.text .er {
+		text-decoration: line-through;
+		text-decoration-thickness: 17px;
 	}
 
 	.text .sidenote-page::before {

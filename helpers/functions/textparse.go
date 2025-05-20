@@ -139,18 +139,19 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 					if err == nil {
 						person = lib.Persons.Item(idno)
 					}
-					note := Note{Id: id}
-					note.Tokens.AppendDivElement(id, "note-hand")
-					ps.Tokens.AppendDivElement(id, "inline-hand")
 					hand := "N/A"
 					if person != nil {
 						hand = person.Name
 					}
+
+					note := Note{Id: id}
+					note.Tokens.AppendDivElement(id, "note-hand")
 					note.Tokens.AppendText(hand)
-					ps.Tokens.AppendText(hand)
 					note.Tokens.AppendEndElement()
-					ps.Tokens.AppendEndElement()
 					ps.AppendNote(note)
+					ps.Tokens.AppendDivElement(id, "inline-hand")
+					ps.Tokens.AppendText(hand)
+					ps.Tokens.AppendEndElement()
 					ps.Tokens.AppendDivElement("", "hand")
 					ps.Tokens.AppendCustomAttribute("aria-describedby", id)
 
@@ -158,14 +159,9 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 					if val := elem.Token.Attributes["type"]; val != "empty" {
 						ps.LC += 1
 						if ps.Break {
-							// if elem.Token.Attributes["tab"] == "1" {
-							// 	ps.Tokens.AppendElement("p", ps.PC+"-"+strconv.Itoa(ps.LC), "tab-1")
-							// 	ps.CloseElement = false
-							// } else {
 							ps.Tokens.AppendEmptyElement("br", ps.PC+"-"+strconv.Itoa(ps.LC))
-							ps.Tokens.AppendDefaultElement(elem.Token) // This is for indents, must be closed
-							// }
 						}
+						ps.Tokens.AppendDefaultElement(elem.Token) // This is for indents, must be closed
 					} else {
 						ps.Tokens.AppendEmptyElement("br", "", "empty")
 						ps.CloseElement = false // Here Indents make no sense, so we dont open an element

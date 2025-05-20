@@ -331,18 +331,24 @@ function Letter() {
 		_alignSidenotes(".notes", ".note-sidenote-meta", ".sidenote");
 	}
 
+	const positionedIntervals = [];
 	function _alignSidenotes(container, align, alignto) {
 		const fulltext = document.querySelector(".fulltext");
 		const cont = document.querySelector(container);
 		if (!cont) return;
-		const notes = cont.querySelectorAll(align);
+		const notes = Array.from(cont.querySelectorAll(align));
 
+		// Reset classes and inline styles
 		notes.forEach((note) => {
 			note.classList.remove("margin-note");
 			note.style.top = "";
 		});
 
-		if (window.innerWidth < 900 || window.matchMedia("print").matches) return;
+		// Skip on print
+		if (window.matchMedia("print").matches) return;
+
+		const textRect = cont.getBoundingClientRect();
+		const GUTTER = 0; // space in pixels between notes
 
 		notes.forEach((note) => {
 			const noteId = note.id;
@@ -351,11 +357,39 @@ function Letter() {
 			if (!anchor) return;
 
 			note.classList.add("margin-note");
-			const textRect = cont.getBoundingClientRect();
 			const anchorRect = anchor.getBoundingClientRect();
-			const top = anchorRect.top - textRect.top;
+			const baseTop = anchorRect.top - textRect.top;
+
+			const noteHeight = note.getBoundingClientRect().height;
+			let top = baseTop;
+
+			// Adjust to prevent overlap
+			let collision;
+			do {
+				collision = false;
+				for (const interval of positionedIntervals) {
+					const intervalTop = interval.top;
+					const intervalBottom = interval.bottom;
+					if (top < intervalBottom && top + noteHeight > intervalTop) {
+						console.log("Collision detected", {
+							top,
+							bottom: top + noteHeight,
+							intervalTop,
+							intervalBottom,
+							newTop: intervalBottom + GUTTER,
+						});
+						top = intervalBottom + GUTTER;
+						collision = true;
+					}
+				}
+			} while (collision);
+
+			// Record this note's interval
+			positionedIntervals.push({ top, bottom: top + noteHeight });
+
 			note.style.top = `${top}px`;
 		});
+		console.log("Aligned sidenotes", positionedIntervals);
 	}
 
 	if (window.htmx) {
@@ -363,11 +397,12 @@ function Letter() {
 			alignSidenotes();
 		});
 	}
+
 	window.addEventListener("load", () => {
 		alignSidenotes();
 	});
+
 	window.addEventListener("resize", alignSidenotes);
-	console.log("Letter loaded");
 }
 
 customElements.define(SCROLL_BUTTON_ELEMENT, ScrollButton);
