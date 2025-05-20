@@ -148,9 +148,10 @@
 	.text p {
 		@apply !indent-4;
 	}
-	/* .text .line.tab-1 { */
-	/* 	@apply inline-block w-4; */
-	/* } */
+
+	.text .line.tab-1 {
+		@apply inline-block w-4;
+	}
 
 	.text .line.tab-2 {
 		@apply inline-block w-8;
