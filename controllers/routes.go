@@ -44,7 +44,7 @@ func Register(server server.Server, cfg config.Config) {
 
 	// INFO: we map the webhook when a secret was provided
 	if cfg.WebHookSecret != "" {
-		server.Server.Post(cfg.WebHookEndpoint, PostWebhook(cfg))
+		server.Server.Post(cfg.WebHookEndpoint, PostWebhook(cfg, server))
 	}
 
 }

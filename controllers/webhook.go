@@ -9,13 +9,14 @@ import (
 
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/config"
 	gitprovider "github.com/Theodor-Springmann-Stiftung/lenz-web/git"
+	"github.com/Theodor-Springmann-Stiftung/lenz-web/server"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/xmlmodels"
 	"github.com/gofiber/fiber/v2"
 )
 
 const SIGNATURE_PREFIX = "sha256="
 
-func PostWebhook(cfg config.Config) fiber.Handler {
+func PostWebhook(cfg config.Config, server server.Server) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		body := c.Body()
 		if !verifySignature256([]byte(cfg.WebHookSecret), body, c.Get("X-Hub-Signature-256")) {
@@ -38,6 +39,7 @@ func PostWebhook(cfg config.Config) fiber.Handler {
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 
+		server.Cache.Reset()
 		return c.SendStatus(fiber.StatusOK)
 	}
 }
