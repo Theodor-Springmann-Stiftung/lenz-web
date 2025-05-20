@@ -147,13 +147,22 @@ func (s *Tokens) AppendCustomAttribute(name, value string) {
 	s.Out[len(s.Out)-1].Attributes[name] = value
 }
 
+func (s *Tokens) AppendElement(name string, id string, classes ...string) {
+	s.Out = append(s.Out, outToken{
+		Name:    name,
+		Id:      id,
+		Classes: classes,
+		Type:    Element,
+	})
+}
+
 func (s *Tokens) AppendEndElement() {
 	skip := 0
 	for i := len(s.Out) - 1; i >= 0; i-- {
 		if s.Out[i].Type == EndElement {
 			skip++
 		}
-		if s.Out[i].Type == Element {
+		if s.Out[i].Type == Element && s.Out[i].Name != "p" && s.Out[i].Name != "br" {
 			if skip == 0 {
 				s.Out = append(s.Out, outToken{
 					Name: s.Out[i].Name,

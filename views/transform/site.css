@@ -91,7 +91,7 @@
 	}
 
 	.text .count {
-		@apply print:hidden hidden lg:block min-w-[4ch] max-w-[10ch] shrink grow-0 relative;
+		@apply print:hidden hidden lg:block w-[2rem] -ml-[2rem] shrink grow-0 relative;
 	}
 
 	.text .fulltext {
@@ -145,9 +145,12 @@
 		@apply inline;
 	}
 
-	.text .line.tab-1 {
-		@apply inline-block w-4;
+	.text p {
+		@apply !indent-4;
 	}
+	/* .text .line.tab-1 { */
+	/* 	@apply inline-block w-4; */
+	/* } */
 
 	.text .line.tab-2 {
 		@apply inline-block w-8;

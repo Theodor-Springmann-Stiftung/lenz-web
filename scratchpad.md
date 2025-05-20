@@ -16,3 +16,37 @@ mouseover hand sidenote
 NOTE ANDERS
 -Tab ist falsch
 
+address
+align
+
+
+line
+page
+tabs
+tab
+sidenote
+
+aq
+del
+dul
+tl
+ul
+it
+b
+ink
+inc
+pe
+nr
+er
+
+fn
+
+
+gr
+hb
+ru
+
+hand
+insertion
+subst
+
