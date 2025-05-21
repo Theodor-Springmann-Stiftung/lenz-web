@@ -264,7 +264,7 @@
 	}
 
 	.text .sidenote {
-		@apply border-l-4 border-slate-200 pl-2 my-1;
+		@apply border-l-4 border-slate-200 pl-2 my-4;
 	}
 
 	.text .hand {
@@ -308,12 +308,12 @@
 
 	.text .margin-note.note-sidenote-meta,
 	.text .margin-note.note-hand {
-		@apply w-[13rem];
+		@apply w-[13rem] invisible;
 	}
 
 	.text div[class^="note-"],
 	.text div[class*=" note-"] {
-		@apply text-sm text-slate-800 invisible;
+		@apply text-sm text-slate-800;
 	}
 
 	.text .page {
