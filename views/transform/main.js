@@ -392,17 +392,13 @@ function Letter() {
 		console.log("Aligned sidenotes", positionedIntervals);
 	}
 
-	if (window.htmx) {
-		htmx.on("htmx:afterSettle", (e) => {
-			alignSidenotes();
-		});
-	}
-
 	window.addEventListener("load", () => {
 		alignSidenotes();
 	});
 
 	window.addEventListener("resize", alignSidenotes);
+
+	alignSidenotes();
 }
 
 customElements.define(SCROLL_BUTTON_ELEMENT, ScrollButton);
