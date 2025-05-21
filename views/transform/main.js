@@ -404,6 +404,9 @@ function Startup() {
 
 			note.style.top = `${top}px`;
 		});
+		notes.forEach((note) => {
+			note.style.visibility = "visible";
+		});
 	}
 }
 

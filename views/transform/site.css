@@ -107,6 +107,7 @@
 	.text .aq,
 	.text .ul,
 	.text .dul,
+	.text .ink,
 	.text .it,
 	.text .tl,
 	.text .pe,
@@ -140,6 +141,10 @@
 
 	.text .aq {
 		@apply font-sans;
+	}
+
+	.text .ink {
+		@apply text-blue-900;
 	}
 
 	.text .line {
@@ -308,7 +313,11 @@
 
 	.text div[class^="note-"],
 	.text div[class*=" note-"] {
-		@apply text-sm text-slate-800;
+		@apply text-sm text-slate-800 invisible;
+	}
+
+	.text .page {
+		@apply font-sans text-sm text-slate-600 invisible;
 	}
 
 	.text .note-hand {
@@ -317,10 +326,6 @@
 
 	.text .note-hand.margin-note {
 		@apply -mt-1;
-	}
-
-	.text .page {
-		@apply font-sans text-sm text-slate-600;
 	}
 
 	.text .eanchor-page-inside::before {

@@ -15596,6 +15596,8 @@ function Startup() {
         }
       } while (mn);
       ze.push({ top: un, bottom: un + gn }), dn.style.top = `${un}px`;
+    }), sn.forEach((dn) => {
+      dn.style.visibility = "visible";
     });
   }
 }
