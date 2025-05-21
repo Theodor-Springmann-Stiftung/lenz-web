@@ -15548,20 +15548,24 @@ class ToolTip extends HTMLElement {
     }
   }
 }
-function Letter() {
+function Startup() {
   let Gr = null;
-  function ze() {
+  const ze = [];
+  new URL(window.location).searchParams.get("print") === "true" && Wr(), window.addEventListener("load", () => {
+    Yr();
+  }), window.addEventListener("resize", Yr), htmx && window.addEventListener("htmx:afterSettle", (Kr) => {
+    Yr();
+  });
+  function Wr() {
     Gr || (Gr = new Previewer()), Gr.preview().then(() => {
       document.body.classList.add("previewing");
     }), window.addEventListener("popstate", (Kr) => {
       window.location.reload();
     });
   }
-  new URL(window.location).searchParams.get("print") === "true" && ze();
-  function Wr() {
+  function Yr() {
     Qr(".count", ".page", ".eanchor-page"), Qr(".notes", ".note-hand", ".hand"), Qr(".notes", ".note-sidenote-meta", ".sidenote");
   }
-  const Yr = [];
   function Qr(Kr, Zr, en) {
     const tn = document.querySelector(".fulltext"), rn = document.querySelector(Kr);
     if (!rn) return;
@@ -15580,7 +15584,7 @@ function Letter() {
       let un = xn, mn;
       do {
         mn = !1;
-        for (const cn of Yr) {
+        for (const cn of ze) {
           const Cn = cn.top, yn = cn.bottom;
           un < yn && un + gn > Cn && (console.log("Collision detected", {
             top: un,
@@ -15591,20 +15595,15 @@ function Letter() {
           }), un = yn + an, mn = !0);
         }
       } while (mn);
-      Yr.push({ top: un, bottom: un + gn }), dn.style.top = `${un}px`;
-    }), console.log("Aligned sidenotes", Yr);
+      ze.push({ top: un, bottom: un + gn }), dn.style.top = `${un}px`;
+    });
   }
-  window.htmx && htmx.on("htmx:afterSettle", (Kr) => {
-    Wr();
-  }), window.addEventListener("load", () => {
-    Wr();
-  }), window.addEventListener("resize", Wr);
 }
 customElements.define(SCROLL_BUTTON_ELEMENT, ScrollButton);
 customElements.define(TOOLTIP_ELEMENT, ToolTip);
 export {
-  Letter,
   Previewer,
   ScrollButton,
+  Startup,
   XSLTParseProcess
 };

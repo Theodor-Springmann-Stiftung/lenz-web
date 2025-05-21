@@ -303,8 +303,27 @@ class ToolTip extends HTMLElement {
 	}
 }
 
-function Letter() {
+function Startup() {
 	let pagedPreviewer = null;
+	const positionedIntervals = [];
+
+	// INFO: Generate a print preview of the page if the URL has ?print=true
+	if (new URL(window.location).searchParams.get("print") === "true") {
+		showPreview();
+	}
+
+	// INFO: Listeners for sidenotes
+	window.addEventListener("load", () => {
+		alignSidenotes();
+	});
+
+	window.addEventListener("resize", alignSidenotes);
+
+	if (htmx) {
+		window.addEventListener("htmx:afterSettle", (_) => {
+			alignSidenotes();
+		});
+	}
 
 	function showPreview() {
 		if (!pagedPreviewer) {
@@ -315,14 +334,11 @@ function Letter() {
 			document.body.classList.add("previewing");
 		});
 
-		window.addEventListener("popstate", (event) => {
+		// INFO: this is probably not neccessary since we open the preview in a new window
+		// but just in case.
+		window.addEventListener("popstate", (_) => {
 			window.location.reload();
 		});
-	}
-
-	// On initial page load, check if ?print=true is set
-	if (new URL(window.location).searchParams.get("print") === "true") {
-		showPreview();
 	}
 
 	function alignSidenotes() {
@@ -331,7 +347,6 @@ function Letter() {
 		_alignSidenotes(".notes", ".note-sidenote-meta", ".sidenote");
 	}
 
-	const positionedIntervals = [];
 	function _alignSidenotes(container, align, alignto) {
 		const fulltext = document.querySelector(".fulltext");
 		const cont = document.querySelector(container);
@@ -389,19 +404,10 @@ function Letter() {
 
 			note.style.top = `${top}px`;
 		});
-		console.log("Aligned sidenotes", positionedIntervals);
 	}
-
-	window.addEventListener("load", () => {
-		alignSidenotes();
-	});
-
-	window.addEventListener("resize", alignSidenotes);
-
-	alignSidenotes();
 }
 
 customElements.define(SCROLL_BUTTON_ELEMENT, ScrollButton);
 customElements.define(TOOLTIP_ELEMENT, ToolTip);
 
-export { XSLTParseProcess, ScrollButton, Previewer, Letter };
+export { XSLTParseProcess, ScrollButton, Previewer, Startup };
