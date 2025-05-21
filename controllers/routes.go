@@ -29,7 +29,7 @@ func Register(server server.Server, cfg config.Config) {
 		Level: compress.LevelBestSpeed,
 	}))
 	server.Server.Use(ASSETS_URL, etag.New())
-	server.Server.Use(ASSETS_URL, middleware.StaticHandler(&views.StaticFS))
+	server.Server.Use(ASSETS_URL, middleware.StaticHandler(&views.StaticFS, cfg.Debug))
 
 	server.Server.Use(func(ctx *fiber.Ctx) error {
 		ctx.Locals("cfg", cfg)

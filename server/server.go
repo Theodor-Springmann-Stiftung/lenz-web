@@ -62,7 +62,7 @@ func New(engine *templating.Engine, storage fiber.Storage, debug bool) Server {
 		server.Use(cache.New(cache.Config{
 			Next:         CacheFunc,
 			Expiration:   CACHE_TIME,
-			CacheControl: true,
+			CacheControl: false,
 			Storage:      storage,
 			KeyGenerator: KeyGenerator,
 		}))
