@@ -103,7 +103,6 @@
 	}
 
 	.text .eanchor-page,
-	.text .line,
 	.text .aq,
 	.text .ul,
 	.text .dul,
@@ -148,7 +147,7 @@
 	}
 
 	.text .line {
-		@apply inline;
+		@apply inline-block;
 	}
 
 	.text p {
