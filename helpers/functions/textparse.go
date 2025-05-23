@@ -132,6 +132,21 @@ func Parse(lib *xmlmodels.Library) func(s string) string {
 					ps.Tokens.AppendEndElement()
 					ps.Tokens.AppendDivElement(id, "note", "note-note")
 
+				case "nr":
+					ext := elem.Token.Attributes["extent"]
+					if ext == "" {
+						ext = "1"
+					}
+					extno, err := strconv.Atoi(ext)
+					if err != nil {
+						extno = 1
+					}
+
+					ps.Tokens.AppendDefaultElement(elem.Token)
+					for i := 0; i < extno; i++ {
+						ps.Tokens.AppendText("&nbsp;")
+					}
+
 				case "hand":
 					id := elem.Token.Attributes["ref"]
 					idno, err := strconv.Atoi(id)

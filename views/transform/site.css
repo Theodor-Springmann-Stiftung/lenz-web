@@ -2,6 +2,7 @@
 @theme {
 	--font-script: Rancho, ui-serif;
 	--font-sans: "Linux Biolinum", "Merriweather Sans", ui-sans-serif;
+	--font-sansugly: "Arial", "Linux Biolinum", "Merriweather Sans", ui-sans-serif;
 	--font-serif: "Linux Libertine", ui-serif;
 	--font-didone: "Playfair", ui-serif;
 
@@ -139,7 +140,7 @@
 	}
 
 	.text .aq {
-		@apply font-sans;
+		@apply font-sansugly;
 	}
 
 	.text .ink {
