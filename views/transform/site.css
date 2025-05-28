@@ -249,6 +249,11 @@
 		content: "⸰";
 	}
 
+	.text .tl::before {
+		@apply text-slate-700 font-sans;
+		content: "□";
+	}
+
 	.text .pe {
 		@apply text-stone-600;
 	}
