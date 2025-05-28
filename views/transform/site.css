@@ -251,7 +251,7 @@
 
 	.text .tl::before {
 		@apply text-slate-700 font-sans;
-		content: "□";
+		content: "◌";
 	}
 
 	.text .pe {
