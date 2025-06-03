@@ -6,31 +6,47 @@
 	<div class="mr-4 text-6xl">{{ $model.Letter }}</div>
 	-->
 	<div class="pt-0.5">
-		<div class="italic">{{ $model.Earliest.Text -}}</div>
+		<div class="flex flex-row">
+			<div class="italic">{{ $model.Earliest.Text -}}</div>
+			{{- if $model.IsDraft.IsTrue -}}
+				<tool-tip position="top">
+					<div class="ml-3 text-gray-500 align-middle"><i class="ri-draft-line"></i></div>
+					<div class="data-tip">Entwurf</div>
+				</tool-tip>
+			{{- end -}}
+		</div>
 		{{- range $sr := $model.SendReceivedPairs -}}
 			<div class="flex flex-row">
 				<div>
 					{{- range $i, $p := $sr.Sent.Persons -}}
-						<div class="inline-block">
-							{{- if $i -}}
-								,
-							{{ end -}}
-							{{- $person := Person $p.Reference -}}
-							{{- $person.Name -}}
-						</div>
+						{{ if and $i (eq $i (Minus (len $sr.Sent.Persons) 1)) }}
+							und
+						{{ else if $i }}
+							,
+						{{ end }}
+						{{- $person := Person $p.Reference -}}
+						{{- $person.Name -}}
 					{{- end -}}
 				</div>
-				<div class="mx-2"><i class="ri-arrow-right-long-line"></i></div>
+				<div class="mx-3">
+					{{- if $model.IsDraft.IsTrue -}}
+						<div class="diagonal-strike">
+							<i class="ri-arrow-right-long-line"></i>
+						</div>
+					{{- else -}}
+						<i class="ri-arrow-right-long-line"></i>
+					{{- end -}}
+				</div>
 				{{- if $sr.Received -}}
 					<div>
 						{{- range $i, $p := $sr.Received.Persons -}}
-							<div class="inline-block">
-								{{- if $i -}}
-									,
-								{{ end -}}
-								{{- $person := Person $p.Reference -}}
-								{{- $person.Name -}}
-							</div>
+							{{ if and $i (eq $i (Minus (len $sr.Received.Persons) 1)) }}
+								und
+							{{ else if $i }}
+								,
+							{{ end }}
+							{{- $person := Person $p.Reference -}}
+							{{- $person.Name -}}
 						{{- end -}}
 					</div>
 				{{- else -}}

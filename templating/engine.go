@@ -124,6 +124,9 @@ func (e *Engine) funcs() error {
 	e.AddFunc("Today", functions.Today)
 	e.AddFunc("GetMonth", functions.GetMonth)
 
+	// Math
+	e.AddFunc("Minus", functions.Minus)
+
 	return nil
 }
 

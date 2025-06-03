@@ -15370,76 +15370,6 @@ class Previewer {
   }
 }
 EventEmitter(Previewer.prototype);
-const ATTR_XSLT_ONLOAD = "script[xslt-onload]", ATTR_XSLT_TEMPLATE = "xslt-template", ATTR_XSLT_STATE = "xslt-transformed", SCROLL_BUTTON_ELEMENT = "scroll-button", TOOLTIP_ELEMENT = "tool-tip";
-var ji, oa, ro;
-class XSLTParseProcess {
-  constructor() {
-    Da(this, oa);
-    Da(this, ji);
-    eo(this, ji, /* @__PURE__ */ new Map());
-  }
-  setup() {
-    let ze = htmx.findAll(ATTR_XSLT_ONLOAD);
-    for (let Wr of ze)
-      to(this, oa, ro).call(this, Wr);
-  }
-  hookupHTMX() {
-    htmx.on("htmx:load", (ze) => {
-      this.setup();
-    });
-  }
-}
-ji = new WeakMap(), oa = new WeakSet(), ro = function(ze) {
-  if (ze.getAttribute(ATTR_XSLT_STATE) === "true" || !ze.hasAttribute(ATTR_XSLT_TEMPLATE))
-    return;
-  let Wr = "#" + ze.getAttribute(ATTR_XSLT_TEMPLATE), Yr = Na(this, ji).get(Wr);
-  if (!Yr) {
-    let en = htmx.find(Wr);
-    if (en) {
-      let tn = en.innerHTML ? new DOMParser().parseFromString(en.innerHTML, "application/xml") : en.contentDocument;
-      Yr = new XSLTProcessor(), Yr.importStylesheet(tn), Na(this, ji).set(Wr, Yr);
-    } else
-      throw new Error("Unknown XSLT template: " + Wr);
-  }
-  let Qr = new DOMParser().parseFromString(ze.innerHTML, "application/xml"), Kr = Yr.transformToFragment(Qr, document), Zr = new XMLSerializer().serializeToString(Kr);
-  ze.outerHTML = Zr;
-};
-class ScrollButton extends HTMLElement {
-  constructor() {
-    super(), this.handleScroll = this.handleScroll.bind(this), this.scrollToTop = this.scrollToTop.bind(this);
-  }
-  connectedCallback() {
-    this.innerHTML = `
-          <button
-            class="
-              scroll-to-top
-              fixed bottom-5 right-5
-              hidden
-              bg-gray-800 text-white
-              p-2
-              rounded-md
-              cursor-pointer
-              text-2xl
-              hover:opacity-80
-              transition-opacity
-              border-0
-            "
-            aria-label="Scroll to top"
-          >
-					<i class="ri-arrow-up-double-line"></i>
-          </button>
-        `, this._button = this.querySelector(".scroll-to-top"), window.addEventListener("scroll", this.handleScroll), this._button.addEventListener("click", this.scrollToTop);
-  }
-  disconnectedCallback() {
-    window.removeEventListener("scroll", this.handleScroll), this._button.removeEventListener("click", this.scrollToTop);
-  }
-  handleScroll() {
-    (window.scrollY || document.documentElement.scrollTop) > 300 ? this._button.classList.remove("hidden") : this._button.classList.add("hidden");
-  }
-  scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-}
 class ToolTip extends HTMLElement {
   static get observedAttributes() {
     return ["position", "timeout"];
@@ -15448,14 +15378,7 @@ class ToolTip extends HTMLElement {
     super(), this._tooltipBox = null, this._timeout = 200, this._hideTimeout = null, this._hiddenTimeout = null;
   }
   connectedCallback() {
-    this.classList.add(
-      "w-full",
-      "h-full",
-      "relative",
-      "block",
-      "leading-none",
-      "[&>*]:leading-normal"
-    );
+    this.classList.add("relative", "block", "leading-none", "[&>*]:leading-normal");
     const ze = this.querySelector(".data-tip"), Wr = ze ? ze.innerHTML : "Tooltip";
     ze && ze.classList.add("hidden"), this._tooltipBox = document.createElement("div"), this._tooltipBox.innerHTML = Wr, this._tooltipBox.className = [
       "opacity-0",
@@ -15546,6 +15469,76 @@ class ToolTip extends HTMLElement {
           "mb-0.5"
         );
     }
+  }
+}
+const ATTR_XSLT_ONLOAD = "script[xslt-onload]", ATTR_XSLT_TEMPLATE = "xslt-template", ATTR_XSLT_STATE = "xslt-transformed", SCROLL_BUTTON_ELEMENT = "scroll-button", TOOLTIP_ELEMENT = "tool-tip";
+var ji, oa, ro;
+class XSLTParseProcess {
+  constructor() {
+    Da(this, oa);
+    Da(this, ji);
+    eo(this, ji, /* @__PURE__ */ new Map());
+  }
+  setup() {
+    let ze = htmx.findAll(ATTR_XSLT_ONLOAD);
+    for (let Wr of ze)
+      to(this, oa, ro).call(this, Wr);
+  }
+  hookupHTMX() {
+    htmx.on("htmx:load", (ze) => {
+      this.setup();
+    });
+  }
+}
+ji = new WeakMap(), oa = new WeakSet(), ro = function(ze) {
+  if (ze.getAttribute(ATTR_XSLT_STATE) === "true" || !ze.hasAttribute(ATTR_XSLT_TEMPLATE))
+    return;
+  let Wr = "#" + ze.getAttribute(ATTR_XSLT_TEMPLATE), Yr = Na(this, ji).get(Wr);
+  if (!Yr) {
+    let en = htmx.find(Wr);
+    if (en) {
+      let tn = en.innerHTML ? new DOMParser().parseFromString(en.innerHTML, "application/xml") : en.contentDocument;
+      Yr = new XSLTProcessor(), Yr.importStylesheet(tn), Na(this, ji).set(Wr, Yr);
+    } else
+      throw new Error("Unknown XSLT template: " + Wr);
+  }
+  let Qr = new DOMParser().parseFromString(ze.innerHTML, "application/xml"), Kr = Yr.transformToFragment(Qr, document), Zr = new XMLSerializer().serializeToString(Kr);
+  ze.outerHTML = Zr;
+};
+class ScrollButton extends HTMLElement {
+  constructor() {
+    super(), this.handleScroll = this.handleScroll.bind(this), this.scrollToTop = this.scrollToTop.bind(this);
+  }
+  connectedCallback() {
+    this.innerHTML = `
+          <button
+            class="
+              scroll-to-top
+              fixed bottom-5 right-5
+              hidden
+              bg-gray-800 text-white
+              p-2
+              rounded-md
+              cursor-pointer
+              text-2xl
+              hover:opacity-80
+              transition-opacity
+              border-0
+            "
+            aria-label="Scroll to top"
+          >
+					<i class="ri-arrow-up-double-line"></i>
+          </button>
+        `, this._button = this.querySelector(".scroll-to-top"), window.addEventListener("scroll", this.handleScroll), this._button.addEventListener("click", this.scrollToTop);
+  }
+  disconnectedCallback() {
+    window.removeEventListener("scroll", this.handleScroll), this._button.removeEventListener("click", this.scrollToTop);
+  }
+  handleScroll() {
+    (window.scrollY || document.documentElement.scrollTop) > 300 ? this._button.classList.remove("hidden") : this._button.classList.add("hidden");
+  }
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
 function Startup() {

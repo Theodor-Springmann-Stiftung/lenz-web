@@ -87,6 +87,26 @@
 		@apply font-bold text-red-500;
 	}
 
+	.diagonal-strike {
+		@apply relative inline-block;
+	}
+
+	.diagonal-strike::before {
+		@apply border-slate-50 border-t-[3px];
+		position: absolute;
+		content: "";
+		left: 10%;
+		top: 50%;
+		right: 0;
+		width: 60%;
+
+		-webkit-transform: rotate(-65deg);
+		-moz-transform: rotate(-65deg);
+		-ms-transform: rotate(-65deg);
+		-o-transform: rotate(-65deg);
+		transform: rotate(-65deg);
+	}
+
 	.text {
 		@apply font-serif relative;
 	}

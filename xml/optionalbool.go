@@ -13,6 +13,14 @@ const (
 	False
 )
 
+func (b OptionalBool) IsTrue() bool {
+	return b == True
+}
+
+func (b OptionalBool) IsFalse() bool {
+	return b == False || b == Unspecified
+}
+
 func (b *OptionalBool) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	var attr struct {
 		Value string `xml:"value,attr"`
