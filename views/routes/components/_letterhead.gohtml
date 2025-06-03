@@ -21,7 +21,7 @@
 					{{- range $i, $p := $sr.Sent.Persons -}}
 						{{ if and $i (eq $i (Minus (len $sr.Sent.Persons) 1)) }}
 							und
-						{{ else if $i }}
+						{{ else if $i -}}
 							,
 						{{ end }}
 						{{- $person := Person $p.Reference -}}
@@ -30,9 +30,7 @@
 				</div>
 				<div class="mx-3">
 					{{- if $model.IsDraft.IsTrue -}}
-						<div class="diagonal-strike">
-							<i class="ri-arrow-right-long-line"></i>
-						</div>
+						<i class="ri-arrow-right-long-line"></i>
 					{{- else -}}
 						<i class="ri-arrow-right-long-line"></i>
 					{{- end -}}
@@ -40,11 +38,12 @@
 				{{- if $sr.Received -}}
 					<div>
 						{{- range $i, $p := $sr.Received.Persons -}}
-							{{ if and $i (eq $i (Minus (len $sr.Received.Persons) 1)) }}
+							{{- if and $i (eq $i (Minus (len $sr.Received.Persons) 1)) -}}
 								und
-							{{ else if $i }}
+							{{- end -}}
+							{{- if $i -}}
 								,
-							{{ end }}
+							{{- end -}}
 							{{- $person := Person $p.Reference -}}
 							{{- $person.Name -}}
 						{{- end -}}
