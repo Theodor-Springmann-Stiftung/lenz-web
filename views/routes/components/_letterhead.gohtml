@@ -8,12 +8,25 @@
 	<div class="pt-0.5">
 		<div class="flex flex-row">
 			<div class="italic">{{ $model.Earliest.Text -}}</div>
-			{{- if $model.IsDraft.IsTrue -}}
-				<tool-tip position="top">
-					<div class="ml-3 text-gray-500 align-middle"><i class="ri-draft-line"></i></div>
-					<div class="data-tip">Entwurf</div>
-				</tool-tip>
-			{{- end -}}
+			<div class="flex flex-row gap-x-1.5 ml-3">
+				{{- if $model.IsDraft.IsTrue -}}
+					<tool-tip position="top">
+						<div class="text-gray-500 align-middle"><i class="ri-draft-line"></i></div>
+						<div class="data-tip">Entwurf</div>
+					</tool-tip>
+				{{- end -}}
+				{{- if $model.HasOriginal.IsTrue -}}
+					<tool-tip position="top">
+						<div class="text-gray-500 align-middle"><i class="ri-file-list-2-line"></i></div>
+						<div class="data-tip">Der Brieftext wurde anhand des Originals kritisch geprüft.</div>
+					</tool-tip>
+				{{- else -}}
+					<tool-tip position="top">
+						<div class="text-gray-500 align-middle"><i class="ri-file-copy-2-line"></i></div>
+						<div class="data-tip">Der Brieftext wurde sekundär überliefert.</div>
+					</tool-tip>
+				{{- end -}}
+			</div>
 		</div>
 		{{- range $sr := $model.SendReceivedPairs -}}
 			<div class="flex flex-row">
