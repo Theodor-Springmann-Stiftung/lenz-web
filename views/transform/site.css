@@ -109,6 +109,8 @@
 
 	.text {
 		@apply font-serif relative;
+		--text-color-rgb: 53, 53, 53;
+		color: rgb(var(--text-color-rgb));
 	}
 
 	.text .count {
@@ -141,6 +143,8 @@
 	.text .i,
 	.text .subst,
 	.text .insertion,
+	.text .insertion-marker,
+	.text .ddel,
 	.text .del,
 	.text .fn,
 	.text .anchor {
@@ -220,7 +224,7 @@
 	}
 
 	.text .dul {
-		@apply underline decoration-double;
+		@apply underline decoration-double decoration-[1px];
 	}
 
 	.text .it {
@@ -255,10 +259,35 @@
 
 	.text .insertion::after {
 		@apply text-slate-700;
-		margin-left: -0.2em;
+		margin-left: -0.4ch;
 		content: "⌟";
 	}
 
+	.text .insertion-marker {
+		@apply text-nowrap;
+	}
+
+	.text .insertion-marker::before {
+		@apply text-slate-700 text-nowrap text-sm relative bottom-[-0.15rem] -ml-[0.4ch] pr-[0.4ch] inline-block;
+	}
+
+	.text .insertion.pos-left .insertion-marker::before {
+		content: "🠊";
+	}
+
+	.text .insertion.pos-right .insertion-marker::before {
+		content: "🠜";
+	}
+
+	.text .insertion.pos-top .insertion-marker::before {
+		@apply bottom-0 text-xs;
+		content: "🠟";
+	}
+
+	.text .insertion.pos-bottom .insertion-marker::before {
+		@apply bottom-0 text-xs;
+		content: "🠝";
+	}
 	.text .nr::before {
 		@apply text-slate-700;
 		content: "⸰";
@@ -279,13 +308,33 @@
 	}
 
 	.text .del {
-		@apply line-through;
+		@apply line-through relative;
 	}
 
 	.text .del .del::before {
 		content: "";
-		@apply absolute inset-x-0 top-1/2 h-px bg-black;
+		@apply absolute inset-x-0 top-[65%] h-[1px] bg-black w-full;
+	}
+
+	.text .ddel {
+		@apply line-through relative;
+	}
+
+	.text .ddel::before {
+		content: "";
+		@apply absolute inset-x-0 top-[65%] h-[1px] bg-black w-full;
+	}
+
+	.text .ddel {
+		@apply relative;
+	}
+
+	.text .ddel::before {
 		top: 55%;
+	}
+
+	.text .ddel::after {
+		top: 45%;
 	}
 
 	.text .sidenote {
@@ -293,12 +342,26 @@
 	}
 
 	.text .hand {
-		@apply inline text-blue-950 !font-didone text-[0.9rem];
+		@apply inline !font-didone text-[0.9rem];
+		/* darker blue hue */
+		--text-color-rgb: 0, 0, 39;
+		color: rgb(var(--text-color-rgb));
 	}
 
 	.text .er {
-		text-decoration: line-through;
-		text-decoration-thickness: 17px;
+		background-image: repeating-linear-gradient(
+			-45deg,
+			rgba(var(--text-color-rgb), 0.5),
+			transparent 1px,
+			transparent 6px
+		);
+
+		-webkit-box-decoration-break: clone;
+		box-decoration-break: clone;
+
+		color: transparent;
+
+		text-shadow: 0 0 rgb(var(--text-color-rgb));
 	}
 
 	.text .sidenote-page::before {

@@ -12,7 +12,7 @@ import (
 	"sync"
 	"time"
 
-	xmlparsing "github.com/Theodor-Springmann-Stiftung/lenz-web/xml"
+	"github.com/Theodor-Springmann-Stiftung/lenz-web/xmlparsing"
 )
 
 const (

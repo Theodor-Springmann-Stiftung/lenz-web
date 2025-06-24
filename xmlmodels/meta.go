@@ -6,7 +6,7 @@ import (
 	"iter"
 	"slices"
 
-	xmlparsing "github.com/Theodor-Springmann-Stiftung/lenz-web/xml"
+	"github.com/Theodor-Springmann-Stiftung/lenz-web/xmlparsing"
 )
 
 type Meta struct {
@@ -82,7 +82,7 @@ func (m Meta) SendRecieved() iter.Seq[SendRecievedPair] {
 
 type Action struct {
 	Dates   []Date       `xml:"date"`
-	Places  []RefElement `xml:"place"`
+	Places  []RefElement `xml:"location"`
 	Persons []RefElement `xml:"person"`
 }
 

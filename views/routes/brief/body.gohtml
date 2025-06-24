@@ -30,9 +30,18 @@
 </div>
 
 <div class="text flex flex-row print:flex-col">
-	{{- Safe (ParseGeneric .text.Content) -}}
+	{{- Safe $model.text -}}
 </div>
 
 <div class="traditions mt-12 pt-3 border-t-gray-200 border-t-1 max-w-[90ch] print:border-none">
 	{{ template "_lettertrad" $model.meta -}}
 </div>
+
+<script type="module">
+	// WARNING: We need to wait for the fonts to settle before rendering anything
+	document.fonts.ready.then(() => {
+		if (window.alignSidenotes) {
+			window.alignSidenotes();
+		}
+	});
+</script>

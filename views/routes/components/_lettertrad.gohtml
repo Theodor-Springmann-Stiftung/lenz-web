@@ -5,7 +5,7 @@
 			{{- (App $trad.Reference).Name -}}
 		</div>
 		<div class="tradition-text text hyphens-auto font-sans">
-			{{- Safe (ParseGeneric $trad.Content) -}}
+			{{- Safe (ParseGeneric $model $trad.Content) -}}
 		</div>
 	</div>
 {{- end -}}

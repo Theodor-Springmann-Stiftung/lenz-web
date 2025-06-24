@@ -1,6 +1,6 @@
 package xmlmodels
 
-import xmlparsing "github.com/Theodor-Springmann-Stiftung/lenz-web/xml"
+import "github.com/Theodor-Springmann-Stiftung/lenz-web/xmlparsing"
 
 type RefElement struct {
 	Reference int    `xml:"ref,attr"`

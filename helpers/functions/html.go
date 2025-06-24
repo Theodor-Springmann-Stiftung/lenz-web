@@ -3,7 +3,7 @@ package functions
 import (
 	"strings"
 
-	xmlparsing "github.com/Theodor-Springmann-Stiftung/lenz-web/xml"
+	"github.com/Theodor-Springmann-Stiftung/lenz-web/xmlparsing"
 )
 
 type outType int
@@ -101,7 +101,7 @@ func (o *outToken) ClassesFromAttrs(attrs map[string]string) {
 	}
 }
 
-func Default(token xmlparsing.Token) outToken {
+func Default(token *xmlparsing.Token) outToken {
 	o := outToken{}
 	switch token.Type {
 	case xmlparsing.StartElement:
@@ -126,7 +126,7 @@ func (s *Tokens) Prepend(token outToken) {
 	s.Out = append([]outToken{token}, s.Out...)
 }
 
-func (s *Tokens) AppendDefaultElement(token xmlparsing.Token, ids ...string) {
+func (s *Tokens) AppendDefaultElement(token *xmlparsing.Token, ids ...string) {
 	t := Default(token)
 	if len(ids) > 0 {
 		t.Id = ids[0]

@@ -158,27 +158,88 @@ class ScrollButton extends HTMLElement {
 	}
 }
 
+let positionedIntervals = [];
+
+function alignSidenotes() {
+	positionedIntervals = [];
+	_alignSidenotes(".count", ".page", ".eanchor-page");
+	_alignSidenotes(".notes", ".note-hand", ".hand");
+	_alignSidenotes(".notes", ".note-sidenote-meta", ".sidenote");
+}
+
+function _alignSidenotes(container, align, alignto) {
+	const fulltext = document.querySelector(".fulltext");
+	const cont = document.querySelector(container);
+	if (!cont) return;
+	const notes = Array.from(cont.querySelectorAll(align));
+
+	// Reset classes and inline styles
+	notes.forEach((note) => {
+		note.classList.remove("margin-note");
+		note.style.top = "";
+	});
+
+	// Skip on print
+	if (window.matchMedia("print").matches) return;
+
+	const textRect = cont.getBoundingClientRect();
+	const GUTTER = 0; // space in pixels between notes
+
+	notes.forEach((note) => {
+		const noteId = note.id;
+		if (!noteId) return;
+		const anchor = fulltext.querySelector(`${alignto}[aria-describedby="${noteId}"]`);
+		if (!anchor) return;
+
+		note.classList.add("margin-note");
+		const anchorRect = anchor.getBoundingClientRect();
+		const baseTop = anchorRect.top - textRect.top;
+
+		const noteHeight = note.getBoundingClientRect().height;
+		let top = baseTop;
+
+		// Adjust to prevent overlap
+		let collision;
+		do {
+			collision = false;
+			for (const interval of positionedIntervals) {
+				const intervalTop = interval.top;
+				const intervalBottom = interval.bottom;
+				if (top < intervalBottom && top + noteHeight > intervalTop) {
+					console.log("Collision detected", {
+						top,
+						bottom: top + noteHeight,
+						intervalTop,
+						intervalBottom,
+						newTop: intervalBottom + GUTTER,
+					});
+					top = intervalBottom + GUTTER;
+					collision = true;
+				}
+			}
+		} while (collision);
+
+		// Record this note's interval
+		positionedIntervals.push({ top, bottom: top + noteHeight });
+
+		note.style.top = `${top}px`;
+	});
+	notes.forEach((note) => {
+		note.style.visibility = "visible";
+	});
+}
+
+// INFO: these are global functions that should be executed ONCE when the page loads, not
+// on every HTMX request.
 function Startup() {
 	let pagedPreviewer = null;
-	const positionedIntervals = [];
 
 	// INFO: Generate a print preview of the page if the URL has ?print=true
 	if (new URL(window.location).searchParams.get("print") === "true") {
 		showPreview();
 	}
 
-	// INFO: Listeners for sidenotes
-	window.addEventListener("load", () => {
-		alignSidenotes();
-	});
-
 	window.addEventListener("resize", alignSidenotes);
-
-	if (htmx) {
-		window.addEventListener("htmx:afterSettle", (_) => {
-			alignSidenotes();
-		});
-	}
 
 	function showPreview() {
 		if (!pagedPreviewer) {
@@ -195,77 +256,11 @@ function Startup() {
 			window.location.reload();
 		});
 	}
-
-	function alignSidenotes() {
-		_alignSidenotes(".count", ".page", ".eanchor-page");
-		_alignSidenotes(".notes", ".note-hand", ".hand");
-		_alignSidenotes(".notes", ".note-sidenote-meta", ".sidenote");
-	}
-
-	function _alignSidenotes(container, align, alignto) {
-		const fulltext = document.querySelector(".fulltext");
-		const cont = document.querySelector(container);
-		if (!cont) return;
-		const notes = Array.from(cont.querySelectorAll(align));
-
-		// Reset classes and inline styles
-		notes.forEach((note) => {
-			note.classList.remove("margin-note");
-			note.style.top = "";
-		});
-
-		// Skip on print
-		if (window.matchMedia("print").matches) return;
-
-		const textRect = cont.getBoundingClientRect();
-		const GUTTER = 0; // space in pixels between notes
-
-		notes.forEach((note) => {
-			const noteId = note.id;
-			if (!noteId) return;
-			const anchor = fulltext.querySelector(`${alignto}[aria-describedby="${noteId}"]`);
-			if (!anchor) return;
-
-			note.classList.add("margin-note");
-			const anchorRect = anchor.getBoundingClientRect();
-			const baseTop = anchorRect.top - textRect.top;
-
-			const noteHeight = note.getBoundingClientRect().height;
-			let top = baseTop;
-
-			// Adjust to prevent overlap
-			let collision;
-			do {
-				collision = false;
-				for (const interval of positionedIntervals) {
-					const intervalTop = interval.top;
-					const intervalBottom = interval.bottom;
-					if (top < intervalBottom && top + noteHeight > intervalTop) {
-						console.log("Collision detected", {
-							top,
-							bottom: top + noteHeight,
-							intervalTop,
-							intervalBottom,
-							newTop: intervalBottom + GUTTER,
-						});
-						top = intervalBottom + GUTTER;
-						collision = true;
-					}
-				}
-			} while (collision);
-
-			// Record this note's interval
-			positionedIntervals.push({ top, bottom: top + noteHeight });
-
-			note.style.top = `${top}px`;
-		});
-		notes.forEach((note) => {
-			note.style.visibility = "visible";
-		});
-	}
 }
 
 customElements.define(SCROLL_BUTTON_ELEMENT, ScrollButton);
 customElements.define(TOOLTIP_ELEMENT, ToolTip);
 
-export { XSLTParseProcess, ScrollButton, Previewer, Startup };
+window.alignSidenotes = alignSidenotes;
+
+export { XSLTParseProcess, ScrollButton, Previewer, Startup, alignSidenotes };

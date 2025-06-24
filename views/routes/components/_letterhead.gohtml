@@ -37,8 +37,8 @@
 						{{ else if $i -}}
 							,
 						{{ end }}
-						{{- $person := Person $p.Reference -}}
-						{{- $person.Name -}}
+						{{- $person := Person $p.Reference }}
+						{{ $person.Name -}}
 					{{- end -}}
 				</div>
 				<div class="mx-3">
@@ -57,8 +57,25 @@
 							{{- if $i -}}
 								,
 							{{- end -}}
-							{{- $person := Person $p.Reference -}}
-							{{- $person.Name -}}
+							{{- $person := Person $p.Reference }}
+							{{ $person.Name -}}
+						{{- end -}}
+						{{ if and $sr.Received.Places (len $sr.Received.Places) }}
+							{{- range $i, $p := $sr.Received.Places -}}
+								{{- $place := Place $p.Reference }}
+								{{- if and $i (eq $i (Minus (len $sr.Received.Places) 1)) -}}
+									und
+								{{- end -}}
+								{{- if $i -}}
+									,
+								{{- end -}}
+								{{- if eq $i 0 -}}
+									&nbsp;({{- $place.Name -}}
+								{{- else -}}
+									{{ $place.Name -}}
+								{{- end -}}
+							{{- end -}}
+							)
 						{{- end -}}
 					</div>
 				{{- else -}}
