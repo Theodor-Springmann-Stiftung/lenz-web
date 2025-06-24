@@ -51,10 +51,9 @@
 				{{- if $sr.Received -}}
 					<div>
 						{{- range $i, $p := $sr.Received.Persons -}}
-							{{- if and $i (eq $i (Minus (len $sr.Received.Persons) 1)) -}}
+							{{- if and $i (eq $i (Minus (len $sr.Received.Persons) 1)) }}
 								und
-							{{- end -}}
-							{{- if $i -}}
+							{{- else if $i -}}
 								,
 							{{- end -}}
 							{{- $person := Person $p.Reference }}
@@ -63,10 +62,9 @@
 						{{ if and $sr.Received.Places (len $sr.Received.Places) }}
 							{{- range $i, $p := $sr.Received.Places -}}
 								{{- $place := Place $p.Reference }}
-								{{- if and $i (eq $i (Minus (len $sr.Received.Places) 1)) -}}
+								{{- if and $i (eq $i (Minus (len $sr.Received.Places) 1)) }}
 									und
-								{{- end -}}
-								{{- if $i -}}
+								{{ else if $i -}}
 									,
 								{{- end -}}
 								{{- if eq $i 0 -}}
