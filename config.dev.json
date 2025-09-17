@@ -1,6 +1,6 @@
 {
 	"debug": true,
 	"watch": true,	
-	"git_url": "git@github.com:Theodor-Springmann-Stiftung/lenz-briefe.git",
+	"git_url": "https://github.com/Theodor-Springmann-Stiftung/lenz-briefe.git",
 	"webhook_secret": "test_secret"
 }
