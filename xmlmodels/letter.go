@@ -34,6 +34,7 @@ type Page struct {
 	Sidenotes []Sidenote
 	Hands     []int
 	Tokens    []xml.Token
+	TokenInfo []Token // Stack and index info for each token
 }
 
 type Sidenote struct {
@@ -44,6 +45,7 @@ type Sidenote struct {
 	Anchor     int
 	Tokens     []xml.Token
 	CharData   string
+	TokenInfo  []Token // Stack and index info for each token
 }
 
 func (l Letter) Keys() []any {
@@ -60,6 +62,15 @@ func (l Letter) String() string {
 		return "Cant marshal to json, Letter: " + err.Error()
 	}
 	return string(json)
+}
+
+func (l Letter) Hands() []int {
+	h := []int{}
+
+	for _, page := range l.Pages {
+		h = append(h, page.Hands...)
+	}
+	return h
 }
 
 type SidenotePosition uint8
@@ -108,6 +119,7 @@ func (lt *Letter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 func (lt *Letter) parseTokens(d *xml.Decoder) error {
 	b := strings.Builder{}
 	var c_page *Page = nil
+	var stack []string // Track element stack
 
 	for {
 		token, err := d.Token()
@@ -170,19 +182,29 @@ func (lt *Letter) parseTokens(d *xml.Decoder) error {
 			default:
 				if c_page != nil {
 					c_page.Tokens = append(c_page.Tokens, tokenCopy)
+					token := NewTokenFromXMLToken(tokenCopy, stack, len(c_page.Tokens)-1)
+					c_page.TokenInfo = append(c_page.TokenInfo, token)
 				}
+				stack = append(stack, t.Name.Local)
 			}
 
 		case xml.CharData:
 			b.WriteString(string(t))
 			if c_page != nil {
 				c_page.Tokens = append(c_page.Tokens, tokenCopy)
+				token := NewTokenFromXMLToken(tokenCopy, stack, len(c_page.Tokens)-1)
+				c_page.TokenInfo = append(c_page.TokenInfo, token)
 			}
 
 		case xml.EndElement:
+			if len(stack) > 0 && stack[len(stack)-1] == t.Name.Local {
+				stack = stack[:len(stack)-1]
+			}
+
 			if t.Name.Local == "letterText" {
-				if c_page != nil {
-					c_page.Tokens = append(c_page.Tokens, tokenCopy)
+				// Don't add letterText end element to page tokens
+				// Only save page if it has actual content
+				if c_page != nil && len(c_page.Tokens) > 0 {
 					lt.Pages = append(lt.Pages, *c_page)
 				}
 				lt.CharData = b.String()
@@ -191,6 +213,8 @@ func (lt *Letter) parseTokens(d *xml.Decoder) error {
 
 			if c_page != nil {
 				c_page.Tokens = append(c_page.Tokens, tokenCopy)
+				token := NewTokenFromXMLToken(tokenCopy, stack, len(c_page.Tokens)-1)
+				c_page.TokenInfo = append(c_page.TokenInfo, token)
 			}
 		}
 	}
@@ -201,6 +225,7 @@ func (lt *Letter) parseTokens(d *xml.Decoder) error {
 func (s *Sidenote) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	b := strings.Builder{}
 	s.XMLName = start.Name
+	var stack []string // Track element stack within sidenote
 
 	for _, attr := range start.Attr {
 		switch attr.Name.Local {
@@ -224,18 +249,35 @@ func (s *Sidenote) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 		tokenCopy := xml.CopyToken(token)
 
 		switch t := tokenCopy.(type) {
+		case xml.StartElement:
+			s.Tokens = append(s.Tokens, tokenCopy)
+			token := NewTokenFromXMLToken(tokenCopy, stack, len(s.Tokens)-1)
+			s.TokenInfo = append(s.TokenInfo, token)
+			stack = append(stack, t.Name.Local)
+
 		case xml.CharData:
 			b.WriteString(string(t))
 			s.Tokens = append(s.Tokens, tokenCopy)
-		// WARNING: this is a problem for sidenotes within sidenotes
+			token := NewTokenFromXMLToken(tokenCopy, stack, len(s.Tokens)-1)
+			s.TokenInfo = append(s.TokenInfo, token)
+
 		case xml.EndElement:
+			if len(stack) > 0 && stack[len(stack)-1] == t.Name.Local {
+				stack = stack[:len(stack)-1]
+			}
+
 			if t.Name.Local == start.Name.Local {
 				s.CharData = b.String()
 				return nil
 			}
 			s.Tokens = append(s.Tokens, tokenCopy)
+			token := NewTokenFromXMLToken(tokenCopy, stack, len(s.Tokens)-1)
+			s.TokenInfo = append(s.TokenInfo, token)
+
 		default:
 			s.Tokens = append(s.Tokens, tokenCopy)
+			token := NewTokenFromXMLToken(tokenCopy, stack, len(s.Tokens)-1)
+			s.TokenInfo = append(s.TokenInfo, token)
 		}
 	}
 }

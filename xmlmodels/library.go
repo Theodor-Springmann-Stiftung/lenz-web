@@ -56,14 +56,14 @@ func (l *Library) String() string {
 	sb.WriteString("Letters: ")
 	sb.WriteString(strconv.Itoa(l.Letters.Count()))
 	filter := func(item Letter) bool {
-		return len(item.Hands) > 0
+		return len(item.Hands()) > 0
 	}
 	hands := 0
 	for l := range l.Letters.Filter(filter) {
 		hands += 1
 		sb.WriteString("\n")
 		sb.WriteString(strconv.Itoa(l.Letter) + ": ")
-		sb.WriteString(strconv.Itoa(len(l.Hands)) + " Hände, No " + strconv.Itoa(hands))
+		sb.WriteString(strconv.Itoa(len(l.Hands())) + " Hände, No " + strconv.Itoa(hands))
 	}
 	sb.WriteString("\n")
 
@@ -307,22 +307,22 @@ func (l *Library) LettersForYear(year int) (ret []Meta) {
 	}) {
 		ret = append(ret, l)
 	}
-	return
+	return ret
 }
 
 func (l *Library) Person(id int) (ret *PersonDef) {
 	ret = l.Persons.Item(id)
-	return
+	return ret
 }
 
 func (l *Library) App(id int) (ret *AppDef) {
 	ret = l.AppDefs.Item(id)
-	return
+	return ret
 }
 
 func (l *Library) Place(id int) (ret *LocationDef) {
 	ret = l.Places.Item(id)
-	return
+	return ret
 }
 
 func (l *Library) Tradition(letter int) (ret []App) {
@@ -338,14 +338,14 @@ func (l *Library) GetPersons(id []int) (ret []*PersonDef) {
 	for _, i := range id {
 		ret = append(ret, l.Person(i))
 	}
-	return
+	return ret
 }
 
 func (l *Library) GetPlaces(id []int) (ret []*LocationDef) {
 	for _, i := range id {
 		ret = append(ret, l.Place(i))
 	}
-	return
+	return ret
 }
 
 func (l *Library) FuncMap() template.FuncMap {
