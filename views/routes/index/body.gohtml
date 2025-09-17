@@ -1,0 +1,20 @@
+{{ $model := . }}
+
+<div class="space-y-8">
+	<div class="prose max-w-none">
+		<h1>Lenz-Briefe</h1>
+		<p>Digitale Edition der Briefe von Jakob Michael Reinhold Lenz</p>
+	</div>
+
+	<div class="space-y-6">
+		{{- range $range := .ranges -}}
+			{{- if $range.Letters -}}
+				<div class="border-l-4 border-gray-300 pl-4">
+					<h2 class="text-xl font-semibold mb-3">{{ $range.Label }}</h2>
+					<div class="text-sm text-gray-600 mb-3">({{ len $range.Letters }} {{ if eq (len $range.Letters) 1 }}Brief{{ else }}Briefe{{ end }})</div>
+					{{ template "_letterlist" $range.Letters }}
+				</div>
+			{{- end -}}
+		{{- end -}}
+	</div>
+</div>

@@ -1,41 +1,45 @@
 {{ $model := . }}
 
-
 <nav class="print:hidden">
-	{{- range $y := .years -}}
-		<a
-			class="inline-block stdlink px-0.5"
-			href="/briefe?year={{ $y }}"
-			{{ if eq $model.year $y -}}aria-current="page"{{- end }}
-			>{{ $y }}</a
-		>
+	{{- range $i, $range := .ranges -}}
+		{{- if $range.Letters -}}
+			<a
+				class="inline-block stdlink px-0.5"
+				href="/briefe?range={{ $range.Label }}"
+				{{ if eq $model.selectedRange $i -}}aria-current="page"{{- end }}
+				>{{ $range.Label }}</a
+			>
+		{{- end -}}
 	{{- end -}}
 	<a
 		class="inline-block stdlink px-0.5"
-		href="/briefe?year=all"
+		href="/briefe?range=all"
 		{{ if .all -}}aria-current="page"{{- end }}
 		>Alle</a
 	>
 </nav>
 
-{{- if .years -}}
-	{{- if .year -}}
-		{{- $letters := index $model.yearmap $model.year -}}
+{{- if .ranges -}}
+	{{- if ne .selectedRange -1 -}}
+		{{- $selectedRangeData := index .ranges .selectedRange -}}
 		<div class="flex flex-row gap-x-1">
-			<div>Briefe für das Jahr {{- .year }}</div>
-			<div>({{- len $letters }})</div>
+			<div>Briefe für {{ $selectedRangeData.Label }}</div>
+			<div>({{ len $selectedRangeData.Letters }})</div>
 		</div>
-		{{ template "_letterlist" $letters -}}
+		{{ template "_letterlist" $selectedRangeData.Letters -}}
 	{{- end -}}
 
 	{{- if .all -}}
-		{{- range $y := .years -}}
-			<div class="">
-				{{- $y -}}
-				{{- $letters := index $model.yearmap $y -}}
-				<div>({{- len $letters }})</div>
-				{{ template "_letterlist" $letters -}}
-			</div>
+		{{- range $range := .ranges -}}
+			{{- if $range.Letters -}}
+				<div class="mb-8">
+					<div class="flex flex-row gap-x-1 mb-4">
+						<div class="font-semibold">{{ $range.Label }}</div>
+						<div>({{ len $range.Letters }})</div>
+					</div>
+					{{ template "_letterlist" $range.Letters -}}
+				</div>
+			{{- end -}}
 		{{- end -}}
 	{{- end -}}
 {{- end -}}
