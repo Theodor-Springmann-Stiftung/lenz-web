@@ -5,7 +5,46 @@ import (
 	"encoding/xml"
 	"io"
 	"strconv"
+	"strings"
 )
+
+const (
+	SidenotePositionLeft SidenotePosition = iota
+	SidenotePositionRight
+	SidenotePositionTop
+	SidenotePositionTopLeft
+	SidenotePositionTopRight
+	SidenotePositionBottom
+	SidenotePositionBottomLeft
+	SidenotePositionBottomRight
+)
+
+type Letter struct {
+	XMLName xml.Name `xml:"letterText"`
+	Letter  int
+	Pages   []Page
+	// TODO: we need to save meta information about the chardata,
+	// but separately, since this array will be used for search
+	CharData string
+}
+
+type Page struct {
+	No        int
+	Letter    int
+	Sidenotes []Sidenote
+	Hands     []int
+	Tokens    []xml.Token
+}
+
+type Sidenote struct {
+	XMLName    xml.Name
+	Position   SidenotePosition
+	Page       int
+	Annotation string
+	Anchor     int
+	Tokens     []xml.Token
+	CharData   string
+}
 
 func (l Letter) Keys() []any {
 	return []any{l.Letter}
@@ -24,17 +63,6 @@ func (l Letter) String() string {
 }
 
 type SidenotePosition uint8
-
-const (
-	SidenotePositionLeft SidenotePosition = iota
-	SidenotePositionRight
-	SidenotePositionTop
-	SidenotePositionTopLeft
-	SidenotePositionTopRight
-	SidenotePositionBottom
-	SidenotePositionBottomLeft
-	SidenotePositionBottomRight
-)
 
 func (sp *SidenotePosition) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
@@ -60,40 +88,6 @@ func (sp *SidenotePosition) UnmarshalXMLAttr(attr xml.Attr) error {
 	return nil
 }
 
-type Letter struct {
-	XMLName xml.Name `xml:"letterText"`
-	Letter  int
-	Pages   []Page
-}
-
-type Page struct {
-	No        int
-	Letter    int
-	Sidenotes []Sidenote
-	Hands     []int
-	Tokens    []xml.Token
-	CharData  string
-}
-
-type Sidenote struct {
-	XMLName    xml.Name
-	Position   SidenotePosition
-	Page       int
-	Annotation string
-	Anchor     int
-	Tokens     []xml.Token
-	CharData   string
-}
-
-type Char struct {
-	Stack []xml.Token
-	Value string
-}
-
-func (c Char) String() string {
-	return c.Value
-}
-
 func (lt *Letter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	lt.XMLName = start.Name
 	for _, attr := range start.Attr {
@@ -112,7 +106,7 @@ func (lt *Letter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 }
 
 func (lt *Letter) parseTokens(d *xml.Decoder) error {
-	stack := []xml.Token{}
+	b := strings.Builder{}
 	var c_page *Page = nil
 
 	for {
@@ -126,9 +120,6 @@ func (lt *Letter) parseTokens(d *xml.Decoder) error {
 
 		// INFO: Make a copy of the token since Token() reuses the underlying data
 		tokenCopy := xml.CopyToken(token)
-		if c_page != nil {
-			c_page.Tokens = append(c_page.Tokens, tokenCopy)
-		}
 
 		switch t := tokenCopy.(type) {
 		case xml.StartElement:
@@ -138,7 +129,9 @@ func (lt *Letter) parseTokens(d *xml.Decoder) error {
 					lt.Pages = append(lt.Pages, *c_page)
 				}
 
-				c_page = &Page{}
+				c_page = &Page{
+					Letter: lt.Letter,
+				}
 
 				for _, attr := range t.Attr {
 					if attr.Name.Local == "index" {
@@ -152,6 +145,10 @@ func (lt *Letter) parseTokens(d *xml.Decoder) error {
 
 			// WARNING: UnmarshalXML continues and changes the state of the parser
 			case "sidenote":
+				if c_page == nil {
+					d.Skip()
+					continue
+				}
 				var sidenote Sidenote = Sidenote{
 					Anchor: len(c_page.Tokens),
 				}
@@ -177,16 +174,18 @@ func (lt *Letter) parseTokens(d *xml.Decoder) error {
 			}
 
 		case xml.CharData:
+			b.WriteString(string(t))
 			if c_page != nil {
-				c_page.CharData = string(t)
 				c_page.Tokens = append(c_page.Tokens, tokenCopy)
 			}
 
 		case xml.EndElement:
 			if t.Name.Local == "letterText" {
 				if c_page != nil {
+					c_page.Tokens = append(c_page.Tokens, tokenCopy)
 					lt.Pages = append(lt.Pages, *c_page)
 				}
+				lt.CharData = b.String()
 				return nil
 			}
 
@@ -200,10 +199,9 @@ func (lt *Letter) parseTokens(d *xml.Decoder) error {
 }
 
 func (s *Sidenote) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	// Set the XMLName
+	b := strings.Builder{}
 	s.XMLName = start.Name
 
-	// Parse attributes
 	for _, attr := range start.Attr {
 		switch attr.Name.Local {
 		case "pos":
@@ -217,7 +215,6 @@ func (s *Sidenote) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 		}
 	}
 
-	// Collect all content tokens
 	for {
 		token, err := d.Token()
 		if err != nil {
@@ -227,16 +224,18 @@ func (s *Sidenote) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 		tokenCopy := xml.CopyToken(token)
 
 		switch t := tokenCopy.(type) {
+		case xml.CharData:
+			b.WriteString(string(t))
+			s.Tokens = append(s.Tokens, tokenCopy)
+		// WARNING: this is a problem for sidenotes within sidenotes
 		case xml.EndElement:
 			if t.Name.Local == start.Name.Local {
-				// End of sidenote element
+				s.CharData = b.String()
 				return nil
 			}
-			// Add the end element token to content
-			s.Content = append(s.Content, tokenCopy)
-		case xml.StartElement, xml.CharData, xml.Comment, xml.ProcInst:
-			// Add all other tokens to content
-			s.Content = append(s.Content, tokenCopy)
+			s.Tokens = append(s.Tokens, tokenCopy)
+		default:
+			s.Tokens = append(s.Tokens, tokenCopy)
 		}
 	}
 }
