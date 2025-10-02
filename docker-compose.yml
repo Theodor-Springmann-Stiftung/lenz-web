@@ -5,12 +5,12 @@ services:
       - "8085"
     volumes:
       - lenz_briefe:/app/data
-		networks:
-			- caddynet
+    networks:
+      - caddynet
 
 volumes:
   lenz_briefe:
 
 networks:
-	caddynet:
-		external: true
+  caddynet:
+    external: true
