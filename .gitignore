@@ -2,3 +2,4 @@ cache/
 _cache/
 tmp/
 lenz-web
+config.json

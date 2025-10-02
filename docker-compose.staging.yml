@@ -1,5 +1,5 @@
 services:
-  lenzbriefe_staging:
+  lenzbriefestaging:
     build: .
     expose:
       - "8085"
