@@ -1,10 +1,16 @@
-name: lenz-briefe
 services:
-  all:
+  lenzbriefe:
     build: .
-    ports:
-      - "8085:8085"
+    expose:
+      - "8085"
     volumes:
       - lenz_briefe:/app/data
+		networks:
+			- caddynet
+
 volumes:
   lenz_briefe:
+
+networks:
+	caddynet:
+		external: true
