@@ -1,15 +1,16 @@
 services:
-  lenzbriefe:
+  lenzbriefe_staging:
     build: .
     expose:
       - "8085"
     volumes:
-      - lenz_briefe:/app/data
+      - lenz_briefe_staging:/app/data
     networks:
       - caddynet
 
 volumes:
-  lenz_briefe:
+  lenz_briefe_staging:
+    external: true
 
 networks:
   caddynet:
