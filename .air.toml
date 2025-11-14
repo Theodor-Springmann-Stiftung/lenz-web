@@ -9,7 +9,6 @@ cmd = "go build -tags=dev,fts5,sqlite_icu -o ./tmp/lenz ."
 delay = 400
 exclude_dir = [
 	"import",
-	"views",
 	"tmp",
 	"vendor",
 	"testdata",
@@ -20,20 +19,21 @@ exclude_dir = [
 	"pb_data",
 	"Almanach-Bilder",
 	"Static-Bilder",
+	"views/assets",
 ]
 exclude_file = []
 exclude_regex = ["_test.go"]
 exclude_unchanged = false
 follow_symlink = false
 include_dir = []
-include_ext = ["go"]
+include_ext = ["go", "gohtml", "html", "tmpl", "mjs", "js", "css"]
 include_file = []
 kill_delay = "0s"
 log = "build-errors.log"
 poll = false
 poll_interval = 0
 post_cmd = []
-pre_cmd = [""]
+pre_cmd = ["npm run --prefix views build"]
 rerun = false
 rerun_delay = 250
 send_interrupt = true

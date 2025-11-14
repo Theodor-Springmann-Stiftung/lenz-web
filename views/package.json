@@ -4,11 +4,10 @@
   "description": "default views for caveman",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "tailwind": "tailwindcss -i transform/site.css -o assets/style.css",
-    "css": "postcss transform/site.css -o assets/style.css",
-    "preview": "vite preview"
+    "dev": "node ./scripts/dev.mjs",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "node ./scripts/build.mjs --minify",
+    "build:css": "postcss transform/site.css -o assets/style.css"
   },
   "repository": {
     "type": "git",
@@ -22,15 +21,13 @@
   "author": "Simon Martens",
   "license": "MIT",
   "devDependencies": {
-    "@laynezh/vite-plugin-lib-assets": "^1.1.0",
     "@tailwindcss/postcss": "^4.1.4",
-    "daisyui": "^5.0.28",
+    "esbuild": "^0.27.0",
     "postcss": "^8.5.3",
     "postcss-cli": "^11.0.1",
     "prettier": "^3.5.3",
     "prettier-plugin-go-template": "^0.0.15",
-    "tailwindcss": "^4.1.4",
-    "vite": "^6.3.3"
+    "tailwindcss": "^4.1.4"
   },
   "dependencies": {
     "pagedjs": "^0.4.3"
