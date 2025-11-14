@@ -107,77 +107,41 @@ func (l *Library) Parse(source xmlparsing.ParseSource, baseDir, commit string) e
 
 	l.prepare()
 
-	wg.Add(1)
-	go func() {
-		err := l.Persons.Serialize(&PersonDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
-		if err != nil {
-			metamu.Lock()
-			slog.Error("Failed to serialize persons:", "error", err)
-			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, REFERENCES_PATH))
-			metamu.Unlock()
-		}
-		wg.Done()
-	}()
+	parse := func(fn func() error, path string, label string) {
+		wg.Add(1)
+		go func() {
+			if err := fn(); err != nil {
+				metamu.Lock()
+				slog.Error("Failed to serialize "+label+":", "error", err)
+				meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, path))
+				metamu.Unlock()
+			}
+			wg.Done()
+		}()
+	}
 
-	wg.Add(1)
-	go func() {
-		err := l.Places.Serialize(&LocationDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
-		if err != nil {
-			metamu.Lock()
-			slog.Error("Failed to serialize places:", "error", err)
-			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, REFERENCES_PATH))
-			metamu.Unlock()
-		}
-		wg.Done()
-	}()
+	// References must be ready before dependent documents (hands etc.) resolve correctly.
+	parse(func() error {
+		return l.Persons.Serialize(&PersonDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
+	}, REFERENCES_PATH, "persons")
+	parse(func() error {
+		return l.Places.Serialize(&LocationDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
+	}, REFERENCES_PATH, "places")
+	parse(func() error {
+		return l.AppDefs.Serialize(&AppDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
+	}, REFERENCES_PATH, "appdefs")
+	wg.Wait()
 
-	wg.Add(1)
-	go func() {
-		err := l.AppDefs.Serialize(&AppDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
-		if err != nil {
-			metamu.Lock()
-			slog.Error("Failed to serialize appdefs:", "error", err)
-			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, REFERENCES_PATH))
-			metamu.Unlock()
-		}
-		wg.Done()
-	}()
-
-	wg.Add(1)
-	go func() {
-		err := l.Letters.Serialize(&DocumentsRoot{}, filepath.Join(meta.BaseDir, LETTERS_PATH), meta)
-		if err != nil {
-			metamu.Lock()
-			slog.Error("Failed to serialize letters:", "error", err)
-			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, LETTERS_PATH))
-			metamu.Unlock()
-		}
-		wg.Done()
-	}()
-
-	wg.Add(1)
-	go func() {
-		err := l.Traditions.Serialize(&TraditionsRoot{}, filepath.Join(meta.BaseDir, TRADITIONS_PATH), meta)
-		if err != nil {
-			metamu.Lock()
-			slog.Error("Failed to serialize traditions:", "error", err)
-			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, TRADITIONS_PATH))
-			metamu.Unlock()
-		}
-		wg.Done()
-	}()
-
-	wg.Add(1)
-	go func() {
-		err := l.Metas.Serialize(&MetaRoot{}, filepath.Join(meta.BaseDir, META_PATH), meta)
-		if err != nil {
-			metamu.Lock()
-			slog.Error("Failed to serialize meta:", "error", err)
-			meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, META_PATH))
-			metamu.Unlock()
-		}
-		wg.Done()
-	}()
+	// Remaining documents can be parsed once references are available.
+	parse(func() error {
+		return l.Letters.Serialize(&DocumentsRoot{}, filepath.Join(meta.BaseDir, LETTERS_PATH), meta)
+	}, LETTERS_PATH, "letters")
+	parse(func() error {
+		return l.Traditions.Serialize(&TraditionsRoot{}, filepath.Join(meta.BaseDir, TRADITIONS_PATH), meta)
+	}, TRADITIONS_PATH, "traditions")
+	parse(func() error {
+		return l.Metas.Serialize(&MetaRoot{}, filepath.Join(meta.BaseDir, META_PATH), meta)
+	}, META_PATH, "meta")
 
 	wg.Wait()
 

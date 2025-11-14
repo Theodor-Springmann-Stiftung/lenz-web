@@ -1,4 +1,4 @@
-package functions
+package xmlmodels
 
 import (
 	"strings"
@@ -208,10 +208,6 @@ func (s *Tokens) AppendText(text string) {
 		Type:  Text,
 		Value: text,
 	})
-}
-
-func (s *Tokens) Append(token outToken) {
-	s.Out = append(s.Out, token)
 }
 
 func (s *Tokens) String() string {
