@@ -26,11 +26,19 @@ func GetLetter(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusNotFound)
 	}
 
-	html := ""
+	text := fiber.Map{
+		"count": "",
+		"notes": "",
+		"pages": []*xmlmodels.PageRender{},
+		"html":  "",
+	}
 	if state := letterData.HTML.Data(); state != nil {
-		html = state.String()
+		text["html"] = state.String()
+		text["count"] = state.CountHTML()
+		text["notes"] = state.NotesHTML()
+		text["pages"] = state.Pages
 	}
 	tradition := lib.Traditions.Item(letter)
 
-	return c.Render("/brief/", fiber.Map{"meta": meta, "text": html, "tradition": tradition, "next": np.Next, "prev": np.Prev})
+	return c.Render("/brief/", fiber.Map{"meta": meta, "text": text, "tradition": tradition, "next": np.Next, "prev": np.Prev})
 }

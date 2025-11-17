@@ -30,7 +30,26 @@
 </div>
 
 <div class="text flex flex-row print:flex-col">
-	{{- Safe $model.text -}}
+	<div class="count">
+		{{- Safe $model.text.count -}}
+	</div>
+		<div class="fulltext">
+			{{- if $model.text.pages }}
+				{{- range $page := $model.text.pages }}
+					<div
+						class="page"
+						data-page-index="{{ $page.Index }}"
+						data-starts-inline="{{ if $page.StartsInline }}true{{ else }}false{{ end }}">
+						{{- $page.HTML | Safe -}}
+					</div>
+				{{- end -}}
+			{{- else }}
+				{{- Safe $model.text.html -}}
+			{{- end -}}
+		</div>
+	<div class="notes">
+		{{- Safe $model.text.notes -}}
+	</div>
 </div>
 
 <div class="traditions mt-12 pt-3 border-t-gray-200 border-t-1 max-w-[90ch] print:border-none">

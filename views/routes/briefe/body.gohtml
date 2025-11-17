@@ -1,45 +1,194 @@
 {{ $model := . }}
+{{ $query := $model.query }}
+{{ $personJSON := Safe .personJSON }}
+{{ $placeJSON := Safe .placeJSON }}
 
-<nav class="print:hidden">
-	{{- range $i, $range := .ranges -}}
-		{{- if $range.Letters -}}
-			<a
-				class="inline-block stdlink px-0.5"
-				href="/briefe?range={{ $range.Label }}"
-				{{ if eq $model.selectedRange $i -}}aria-current="page"{{- end }}
-				>{{ $range.Label }}</a
-			>
-		{{- end -}}
-	{{- end -}}
-	<a
-		class="inline-block stdlink px-0.5"
-		href="/briefe?range=all"
-		{{ if .all -}}aria-current="page"{{- end }}
-		>Alle</a
-	>
-</nav>
-
-{{- if .ranges -}}
-	{{- if ne .selectedRange -1 -}}
-		{{- $selectedRangeData := index .ranges .selectedRange -}}
-		<div class="flex flex-row gap-x-1">
-			<div>Briefe für {{ $selectedRangeData.Label }}</div>
-			<div>({{ len $selectedRangeData.Letters }})</div>
+<div class="flex flex-col gap-8 lg:flex-row">
+	<aside class="lg:w-72 shrink-0 space-y-5 print:hidden font-sans">
+		<nav class="border border-slate-200 rounded bg-white shadow p-3 space-y-2">
+			<div class="text-[0.75rem] font-semibold uppercase tracking-wide text-slate-600">Jahre</div>
+			<ul class="space-y-1 text-xs font-medium text-slate-700">
+				{{- range $i, $range := .ranges -}}
+					{{- if $range.Letters -}}
+						<li>
+							<a
+								class="flex items-center justify-between rounded border px-2 py-1 transition {{ if eq $model.selectedRange $i }}border-slate-900 bg-slate-900 text-white{{ else }}border-slate-200 hover:border-slate-400{{ end }}"
+								href="/briefe?range={{ $range.Label }}{{ $query }}">
+								<span>{{ $range.Label }}</span>
+								<span class="text-[0.65rem] opacity-70">{{ len $range.Letters }}</span>
+							</a>
+						</li>
+					{{- end -}}
+				{{- end -}}
+				<li>
+					<a
+						class="flex items-center justify-between rounded border px-2 py-1 transition {{ if .all }}border-slate-900 bg-slate-900 text-white{{ else }}border-slate-200 hover:border-slate-400{{ end }}"
+						href="/briefe?range=all{{ $query }}">
+						<span>Alle</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="space-y-4">
+			<filter-list
+				class="block"
+				data-title="Personen"
+				data-param="person"
+				data-active="{{ .person }}"
+				data-items='{{ $personJSON }}'>
+				<div class="text-sm text-slate-500">Filter werden geladen …</div>
+			</filter-list>
+			<filter-list
+				class="block"
+				data-title="Orte"
+				data-param="ort"
+				data-active="{{ .ort }}"
+				data-items='{{ $placeJSON }}'>
+				<div class="text-sm text-slate-500">Filter werden geladen …</div>
+			</filter-list>
 		</div>
-		{{ template "_letterlist" $selectedRangeData.Letters -}}
-	{{- end -}}
+	</aside>
 
-	{{- if .all -}}
-		{{- range $range := .ranges -}}
-			{{- if $range.Letters -}}
-				<div class="mb-8">
-					<div class="flex flex-row gap-x-1 mb-4">
-						<div class="font-semibold">{{ $range.Label }}</div>
-						<div>({{ len $range.Letters }})</div>
-					</div>
-					{{ template "_letterlist" $range.Letters -}}
+	<section class="flex-1">
+		{{- if .ranges -}}
+			{{- if ne .selectedRange -1 -}}
+				{{- $selectedRangeData := index .ranges .selectedRange -}}
+				<div class="flex flex-row gap-x-1">
+					<div>Briefe für {{ $selectedRangeData.Label }}</div>
+					<div>({{ len $selectedRangeData.Letters }})</div>
 				</div>
+				{{ template "_letterlist" $selectedRangeData.Letters -}}
+			{{- end -}}
+
+			{{- if .all -}}
+				{{- range $range := .ranges -}}
+					{{- if $range.Letters -}}
+						<div class="mb-8">
+							<div class="flex flex-row gap-x-1 mb-4">
+								<div class="font-semibold">{{ $range.Label }}</div>
+								<div>({{ len $range.Letters }})</div>
+							</div>
+							{{ template "_letterlist" $range.Letters -}}
+						</div>
+					{{- end -}}
+				{{- end -}}
 			{{- end -}}
 		{{- end -}}
-	{{- end -}}
-{{- end -}}
+	</section>
+</div>
+
+<script type="module">
+	(() => {
+		if (customElements.get("filter-list")) {
+			return;
+		}
+
+		class FilterList extends HTMLElement {
+			connectedCallback() {
+				if (this._init) {
+					return;
+				}
+				this._init = true;
+				this.param = this.dataset.param || "";
+				this.title = this.dataset.title || "";
+				this.activeValue = this.dataset.active || "";
+
+				try {
+					this.items = JSON.parse(this.dataset.items || "[]");
+				} catch (err) {
+					console.error("filter-list: failed to parse dataset items", err);
+					this.items = [];
+				}
+
+				this.render();
+			}
+
+			render() {
+				this.innerHTML = `
+					<div class="border border-slate-200 rounded bg-white shadow p-3 space-y-1.5 font-sans">
+						<div class="flex items-center justify-between gap-2 pb-1 border-b border-slate-100">
+							<h3 class="text-[0.75rem] font-semibold uppercase tracking-wide text-slate-600">${this.title}</h3>
+							<button type="button" data-role="clear" class="text-[0.7rem] text-slate-500 hover:text-slate-900 ${this.activeValue ? "" : "invisible"}">Zurücksetzen</button>
+						</div>
+						<div>
+							<label class="sr-only" for="${this.param}-filter-input">Filter ${this.title}</label>
+							<input
+								id="${this.param}-filter-input"
+								type="search"
+								placeholder="Suchen"
+								class="w-full rounded border border-slate-200 bg-white px-3 py-1 text-xs text-slate-700 placeholder-slate-400 focus:border-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-400"/>
+						</div>
+						<ul class="max-h-64 overflow-y-auto divide-y divide-slate-100 text-[0.7rem]" data-role="list"></ul>
+						<p class="text-xs text-slate-500 hidden" data-role="empty">Keine Treffer</p>
+					</div>
+				`;
+
+				this.list = this.querySelector('[data-role="list"]');
+				this.empty = this.querySelector('[data-role="empty"]');
+				this.input = this.querySelector('input[type="search"]');
+				this.clearButton = this.querySelector('[data-role="clear"]');
+
+				this.input?.addEventListener("input", () => this.update());
+				this.clearButton?.addEventListener("click", () => {
+					this.activeValue = "";
+					this.navigate();
+				});
+
+				this.update();
+			}
+
+			update() {
+				if (!this.list) {
+					return;
+				}
+				const query = (this.input?.value || "").trim().toLowerCase();
+				const results = this.items.filter((item) => item.name?.toLowerCase().includes(query));
+
+				this.list.innerHTML = "";
+				results.forEach((item) => {
+					const li = document.createElement("li");
+					li.className = "";
+					const btn = document.createElement("button");
+					btn.type = "button";
+					const isActive = String(item.id) === String(this.activeValue);
+					btn.className = `w-full text-left px-2 py-1 rounded transition ${
+						isActive
+							? "bg-slate-900 text-white"
+							: "text-slate-700 hover:bg-slate-100"
+					}`;
+					btn.textContent = item.name;
+					btn.addEventListener("click", () => {
+						this.activeValue = isActive ? "" : String(item.id);
+						this.navigate();
+					});
+					li.appendChild(btn);
+					this.list.appendChild(li);
+				});
+
+				if (this.empty) {
+					this.empty.classList.toggle("hidden", results.length > 0);
+				}
+			}
+
+			navigate() {
+				if (!this.param) {
+					return;
+				}
+				const url = new URL(window.location.href);
+				const otherParam = this.param === "person" ? "ort" : "person";
+				url.searchParams.delete(otherParam);
+
+				if (this.activeValue) {
+					url.searchParams.set(this.param, this.activeValue);
+					url.searchParams.set("range", "all");
+				} else {
+					url.searchParams.delete(this.param);
+				}
+
+				window.location.href = url.pathname + url.search;
+			}
+		}
+
+		customElements.define("filter-list", FilterList);
+	})();
+</script>

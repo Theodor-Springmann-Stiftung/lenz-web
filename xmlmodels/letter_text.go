@@ -23,10 +23,31 @@ type Note struct {
 	Tokens Tokens
 }
 
+type PageRender struct {
+	Index        string
+	StartsInline bool
+	Tokens       Tokens
+	rendered     string
+}
+
+func (p *PageRender) HTML() string {
+	if p == nil {
+		return ""
+	}
+	if p.rendered != "" {
+		return p.rendered
+	}
+	p.rendered = p.Tokens.String()
+	return p.rendered
+}
+
 type LenzParseState struct {
 	Tokens       Tokens
 	Notes        []Note
 	Count        []Note
+	Pages        []*PageRender
+	currentPage  *PageRender
+	paging       bool
 	LC           int
 	PC           string
 	CloseElement bool
@@ -46,9 +67,7 @@ func (s *LenzParseState) String() string {
 	}
 	builder := strings.Builder{}
 	builder.WriteString(outToken{Name: "div", Classes: []string{"count"}, Type: Element}.String())
-	for _, c := range s.Count {
-		builder.WriteString(c.Tokens.String())
-	}
+	builder.WriteString(s.CountHTML())
 	builder.WriteString(outToken{Name: "div", Classes: []string{"count"}, Type: EndElement}.String())
 
 	tokens := s.Tokens
@@ -57,16 +76,116 @@ func (s *LenzParseState) String() string {
 	builder.WriteString(tokens.String())
 
 	builder.WriteString(outToken{Name: "div", Classes: []string{"notes"}, Type: Element}.String())
-	for _, note := range s.Notes {
-		builder.WriteString(note.Tokens.String())
-	}
+	builder.WriteString(s.NotesHTML())
 	builder.WriteString(outToken{Name: "div", Classes: []string{"notes"}, Type: EndElement}.String())
 	s.rendered = builder.String()
 	return s.rendered
 }
 
+func (s *LenzParseState) CountHTML() string {
+	if s == nil {
+		return ""
+	}
+	builder := strings.Builder{}
+	for _, c := range s.Count {
+		builder.WriteString(c.Tokens.String())
+	}
+	return builder.String()
+}
+
+func (s *LenzParseState) NotesHTML() string {
+	if s == nil {
+		return ""
+	}
+	builder := strings.Builder{}
+	for _, note := range s.Notes {
+		builder.WriteString(note.Tokens.String())
+	}
+	return builder.String()
+}
+
 func (s *LenzParseState) AppendNote(note Note) {
 	s.Notes = append(s.Notes, note)
+}
+
+func (s *LenzParseState) ensureCurrentPage() *PageRender {
+	if s.currentPage == nil {
+		s.startPage(s.PC)
+	}
+	return s.currentPage
+}
+
+func (s *LenzParseState) startPage(index string) *PageRender {
+	if index == "" {
+		index = strconv.Itoa(len(s.Pages) + 1)
+	}
+	page := &PageRender{Index: index}
+	s.Pages = append(s.Pages, page)
+	s.currentPage = page
+	s.paging = true
+	return page
+}
+
+func (s *LenzParseState) currentPageTokens() *Tokens {
+	if !s.paging {
+		return nil
+	}
+	return &s.ensureCurrentPage().Tokens
+}
+
+func (s *LenzParseState) appendDefaultElement(token *xmlparsing.Token, ids ...string) {
+	s.Tokens.AppendDefaultElement(token, ids...)
+	if pageTokens := s.currentPageTokens(); pageTokens != nil {
+		pageTokens.AppendDefaultElement(token, ids...)
+	}
+}
+
+func (s *LenzParseState) appendDivElement(id string, classes ...string) {
+	s.Tokens.AppendDivElement(id, classes...)
+	if pageTokens := s.currentPageTokens(); pageTokens != nil {
+		pageTokens.AppendDivElement(id, classes...)
+	}
+}
+
+func (s *LenzParseState) appendEndElement() {
+	s.Tokens.AppendEndElement()
+	if pageTokens := s.currentPageTokens(); pageTokens != nil {
+		pageTokens.AppendEndElement()
+	}
+}
+
+func (s *LenzParseState) appendCustomAttribute(name, value string) {
+	s.Tokens.AppendCustomAttribute(name, value)
+	if pageTokens := s.currentPageTokens(); pageTokens != nil {
+		pageTokens.AppendCustomAttribute(name, value)
+	}
+}
+
+func (s *LenzParseState) appendLink(href string, classes ...string) {
+	s.Tokens.AppendLink(href, classes...)
+	if pageTokens := s.currentPageTokens(); pageTokens != nil {
+		pageTokens.AppendLink(href, classes...)
+	}
+}
+
+func (s *LenzParseState) appendEmptyElement(name string, id string, classes ...string) {
+	s.Tokens.AppendEmptyElement(name, id, classes...)
+	if pageTokens := s.currentPageTokens(); pageTokens != nil {
+		pageTokens.AppendEmptyElement(name, id, classes...)
+	}
+}
+
+func (s *LenzParseState) appendText(text string) {
+	s.Tokens.AppendText(text)
+	if pageTokens := s.currentPageTokens(); pageTokens != nil {
+		pageTokens.AppendText(text)
+	}
+}
+
+func (s *LenzParseState) markCurrentPageInline(inline bool) {
+	if page := s.ensureCurrentPage(); page != nil {
+		page.StartsInline = inline
+	}
 }
 
 type LenzTextHandler struct {
@@ -86,54 +205,54 @@ func (h LenzTextHandler) OnOpenElement(state *xmlparsing.ParseState[*LenzParseSt
 
 	switch elem.Name {
 	case "insertion":
-		ps.Tokens.AppendDefaultElement(elem)
-		ps.Tokens.AppendDivElement("", "insertion-marker")
-		ps.Tokens.AppendEndElement()
+		ps.appendDefaultElement(elem)
+		ps.appendDivElement("", "insertion-marker")
+		ps.appendEndElement()
 	case "sidenote":
 		id := randString(8)
-		ps.Tokens.AppendDefaultElement(elem)
+		ps.appendDefaultElement(elem)
 		ps.Break = false
-		ps.Tokens.AppendCustomAttribute("aria-describedby", id)
+		ps.appendCustomAttribute("aria-describedby", id)
 		if elem.Attributes["annotation"] != "" ||
 			elem.Attributes["page"] != "" ||
 			elem.Attributes["pos"] != "" {
 			note := Note{Id: id}
 			note.Tokens.AppendDivElement(id, "note-sidenote-meta")
-			ps.Tokens.AppendDivElement(id, "inline-sidenote-meta")
+			ps.appendDivElement(id, "inline-sidenote-meta")
 			if elem.Attributes["page"] != "" {
 				note.Tokens.AppendDivElement("", "sidenote-page")
 				note.Tokens.AppendText(elem.Attributes["page"])
 				note.Tokens.AppendEndElement()
-				ps.Tokens.AppendDivElement("", "sidenote-page")
-				ps.Tokens.AppendText(elem.Attributes["page"])
-				ps.Tokens.AppendEndElement()
+				ps.appendDivElement("", "sidenote-page")
+				ps.appendText(elem.Attributes["page"])
+				ps.appendEndElement()
 			}
 			if elem.Attributes["annotation"] != "" {
 				note.Tokens.AppendDivElement("", "sidenote-note")
 				note.Tokens.AppendText(elem.Attributes["annotation"])
 				note.Tokens.AppendEndElement()
-				ps.Tokens.AppendDivElement("", "sidenote-note")
-				ps.Tokens.AppendText(elem.Attributes["annotation"])
-				ps.Tokens.AppendEndElement()
+				ps.appendDivElement("", "sidenote-note")
+				ps.appendText(elem.Attributes["annotation"])
+				ps.appendEndElement()
 			}
 			if elem.Attributes["pos"] != "" {
 				note.Tokens.AppendDivElement("", "sidenote-pos")
 				note.Tokens.AppendText(elem.Attributes["pos"])
 				note.Tokens.AppendEndElement()
-				ps.Tokens.AppendDivElement("", "sidenote-pos")
-				ps.Tokens.AppendText(elem.Attributes["pos"])
-				ps.Tokens.AppendEndElement()
+				ps.appendDivElement("", "sidenote-pos")
+				ps.appendText(elem.Attributes["pos"])
+				ps.appendEndElement()
 			}
 			note.Tokens.AppendEndElement()
-			ps.Tokens.AppendEndElement()
+			ps.appendEndElement()
 			ps.AppendNote(note)
 		}
 
 	case "note":
 		id := randString(8)
-		ps.Tokens.AppendLink("#"+id, "nanchor-note")
-		ps.Tokens.AppendEndElement()
-		ps.Tokens.AppendDivElement(id, "note", "note-note")
+		ps.appendLink("#"+id, "nanchor-note")
+		ps.appendEndElement()
+		ps.appendDivElement(id, "note", "note-note")
 
 	case "nr":
 		ext := elem.Attributes["extent"]
@@ -145,9 +264,9 @@ func (h LenzTextHandler) OnOpenElement(state *xmlparsing.ParseState[*LenzParseSt
 			extno = 1
 		}
 
-		ps.Tokens.AppendDefaultElement(elem)
+		ps.appendDefaultElement(elem)
 		for i := 0; i < extno; i++ {
-			ps.Tokens.AppendText("&nbsp;")
+			ps.appendText("&nbsp;")
 		}
 
 	case "hand":
@@ -167,21 +286,21 @@ func (h LenzTextHandler) OnOpenElement(state *xmlparsing.ParseState[*LenzParseSt
 		note.Tokens.AppendText(hand)
 		note.Tokens.AppendEndElement()
 		ps.AppendNote(note)
-		ps.Tokens.AppendDivElement(id, "inline-hand")
-		ps.Tokens.AppendText(hand)
-		ps.Tokens.AppendEndElement()
-		ps.Tokens.AppendDivElement("", "hand")
-		ps.Tokens.AppendCustomAttribute("aria-describedby", id)
+		ps.appendDivElement(id, "inline-hand")
+		ps.appendText(hand)
+		ps.appendEndElement()
+		ps.appendDivElement("", "hand")
+		ps.appendCustomAttribute("aria-describedby", id)
 
 	case "line":
 		if val := elem.Attributes["type"]; val != "empty" {
 			ps.LC += 1
 			if ps.Break {
-				ps.Tokens.AppendEmptyElement("br", ps.PC+"-"+strconv.Itoa(ps.LC))
+				ps.appendEmptyElement("br", ps.PC+"-"+strconv.Itoa(ps.LC))
 			}
-			ps.Tokens.AppendDefaultElement(elem)
+			ps.appendDefaultElement(elem)
 		} else {
-			ps.Tokens.AppendEmptyElement("br", "", "empty")
+			ps.appendEmptyElement("br", "", "empty")
 			ps.CloseElement = false
 		}
 		ps.LineBreak = true
@@ -190,9 +309,10 @@ func (h LenzTextHandler) OnOpenElement(state *xmlparsing.ParseState[*LenzParseSt
 		ps.PC = elem.Attributes["index"]
 		ps.PageBreak = true
 		ps.CloseElement = false
+		ps.startPage(ps.PC)
 
 	default:
-		ps.Tokens.AppendDefaultElement(elem)
+		ps.appendDefaultElement(elem)
 	}
 
 	return nil
@@ -204,7 +324,7 @@ func (h LenzTextHandler) OnCloseElement(state *xmlparsing.ParseState[*LenzParseS
 		ps.LineBreak = true
 	}
 	if ps.CloseElement {
-		ps.Tokens.AppendEndElement()
+		ps.appendEndElement()
 	} else {
 		ps.CloseElement = true
 	}
@@ -223,17 +343,19 @@ func (h LenzTextHandler) OnText(state *xmlparsing.ParseState[*LenzParseState], e
 	}
 	if ps.PageBreak && ps.PC != "1" {
 		ps.PageBreak = false
+		inline := !ps.LineBreak
+		ps.markCurrentPageInline(inline)
 		note := Note{Id: ps.PC}
 		quality := "outside"
-		if !ps.LineBreak {
+		if inline {
 			quality = "inside"
 		}
-		ps.Tokens.AppendDivElement("", "eanchor-page", "eanchor-page-"+quality)
-		ps.Tokens.AppendCustomAttribute("aria-describedby", ps.PC)
-		ps.Tokens.AppendEndElement()
-		ps.Tokens.AppendDivElement("", "page-counter", "page-"+quality)
-		ps.Tokens.AppendText(ps.PC)
-		ps.Tokens.AppendEndElement()
+		ps.appendDivElement("", "eanchor-page", "eanchor-page-"+quality)
+		ps.appendCustomAttribute("aria-describedby", ps.PC)
+		ps.appendEndElement()
+		ps.appendDivElement("", "page-counter", "page-"+quality)
+		ps.appendText(ps.PC)
+		ps.appendEndElement()
 		note.Tokens.AppendDivElement(ps.PC, "page", "page-"+quality)
 		note.Tokens.AppendText(ps.PC)
 		note.Tokens.AppendEndElement()
@@ -243,7 +365,7 @@ func (h LenzTextHandler) OnText(state *xmlparsing.ParseState[*LenzParseState], e
 		ps.LineBreak = false
 	}
 
-	ps.Tokens.AppendDefaultElement(elem)
+	ps.appendDefaultElement(elem)
 	return nil
 }
 

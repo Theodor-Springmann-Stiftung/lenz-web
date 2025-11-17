@@ -86,10 +86,62 @@ type Action struct {
 	Persons []RefElement `xml:"person"`
 }
 
+func (m Meta) HasPerson(id int) bool {
+	if id <= 0 {
+		return false
+	}
+	for _, action := range m.Sent {
+		if action.HasPerson(id) {
+			return true
+		}
+	}
+	for _, action := range m.Recieved {
+		if action.HasPerson(id) {
+			return true
+		}
+	}
+	return false
+}
+
+func (m Meta) HasPlace(id int) bool {
+	if id <= 0 {
+		return false
+	}
+	for _, action := range m.Sent {
+		if action.HasPlace(id) {
+			return true
+		}
+	}
+	for _, action := range m.Recieved {
+		if action.HasPlace(id) {
+			return true
+		}
+	}
+	return false
+}
+
 func (a *Action) Earliest() *Date {
 	if len(a.Dates) == 0 {
 		return nil
 	}
 
 	return &a.Dates[0]
+}
+
+func (a Action) HasPerson(id int) bool {
+	for _, ref := range a.Persons {
+		if ref.Reference == id {
+			return true
+		}
+	}
+	return false
+}
+
+func (a Action) HasPlace(id int) bool {
+	for _, ref := range a.Places {
+		if ref.Reference == id {
+			return true
+		}
+	}
+	return false
 }

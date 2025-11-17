@@ -405,7 +405,8 @@
 		@apply text-sm text-slate-800;
 	}
 
-	.text .page {
+	.text .count .page,
+	.text .notes .page {
 		@apply font-sans text-sm text-slate-600 invisible;
 	}
 
