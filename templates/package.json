@@ -1,0 +1,22 @@
+{
+  "name": "lenz-templates",
+  "version": "1.0.0",
+  "description": "Templates for the JMR Lenz briefausgabe",
+  "license": "MIT",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "npm run js_prod && npm run css_prod",
+    "js_prod": "esbuild ./src/index.js --bundle --minify --outfile=./public/index.js",
+    "js": "esbuild ./src/index.js --bundle --sourcemap --outfile=./public/index.js",
+    "css_prod": "tailwindcss -i ./src/style.css -o ./public/style.css --minify",
+    "css": "tailwindcss -i ./src/style.css -o ./public/style.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "esbuild": "^0.27.3",
+    "tailwindcss": "^4.1.18"
+  }
+}

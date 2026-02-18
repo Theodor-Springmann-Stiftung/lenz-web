@@ -1,11 +1,13 @@
 package main
 
 import (
+	"io/fs"
 	"log/slog"
-	"path/filepath"
 
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/app"
-	"github.com/Theodor-Springmann-Stiftung/lenz-web/git"
+	_ "github.com/Theodor-Springmann-Stiftung/lenz-web/pages"
+	"github.com/Theodor-Springmann-Stiftung/lenz-web/templates"
+	"github.com/labstack/echo/v5"
 )
 
 func main() {
@@ -18,23 +20,39 @@ func main() {
 		slog.SetLogLoggerLevel(slog.LevelDebug)
 	}
 
-	dir := filepath.Join(cfg.BaseDIR, cfg.GITPath)
-	repo, err := git.OpenOrClone(dir, cfg.GitURL, cfg.GitBranch)
+	application, err := app.New(cfg)
 	if err != nil {
 		panic(err)
 	}
 
-	println("Repo opened: " + repo.String())
-
-	latest, err := repo.Latest()
+	e := echo.New()
+	publicFS, err := fs.Sub(templates.PublicFS, "public")
 	if err != nil {
 		panic(err)
 	}
+	e.StaticFS("/public", publicFS)
 
-	println("Commit" + latest.String())
+	for _, route := range application.Routes() {
+		routePath := route.Path
+		e.GET(routePath, func(c *echo.Context) error {
+			out, err := application.RenderPath(routePath)
+			if err != nil {
+				return err
+			}
+			return c.HTMLBlob(200, out)
+		})
+	}
+
+	addr := cfg.Address + ":" + cfg.Port
+	if err := e.Start(addr); err != nil {
+		panic(err)
+	}
 }
 
 func GetConfig() (app.Config, error) {
 	cp := app.NewConfigProvider([]string{"config.dev.json", "config.json"})
-	return *cp.Config, cp.Read()
+	if err := cp.Read(); err != nil {
+		return app.Config{}, err
+	}
+	return *cp.Config, nil
 }
