@@ -1,9 +1,0 @@
-./helpers.go
-./item.go
-./library.go
-./models.go
-./optionalbool.go
-./resolver.go
-./xmlprovider.go
-./xsdtime.go
-./xsdtime_test.go

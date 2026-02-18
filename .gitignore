@@ -3,3 +3,4 @@ _cache/
 tmp/
 lenz-web
 config.json
+.gocache/
