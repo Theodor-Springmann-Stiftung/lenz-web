@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"time"
 
+	gitpkg "github.com/Theodor-Springmann-Stiftung/lenz-web/git"
 	"github.com/Theodor-Springmann-Stiftung/lenz-web/xmlparsing"
 )
 
@@ -23,8 +23,7 @@ const (
 )
 
 type Library struct {
-	mu sync.Mutex
-	xmlparsing.Library
+	Commit gitpkg.Commit
 
 	Persons *xmlparsing.XMLParser[PersonDef]
 	Places  *xmlparsing.XMLParser[LocationDef]
@@ -38,7 +37,6 @@ type Library struct {
 }
 
 func (l *Library) String() string {
-	// TODO:
 	sb := strings.Builder{}
 
 	sb.WriteString("Persons: ")
@@ -63,7 +61,7 @@ func (l *Library) String() string {
 		hands += 1
 		sb.WriteString("\n")
 		sb.WriteString(strconv.Itoa(l.Letter) + ": ")
-		sb.WriteString(strconv.Itoa(len(l.Hands)) + " Hände, No " + strconv.Itoa(hands))
+		sb.WriteString(strconv.Itoa(len(l.Hands)) + " hands, No " + strconv.Itoa(hands))
 	}
 	sb.WriteString("\n")
 
@@ -78,9 +76,8 @@ func (l *Library) String() string {
 	return sb.String()
 }
 
-// INFO: this is the only place where the providers are created. There is no need for locking on access.
-func NewLibrary() *Library {
-	return &Library{
+func NewLibrary(baseDir string, commit *gitpkg.Commit) (*Library, error) {
+	lib := &Library{
 		Persons:    xmlparsing.NewXMLParser[PersonDef](),
 		Places:     xmlparsing.NewXMLParser[LocationDef](),
 		AppDefs:    xmlparsing.NewXMLParser[AppDef](),
@@ -88,120 +85,67 @@ func NewLibrary() *Library {
 		Traditions: xmlparsing.NewXMLParser[Tradition](),
 		Metas:      xmlparsing.NewXMLParser[Meta](),
 	}
+	if commit != nil {
+		lib.Commit = *commit
+	}
+
+	if err := lib.parse(baseDir); err != nil {
+		return nil, err
+	}
+
+	return lib, nil
 }
 
-func (l *Library) Parse(source xmlparsing.ParseSource, baseDir, commit string) error {
-	// INFO: this lock prevents multiple parses from happening at the same time.
-	l.mu.Lock()
-	defer l.mu.Unlock()
+func (l *Library) parse(baseDir string) error {
 	l.cache.Clear()
 
 	wg := sync.WaitGroup{}
-	meta := xmlparsing.ParseMeta{
-		Source:  source,
-		BaseDir: baseDir,
-		Commit:  commit,
-		Date:    time.Now(),
-	}
-	metamu := sync.Mutex{}
-
-	l.prepare()
+	failedPaths := make([]string, 0)
+	failedMu := sync.Mutex{}
 
 	parse := func(fn func() error, path string, label string) {
 		wg.Add(1)
 		go func() {
+			defer wg.Done()
 			if err := fn(); err != nil {
-				metamu.Lock()
+				failedMu.Lock()
 				slog.Error("Failed to serialize "+label+":", "error", err)
-				meta.FailedPaths = append(meta.FailedPaths, filepath.Join(meta.BaseDir, path))
-				metamu.Unlock()
+				failedPaths = append(failedPaths, filepath.Join(baseDir, path))
+				failedMu.Unlock()
 			}
-			wg.Done()
 		}()
 	}
 
 	// References must be ready before dependent documents (hands etc.) resolve correctly.
 	parse(func() error {
-		return l.Persons.Serialize(&PersonDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
+		return l.Persons.Serialize(&PersonDefs{}, filepath.Join(baseDir, REFERENCES_PATH))
 	}, REFERENCES_PATH, "persons")
 	parse(func() error {
-		return l.Places.Serialize(&LocationDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
+		return l.Places.Serialize(&LocationDefs{}, filepath.Join(baseDir, REFERENCES_PATH))
 	}, REFERENCES_PATH, "places")
 	parse(func() error {
-		return l.AppDefs.Serialize(&AppDefs{}, filepath.Join(meta.BaseDir, REFERENCES_PATH), meta)
+		return l.AppDefs.Serialize(&AppDefs{}, filepath.Join(baseDir, REFERENCES_PATH))
 	}, REFERENCES_PATH, "appdefs")
 	wg.Wait()
 
 	// Remaining documents can be parsed once references are available.
 	parse(func() error {
-		return l.Letters.Serialize(&DocumentsRoot{}, filepath.Join(meta.BaseDir, LETTERS_PATH), meta)
+		return l.Letters.Serialize(&DocumentsRoot{}, filepath.Join(baseDir, LETTERS_PATH))
 	}, LETTERS_PATH, "letters")
 	parse(func() error {
-		return l.Traditions.Serialize(&TraditionsRoot{}, filepath.Join(meta.BaseDir, TRADITIONS_PATH), meta)
+		return l.Traditions.Serialize(&TraditionsRoot{}, filepath.Join(baseDir, TRADITIONS_PATH))
 	}, TRADITIONS_PATH, "traditions")
 	parse(func() error {
-		return l.Metas.Serialize(&MetaRoot{}, filepath.Join(meta.BaseDir, META_PATH), meta)
+		return l.Metas.Serialize(&MetaRoot{}, filepath.Join(baseDir, META_PATH))
 	}, META_PATH, "meta")
 
 	wg.Wait()
 
-	l.cleanup(meta)
-	l.Parses = append(l.Parses, meta)
+	if len(failedPaths) > 0 {
+		return fmt.Errorf("parsing encountered errors: failed paths: %v", failedPaths)
+	}
 
-	var errors []string
-	if len(meta.FailedPaths) > 0 {
-		errors = append(errors, fmt.Sprintf("Failed paths: %v", meta.FailedPaths))
-	}
-	if len(errors) > 0 {
-		return fmt.Errorf("Parsing encountered errors: %v", strings.Join(errors, "; "))
-	}
 	return nil
-}
-
-func (l *Library) prepare() {
-	l.Persons.Prepare()
-	l.Places.Prepare()
-	l.AppDefs.Prepare()
-	l.Letters.Prepare()
-	l.Traditions.Prepare()
-	l.Metas.Prepare()
-}
-
-func (l *Library) cleanup(meta xmlparsing.ParseMeta) {
-	wg := sync.WaitGroup{}
-	wg.Add(6)
-
-	go func() {
-		l.Persons.Cleanup(meta)
-		wg.Done()
-	}()
-
-	go func() {
-		l.Places.Cleanup(meta)
-		wg.Done()
-	}()
-
-	go func() {
-		l.AppDefs.Cleanup(meta)
-		wg.Done()
-	}()
-
-	go func() {
-		l.Letters.Cleanup(meta)
-		wg.Done()
-	}()
-
-	go func() {
-		l.Traditions.Cleanup(meta)
-		wg.Done()
-	}()
-
-	go func() {
-		l.Metas.Cleanup(meta)
-		wg.Done()
-	}()
-
-	wg.Wait()
 }
 
 type NextPrev struct {

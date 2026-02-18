@@ -11,10 +11,6 @@ type IXMLItem interface {
 	Type() string
 }
 
-type ILibrary interface {
-	Parse(meta ParseMeta) error
-}
-
 type ResolvingMap[T IXMLItem] map[string][]Resolved[T]
 
 type ReferenceResolver[T IXMLItem] interface {
