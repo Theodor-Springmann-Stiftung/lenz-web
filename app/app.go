@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"html/template"
 	"path/filepath"
 	"sync"
@@ -12,12 +11,11 @@ import (
 )
 
 type App struct {
-	mu     sync.Mutex
-	lib    atomic.Pointer[xmlmodels.Library]
-	repo   atomic.Pointer[git.Repo]
-	tmpl   *template.Template
-	routes []Route
-	err    error
+	mu   sync.Mutex
+	lib  atomic.Pointer[xmlmodels.Library]
+	repo atomic.Pointer[git.Repo]
+	tmpl atomic.Pointer[*template.Template]
+	cfg  Config
 }
 
 func New(cfg Config) (*App, error) {
@@ -37,39 +35,15 @@ func (a *App) Repo() *git.Repo {
 }
 
 func (a *App) Templates() *template.Template {
-	return a.tmpl
+	return *a.tmpl.Load()
 }
 
-func (a *App) Routes() []Route {
-	a.mu.Lock()
-	defer a.mu.Unlock()
-
-	ret := make([]Route, len(a.routes))
-	copy(ret, a.routes)
-	return ret
+func (a *App) Config() Config {
+	return a.cfg
 }
 
-func (a *App) RenderPath(path string) ([]byte, error) {
-	a.mu.Lock()
-	var route *Route
-	for i := range a.routes {
-		if a.routes[i].Path == path {
-			r := a.routes[i]
-			route = &r
-			break
-		}
-	}
-	a.mu.Unlock()
-
-	if route == nil || route.page == nil {
-		return nil, fmt.Errorf("no route for path: %s", path)
-	}
-
-	model, err := route.page.Model(a, *route)
-	if err != nil {
-		return nil, err
-	}
-	return route.page.Render(a, *route, model)
+func (a *App) Pages() []Page {
+	return RegisteredPages()
 }
 
 func (a *App) init(cfg Config) error {
@@ -103,15 +77,9 @@ func (a *App) init(cfg Config) error {
 
 	a.repo.Store(repo)
 	a.lib.Store(lib)
-	a.tmpl = tmpl
+	a.tmpl.Store(&tmpl)
 
-	routes, err := discoverPages(a)
-	if err != nil {
-		return err
-	}
-
-	a.routes = routes
-	a.err = nil
+	a.cfg = cfg
 	return nil
 }
 
@@ -126,12 +94,5 @@ func (a *App) RefreshLibrary(dir string, commit *git.Commit) (*xmlmodels.Library
 
 	a.lib.Store(lib)
 
-	routes, err := discoverPages(a)
-	if err != nil {
-		return nil, err
-	}
-
-	a.routes = routes
-	a.err = nil
 	return lib, nil
 }
