@@ -5,7 +5,7 @@ import (
 	"github.com/labstack/echo/v5"
 )
 
+// INFO: Static files here:
 func MapStatic(e *echo.Echo) {
-	// INFO: Static files here:
 	e.StaticFS("/public", templates.PublicFS)
 }
