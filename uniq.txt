@@ -1,0 +1,39 @@
+IGNORE:
+address
+
+BASE:
+aq
+b // im Druck
+del
+dul
+tul
+er
+gr
+hb
+ink // wechsel der Tinte ref="2"
+it // im Druck
+pe
+ru
+tl // Textverlust
+ul
+fn[@index='1'] & anchor // keine ref? irgendwie nur die anchors in den footnotes? 
+
+
+INLINE-SONDERFÄLLE:
+nr[@extent='1-4|8|30'] oder ohne default = 1
+subst (+kinder) = Überschreibungen
+insertion
+del in subst
+hand
+
+INLINE-BLOCK:
+align center|right
+tab 2|12|8
+
+BLOCK:
+note? evtl.
+tabs
+letterText (wie line type="break" falls kein line)
+line (Fälle: empty, tab 1-2|4-8, break)
+page[@index='1-14']
+sidenote[@pos='left|right|(bottom|top [left|right])' and @page='1-14' and @annotation='[.*]'
