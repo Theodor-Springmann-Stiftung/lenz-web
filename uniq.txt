@@ -1,5 +1,6 @@
 IGNORE:
 address
+tabs
 
 BASE:
 aq
@@ -16,6 +17,7 @@ pe
 ru
 tl // Textverlust
 ul
+note
 fn[@index='1'] & anchor // keine ref? irgendwie nur die anchors in den footnotes? 
 
 
@@ -31,8 +33,6 @@ align center|right
 tab 2|12|8
 
 BLOCK:
-note? evtl.
-tabs
 letterText (wie line type="break" falls kein line)
 line (Fälle: empty, tab 1-2|4-8, break)
 page[@index='1-14']

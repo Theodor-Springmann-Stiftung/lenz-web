@@ -1,613 +1,644 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <examples source="_cache/git/data/xml/briefe.xml" totalLetterText="374">
-<!-- sample 1/15: letter 1 (start line 7, block #1) -->
-<letterText letter="1">
-	<page index="1" /><align pos="right">HochEdelgeborner Hochgelahrter Herr <aq>Secretair</aq></align>
+	<!-- sample 1/15: letter 1 (start line 7, block #1) -->
+	<letterText letter="1">
+		<page index="1" /><align pos="right">HochEdelgeborner Hochgelahrter Herr <aq>Secretair</aq></align>
   <line
-		type="break" tab="7" /><align pos="right">VerEhrungswürdigster Gönner!</align>
-  <line type="empty" />
-  <line
-		type="empty" />
-  <line type="empty" /> Ew. HochEdelgebh: haben mich durch die neue Probe von Dero
-	schätzbaren Gewogenheit ausserorndtlich beschämt. Meine Feder ist zu schwach, Denenselben die
-	regen Empfindungen meines Herzens darüber zu schildern. Ich weiß Ew. HochEdelgebh: meine
-	Dankbegierde auf keine andere Art an den Tag zu legen, als daß ich meine gestrigen Wünsche für
-	Dero Wohlseyn wiederhole, und die gütige Vorsicht um die Erhörung derselben anflehe. Der Herr
-	überschütte Dieselben und Dero werthes Hauß im künftigen Jahr mit tausend Seegen und Heil. Er
-	erhalte Ew. HochEdelgebh: bis zu den spätesten Zeiten im ersprießlichsten Wohlergehen. Er bewahre
-	Ew. HochEdelgebh: für alle wiedrige Zufälle in den künftigen Jahren, und <page index="2" />lasse
-	mich noch lange das Glük geniessen, Dieselben in dem blühendsten Wohlstande zu sehen, und mich mit
-	dem erkenntlichsten Herzen nennen zu dürfen <line type="empty" />
-  <line type="break" /><align
-		pos="right">HochEdelgebohrner Hochgelahrter Herr Secretair <line type="break" tab="7" />Verehrungswürdigster
-	Gönner <line type="break" tab="7" />Ew. HochEdelgebh:</align>
-  <line type="empty" />
-  <line
-		type="empty" />
-  <line type="empty" />
-  <line type="empty" /> Von Hause, d. 2 Jenner, 1765. <line
-		type="empty" />
-  <align pos="right">gehorsamsten Diener <line type="break" />Jacob Michael
-	Reinhold Lenz</align>
-</letterText>
-
-<!-- sample 2/15: letter 28 (start line 567, block #28) -->
-<letterText letter="28"><page index="1" />
-  <line tab="1" />Mein Schatten soll Ihnen Rö– schiken ich
-	bin froh mich Ihnen als Physiognom nur im Profil zeigen zu dürfen, von meinem Brustbild machte
-	Ihnen die <ul>Güte Ihres Herzens</ul> eine viel zu vortheilhafte Zeichnung. Dafür bin ich aber
-	Herz genug gewesen, das Ihrige an meine Lippen zu drüken u: einen Wunsch gen Himmel zu schiken,
-	den Mann von Angesicht zu sehen, mit dem ich einen Briefwechsel scheüe, bis ich ihn inniger u:
-	vertrauter – führen kann – das heißt bis Ihre <ul>gute</ul> Meynung von mir nicht mehr Vortheil
-	ist. <line tab="1" />Ich bin den Armen eines Vaters entschlüpft, der so redlich dachte als Sie,
-	obgleich nicht so aufgeklärt. Seyen Sie mein Vater! Lenz. </letterText>
-
-<!-- sample 3/15: letter 54 (start line 1123, block #54) -->
-<letterText letter="54">
-	<page index="1" />
-	<line tab="1" />
-	<aq>vous pouvez vous fier a ma parole d’honneur que ladite feuille ne sera jamais publiée avec <ul>ma
-		bonne volonté.</ul> Aussi n’etoit elle ecrite qu’ <ul>après le point de vue d’une grande partie
-		de vos lecteurs, dont</ul> les caquets au sujet de vous et de vos ecrits ne parviennent jamais
-		jusqu’a vous. Je n’aurois pas crú, que cela pourroit te faire quelque peine, je ne te l’ ai
-		communiqué que pour sonder tes façons d’envisager ces choses lá, pour pouvoir a l’ avenir dire
-		quelque chose de plus raisonnable la dessuzis. Voila mes intentions, <ul>j’ai tout employé de</ul>
-		supprimer cela et je te puis <ul>assurer d’ avance</ul> qu’il ne verra jamais le jour. Nous en
-		parlerons davantage.</aq>
-	<line type="break" />
-	<align pos="right">Le.</align>
-	<sidenote pos="left" page="1" annotation="Am linken Rande, vertikal">
-		<aq>Remerciemens pour la peine que vous vous etes donnée avec les Lindaviana</aq>
-	</sidenote>
-	<page index="2" />
-	<note>linke Spalte</note>
-	<line type="break" />
-	<hand ref="12"><!-- Wie kann ich zwei Hände markieren, wenn das Element <hand> nur eine Referenz
-		vorsieht? -->
-		<pe>
-			<line type="break" />Wurstfresser aus dem Scheishaus. <line type="break" /><ul>Piphahn.</ul>
-  <line
-				type="break" />Margaretlin Madre de tuti I Santi <line type="break" /><ul>Galloch Schalloch</ul>
-  <line
-				type="break" />Leisekentritt. Schleicher. <line type="break" />Lasueangel. Laus. Angel. <line
-				type="break" />Hengst mensch von einer Prinzeß <line type="empty" />
-  <line type="empty" />
-  <note>rechte
-			Spalte</note>
-  <line type="break" /><del>Eulenspiegel <line type="break" />Fotzenhut <line
-					type="break" />Dreckfincke <line type="break" />Saumagen <line type="break" />Faselhans <line
-					type="break" />Blaufincke</del> – halb <nr> </nr>
-  <line type="break" />klein Hanswurst <line
-				type="break" />beym Freyschmausen <nr> </nr>
-  <line type="break" />Hundsfut Gast Rolle <line
-				type="break" />Ahlke Pöleke <nr> </nr> die dumm <nr> </nr> ist und war <line type="break" />
-			n’a <nr> </nr> … <nr> </nr>
-  <line type="break" />Kropfliesgen. von Harz <line type="break" />
-			Metze <nr> </nr> Dreyhaar Alte Hure Kupplerin <line type="break" />Schlinschlanschlodi, kommt
-			von Akademien <line type="break" />Metze Magen Regenwurm <line type="break" />Ganz Magen </pe>
-	</hand>
-</letterText>
-
-<!-- sample 4/15: letter 81 (start line 1512, block #81) -->
-<letterText letter="81"><page index="1" />
-  <line tab="1" />Gieb mir den gemißbrauchten Namen Gottes
-	zurück Herder! mein böser Genius hieß mich das schreiben <line tab="1" />Die Soldaten können noch
-	nicht gedruckt werden. Erröthen muß ich freilich über den Unverstand meines letzten Briefes. Gott
-	wo war ich, als ich ihn schrieb. <line tab="1" />Mache Dir keine Gedanken über die Ebbe und Fluth
-	meines Entschlusses. Es sind lauter Lokalverhältnisse die mich so peinigen. Die aber aufhören
-	werden. Ein Poet ist das unglücklichste Wesen unter der Sonnen. <line tab="1" />Grüsse Deine Frau.
-	Sollte ich von hier reisen oder sollte es einst Zeit seyn das grosse Trauerspiel aufzudecken, so
-	werd’ ich Dir vorher schreiben. Bis dahin muß ich noch stumm die Zähne zusammenbeissen und die
-	Leiden meines Volks in meinem verborgensten Herzen wüthen lassen. <line type="empty" />
-  <line
-		type="break" />Strasburg d 18ten Nvbr. 1775. <line type="break" /><align pos="right">Lenz.</align>
-  <sidenote
-		pos="left" page="1" annotation="am linken Rand, vertikal"> Solltest Du es einst künftig drucken
-	lassen, so muß auch alsdann mein Name im Anfange verschwiegen bleiben. Ich sag es Dir hier voraus,
-	falls ich es etwa alsdann zu erinnern vergessen sollte.</sidenote>
-  <line type="empty" />
-  <align
-		pos="center">
-		<note>Außenseite des zum Umschlag gefalteten Bogens, rotes Siegel:</note>
-	</align>
-  <page
-		index="4" />
-  <line type="break" /><address>Herrn <line type="break" />Herrn <ul>Herder</ul>
-  <line
-			type="break" />Consistorialrath <line type="break" />in <ul>Bückeburg.</ul></address>
-</letterText>
-
-<!-- sample 5/15: letter 108 (start line 1907, block #108) -->
-<letterText letter="108"><page index="1" /><hand ref="20">
-		<align pos="right">Empfangen. Den 12 Febr. 1776.</align>
-	</hand>
-  <line type="empty" />
-  <line
-		type="break" /><align pos="center">Bester Freund!</align>
-  <line type="empty" />
-  <line tab="1" />Eben
-	jetzt erfahre ich von Me. la Roche, was ich noch nie gewußt, daß sie einen Sohn bey Wiel. im Hause
-	gehabt. Ein Donnerschlag hätte mir nicht empfindlicher kommen können als eine Nachricht, die
-	soviel Beziehung auf meine Pasquinade hat, denn ich wollte eher alles in der Welt als diese Frau
-	oder etwas das ihr angeht beleidigen oder kompromittiren. Können Sie es also auf irgend eine Art
-	machen, daß die Wolken entweder gar nicht oder wenn dies <ul>unmöglich ist,</ul> statt der
-	deutschen Namen die Griechischen aus dem Aristophanes: <ul>Strepsiades und Phidippides</ul> (für
-	Leopold Sauk <aq>etc:</aq>) gesetzt und die Vertheidigung W. gegen die Wolken durchaus <ul>nicht
-	an diese</ul> angehängt, sondern <ul>detaschirt</ul> gedruckt werden als Palinodie nicht als
-	prämeditirte versteckte Apologie derselben. Wie gesagt ich bin über diese Nachricht ausser mir
-	denn sie zertrümmert mein ganzes Projeckt, das nichts weniger war als irgend eine Privatperson
-	durch meine Possenreissereyen zu beleidigen sondern nur W. aus seinen Schriften turlupiniren
-	wollte. <line type="break" /><align pos="right">L.</align>
-  <line type="empty" />
-  <line type="break" />
-  <sidenote
-		pos="left" page="1" annotation="am linken Rand, vertikal">
-		<line tab="1" />Wenn der Druck der Wolken ganz inhibirt werden kann, ich gebe was darum. Die
-	Palinodie kann und, muß deswegen doch in die Welt. Desto origineller ist sie. Man kann dazu
-	setzen, der V. habe den Druck der W. verhindert und weil viele sie im Mskpt. gelesen, dies zu
-	seiner Rechtfertigung geschrieben. Ich will nichts dafür.</sidenote>
-</letterText>
-
-<!-- sample 6/15: letter 134 (start line 2257, block #134) -->
-<letterText letter="134"><page index="1" /><hand ref="51">
-		<align pos="right">Empf. 23. März 1776.</align>
-	</hand>
-  <line type="empty" />
-  <line type="break" /><align
-		pos="center">Den 15ten Merz</align>
-  <line type="empty" />
-  <line tab="1" />Eine Reise deren Folgen
-	für mein Vaterland wichtiger als für mich seyn werden, zwingt mich bester der Menschen Sie zu
-	beschwören daß Sie bey Herrn Reich alles anwenden mir das Geld das er <ul>für die Soldaten</ul>
-	versprochen, sogleich durch Ihre gütige Vermittlung zu übermachen und zwar unter <ul>dem Couvert</ul> <ul>des
-	Herrn Merk in Darmstadt</ul> mit dem ich deswegen schon die gehörige Abrede genommen. Sollte es
-	auch unter der mir schmerzlichen Bedingung seyn, daß er das Stück schon auf Ostern bekannt machen
-	müßte. <line tab="1" />Ich brauche Geld nöthiger als das Leben und das zu einem entscheidenden
-	Augenblick der hernach nicht wiederkommt. Könnt’ ich auch für die andere Piece etwas vorausbezahlt
-	bekommen von der Ihnen Boje gesagt haben wird so geschäh mir <ul>auf ewig</ul> eine Wohlthat. Ich
-	bin auf der Hälfte des Weges der meine Laufbahn endet – und komme zu kurz. Helfen Sie! <line
-		type="empty" />
-  <line type="break" /><align pos="right">Ihrem <line type="break" />aufs Äusserste
-	gebrachten <line type="break" />JMRLenz.</align>
-  <line type="empty" />
-  <line type="break" />Richten
-	Sie den Brief nur an Herrn Merk in Darmstadt. <sidenote pos="left" page="1"
-		annotation="am linken Rande, vertikal">
-		<line tab="1" />könnte es aufs späteste in 14 Tagen da seyn. Verzeyhen Sie das erste und
-	letztemal daß mich die Noth zwingt in dem <ul>Grad unbescheiden</ul> zu seyn. Wie werd ichs in
-	meinem ganzen Leben gut machen?</sidenote>
-  <page index="2" />
-  <line type="break" /><address>Herrn <line
-			type="break" />Herrn Leibarzt <line type="break" /><ul>Zimmermann</ul>
-  <line type="break" />in <ul>
-	Hannover</ul></address>
-</letterText>
-
-<!-- sample 7/15: letter 161 (start line 2600, block #161) -->
-<letterText letter="161">
-	<page index="1" />
-	<hand ref="9">
-		<line tab="1" />Mich freut’s liebster Mann wenn es Ihnen wohl gehet. Ihr Briefgen habe erhalten
-		und ihre aufträge sind besorgt bis auf H: Fibich den ich noch nicht gesehen habe. Herr Prof.
-		Koch sagt mir Sie hätten ein Buch von der Bibliothek, ich dachte Sie hätten alle nach Hause
-		geschickt: Er hat es aber doch nicht zurück begehrt. Ich denke Sie kommen bald wieder wann nicht
-		allenfalls eine beßere <aq>vocation</aq> Sie uns weg kapert. Viele<del>n</del> Empfehlungen an
-		meinen Liebsten Goethe, H. V. Knebel, Graf Stollberg und unbekannter weis an Hn. Hofrath
-		Wieland. Hetzler hat mir den 1ten Bogen von meinen Abhandlungen zugeschickt Sie werden auf die
-		Meße fertig. Lieben Sie mich <line type="break" /><align pos="right">Saltzmann</align>
+			type="break" tab="7" /><align pos="right">VerEhrungswürdigster Gönner!</align>
   <line
 			type="empty" />
-  <line type="break" />Strasburg den 16ten Apr: <ul>1776.</ul></hand>
-	<page index="2" />
-	<line type="empty" />
-	<line type="break" />
-	<hand ref="11">D 16. Apr. 76. <line type="empty" />
-  <line tab="1" />Laß mich mit ein paar Worten
-		dieß Blatt profaniren, meine Liebe zu Dir mag's wieder heiligen. Meine Seele frohlockt drob daß
-		Dirs wohl geht. Deine Grüße sind ausgericht. Alle grüßen Dich wieder und sind herzlich froh daß
-		sie drüber in die Höh springen möchten wann sie hören daß Du glücklich bist. <aq>Mslle.</aq>
-		König. Lauthin. Fibich. Zimmermann. Mechel. <aq>Spener. Sano.</aq> Prinz grüßen Dich. <line
-			tab="1" />Hier ist ein Brief aus dem Philanthr. von Simon und Schweigh: es soll eine <aq>
-		Vocation</aq> drinn seyn für Herrn Lentz den man zum Schriftsteller fürs <aq>Philanth.</aq>
-		wünscht. Schreibst Du ihnen Antwort, so gieb ihnen meinen Gruß ich werd ihnen bald auch
-		schreiben. <line tab="1" />Wann ich die Woche das Pack aus Zürich nicht bekommen werde, so
-		schick ich Dir Deine verlangten Strasb. Manuscripte und machs mit den Briefen wie Du verlangst. <line
-			tab="1" />Nicht mit meinem Namen aber desto mehr mit meinem Herzen ehre und liebe ich alle
-		verdienstvollen Männer. Insonders sag Dir wieder mit der wärmsten und immerbleibenden
-		Zärtlichkeit daß ich bin Dein Röderer. <line tab="1" />Hastu noch nicht 2 Briefe von mir kriegt,
-		der eine auf Darmstadt an Hn. Merk, der andere nach Weimar, in dem ich Dir sage daß Fräulein von
-		Waldner mit Herrn von Oberkirch den 1sten April um 12 Uhr in der Neuen Kirch <aq>copulirt</aq>
-		worden sind.</hand>
-</letterText>
+  <line
+			type="empty" />
+  <line type="empty" /> Ew. HochEdelgebh: haben mich durch die neue Probe von
+		Dero schätzbaren Gewogenheit ausserorndtlich beschämt. Meine Feder ist zu schwach, Denenselben
+		die regen Empfindungen meines Herzens darüber zu schildern. Ich weiß Ew. HochEdelgebh: meine
+		Dankbegierde auf keine andere Art an den Tag zu legen, als daß ich meine gestrigen Wünsche für
+		Dero Wohlseyn wiederhole, und die gütige Vorsicht um die Erhörung derselben anflehe. Der Herr
+		überschütte Dieselben und Dero werthes Hauß im künftigen Jahr mit tausend Seegen und Heil. Er
+		erhalte Ew. HochEdelgebh: bis zu den spätesten Zeiten im ersprießlichsten Wohlergehen. Er
+		bewahre Ew. HochEdelgebh: für alle wiedrige Zufälle in den künftigen Jahren, und <page index="2" />lasse
+		mich noch lange das Glük geniessen, Dieselben in dem blühendsten Wohlstande zu sehen, und mich
+		mit dem erkenntlichsten Herzen nennen zu dürfen <line type="empty" />
+  <line type="break" /><align
+			pos="right">HochEdelgebohrner Hochgelahrter Herr Secretair <line type="break" tab="7" />Verehrungswürdigster
+		Gönner <line type="break" tab="7" />Ew. HochEdelgebh:</align>
+  <line type="empty" />
+  <line
+			type="empty" />
+  <line type="empty" />
+  <line type="empty" /> Von Hause, d. 2 Jenner, 1765. <line
+			type="empty" />
+  <align pos="right">gehorsamsten Diener <line type="break" />Jacob Michael
+		Reinhold Lenz</align>
+	</letterText>
 
-<!-- sample 8/15: letter 188 (start line 3052, block #188) -->
-<letterText letter="188"><page index="1" />
-  <line tab="1" />Wie es zugeht lieber Lavater! daß ich das
-	bewußte Bild noch nicht erhalte, da Du es doch Rödern für mich zugeschickt haben willst, begreiffe
-	ich nicht, macht mir aber viele Herzensquaal. Das einzige worinn ich auf der Welt (ausser eurer
-	Freundschaft) einen Werth setze, das einzige das mich in einer selbstgewählten Einsamkeit von der
-	ganzen Weit vergessen, erhalten sollte, zum Besten manches guten Menschen erhalten – soll ich denn
-	durchaus auf äusserste gebracht seyn. Ich verlange nichts, fodere nichts als einen Schatten –
-	einen Schatten der mich allein an diese Welt binden kann die mich in allen meinen Verhältnissen
-	peinigt. Ich will nicht müssig gehen in meiner Einöde, aber ich muß etwas haben das meine Kräfte
-	aufrecht erhält, das mich dem grossen Ziel entgegenspornt um des willen ich nur noch lebe. Ich
-	weiß sehr wohl daß dies <ul>Schatten,</ul> daß es ein Traum, daß es Betrug ist, aber laß – wenn es
-	nur seine Wirkung <sidenote pos="left" page="1"
-		annotation="am linken Rand der ersten Seite, vertikal">thut. Und wenn die vorher bestimmten
-	Schläge durch die unsichtbaren Mächte die mich brauchen <insertion pos="top">wollen</insertion>,
-	geschehen sind: was ist darnach an dem Instrument gelegen! <del>Das vermuthlich zum Unglück
-	bestimmt war.</del> Wende um</sidenote>
+	<!-- sample 2/15: letter 28 (start line 567, block #28) -->
+	<letterText letter="28"><page index="1" />
+  <line tab="1" />Mein Schatten soll Ihnen Rö– schiken ich
+		bin froh mich Ihnen als Physiognom nur im Profil zeigen zu dürfen, von meinem Brustbild machte
+		Ihnen die <ul>Güte Ihres Herzens</ul> eine viel zu vortheilhafte Zeichnung. Dafür bin ich aber
+		Herz genug gewesen, das Ihrige an meine Lippen zu drüken u: einen Wunsch gen Himmel zu schiken,
+		den Mann von Angesicht zu sehen, mit dem ich einen Briefwechsel scheüe, bis ich ihn inniger u:
+		vertrauter – führen kann – das heißt bis Ihre <ul>gute</ul> Meynung von mir nicht mehr Vortheil
+		ist. <line tab="1" />Ich bin den Armen eines Vaters entschlüpft, der so redlich dachte als Sie,
+		obgleich nicht so aufgeklärt. Seyen Sie mein Vater! Lenz. </letterText>
+
+	<!-- sample 3/15: letter 54 (start line 1123, block #54) -->
+	<letterText letter="54">
+		<page index="1" />
+		<line tab="1" />
+		<aq>vous pouvez vous fier a ma parole d’honneur que ladite feuille ne sera jamais publiée avec <ul>ma
+			bonne volonté.</ul> Aussi n’etoit elle ecrite qu’ <ul>après le point de vue d’une grande
+				partie
+				de vos lecteurs, dont</ul> les caquets au sujet de vous et de vos ecrits ne parviennent
+			jamais jusqu’a vous. Je n’aurois pas crú, que cela pourroit te faire quelque peine, je ne te
+			l’ ai communiqué que pour sonder tes façons d’envisager ces choses lá, pour pouvoir a l’
+			avenir dire quelque chose de plus raisonnable la dessuzis. Voila mes intentions, <ul>j’ai tout
+			employé de</ul> supprimer cela et je te puis <ul>assurer d’ avance</ul> qu’il ne verra jamais
+			le jour. Nous en parlerons davantage.</aq>
+		<line type="break" />
+		<align pos="right">Le.</align>
+		<sidenote pos="left" page="1" annotation="Am linken Rande, vertikal">
+			<aq>Remerciemens pour la peine que vous vous etes donnée avec les Lindaviana</aq>
+		</sidenote>
+		<page index="2" />
+		<note>linke Spalte</note>
+		<line type="break" />
+		<hand ref="12"><!-- Wie kann ich zwei Hände markieren, wenn das Element <hand> nur eine Referenz
+		vorsieht? -->
+			<pe>
+				<line type="break" />Wurstfresser aus dem Scheishaus. <line type="break" /><ul>Piphahn.</ul>
+  <line
+					type="break" />Margaretlin Madre de tuti I Santi <line type="break" /><ul>Galloch
+					Schalloch</ul>
+  <line
+					type="break" />Leisekentritt. Schleicher. <line type="break" />Lasueangel. Laus. Angel. <line
+					type="break" />Hengst mensch von einer Prinzeß <line type="empty" />
+  <line type="empty" />
+  <note>rechte
+				Spalte</note>
+  <line type="break" /><del>Eulenspiegel <line type="break" />Fotzenhut <line
+						type="break" />Dreckfincke <line type="break" />Saumagen <line type="break" />Faselhans <line
+						type="break" />Blaufincke</del> – halb <nr> </nr>
+  <line type="break" />klein Hanswurst <line
+					type="break" />beym Freyschmausen <nr> </nr>
+  <line type="break" />Hundsfut Gast Rolle <line
+					type="break" />Ahlke Pöleke <nr> </nr> die dumm <nr> </nr> ist und war <line type="break" />
+				n’a <nr> </nr> … <nr> </nr>
+  <line type="break" />Kropfliesgen. von Harz <line type="break" />
+				Metze <nr> </nr> Dreyhaar Alte Hure Kupplerin <line type="break" />Schlinschlanschlodi,
+				kommt von Akademien <line type="break" />Metze Magen Regenwurm <line type="break" />Ganz
+				Magen </pe>
+		</hand>
+	</letterText>
+
+	<!-- sample 4/15: letter 81 (start line 1512, block #81) -->
+	<letterText letter="81"><page index="1" />
+  <line tab="1" />Gieb mir den gemißbrauchten Namen Gottes
+		zurück Herder! mein böser Genius hieß mich das schreiben <line tab="1" />Die Soldaten können
+		noch nicht gedruckt werden. Erröthen muß ich freilich über den Unverstand meines letzten
+		Briefes. Gott wo war ich, als ich ihn schrieb. <line tab="1" />Mache Dir keine Gedanken über die
+		Ebbe und Fluth meines Entschlusses. Es sind lauter Lokalverhältnisse die mich so peinigen. Die
+		aber aufhören werden. Ein Poet ist das unglücklichste Wesen unter der Sonnen. <line tab="1" />Grüsse
+		Deine Frau. Sollte ich von hier reisen oder sollte es einst Zeit seyn das grosse Trauerspiel
+		aufzudecken, so werd’ ich Dir vorher schreiben. Bis dahin muß ich noch stumm die Zähne
+		zusammenbeissen und die Leiden meines Volks in meinem verborgensten Herzen wüthen lassen. <line
+			type="empty" />
+  <line
+			type="break" />Strasburg d 18ten Nvbr. 1775. <line type="break" /><align pos="right">Lenz.</align>
+  <sidenote
+			pos="left" page="1" annotation="am linken Rand, vertikal"> Solltest Du es einst künftig
+			drucken
+			lassen, so muß auch alsdann mein Name im Anfange verschwiegen bleiben. Ich sag es Dir hier
+		voraus,
+			falls ich es etwa alsdann zu erinnern vergessen sollte.</sidenote>
+  <line type="empty" />
+  <align
+			pos="center">
+			<note>Außenseite des zum Umschlag gefalteten Bogens, rotes Siegel:</note>
+		</align>
+  <page
+			index="4" />
+  <line type="break" /><address>Herrn <line type="break" />Herrn <ul>Herder</ul>
+  <line
+				type="break" />Consistorialrath <line type="break" />in <ul>Bückeburg.</ul></address>
+	</letterText>
+
+	<!-- sample 5/15: letter 108 (start line 1907, block #108) -->
+	<letterText letter="108"><page index="1" /><hand ref="20">
+			<align pos="right">Empfangen. Den 12 Febr. 1776.</align>
+		</hand>
+  <line type="empty" />
+  <line
+			type="break" /><align pos="center">Bester Freund!</align>
+  <line type="empty" />
+  <line tab="1" />Eben
+		jetzt erfahre ich von Me. la Roche, was ich noch nie gewußt, daß sie einen Sohn bey Wiel. im
+		Hause gehabt. Ein Donnerschlag hätte mir nicht empfindlicher kommen können als eine Nachricht,
+		die soviel Beziehung auf meine Pasquinade hat, denn ich wollte eher alles in der Welt als diese
+		Frau oder etwas das ihr angeht beleidigen oder kompromittiren. Können Sie es also auf irgend
+		eine Art machen, daß die Wolken entweder gar nicht oder wenn dies <ul>unmöglich ist,</ul> statt
+		der deutschen Namen die Griechischen aus dem Aristophanes: <ul>Strepsiades und Phidippides</ul>
+		(für Leopold Sauk <aq>etc:</aq>) gesetzt und die Vertheidigung W. gegen die Wolken durchaus <ul>nicht
+		an diese</ul> angehängt, sondern <ul>detaschirt</ul> gedruckt werden als Palinodie nicht als
+		prämeditirte versteckte Apologie derselben. Wie gesagt ich bin über diese Nachricht ausser mir
+		denn sie zertrümmert mein ganzes Projeckt, das nichts weniger war als irgend eine Privatperson
+		durch meine Possenreissereyen zu beleidigen sondern nur W. aus seinen Schriften turlupiniren
+		wollte. <line type="break" /><align pos="right">L.</align>
+  <line type="empty" />
+  <line
+			type="break" />
+  <sidenote
+			pos="left" page="1" annotation="am linken Rand, vertikal">
+			<line tab="1" />Wenn der Druck der Wolken ganz inhibirt werden kann, ich gebe was darum. Die
+		Palinodie kann und, muß deswegen doch in die Welt. Desto origineller ist sie. Man kann dazu
+		setzen, der V. habe den Druck der W. verhindert und weil viele sie im Mskpt. gelesen, dies zu
+		seiner Rechtfertigung geschrieben. Ich will nichts dafür.</sidenote>
+	</letterText>
+
+	<!-- sample 6/15: letter 134 (start line 2257, block #134) -->
+	<letterText letter="134"><page index="1" /><hand ref="51">
+			<align pos="right">Empf. 23. März 1776.</align>
+		</hand>
+  <line type="empty" />
+  <line
+			type="break" /><align
+			pos="center">Den 15ten Merz</align>
+  <line type="empty" />
+  <line tab="1" />Eine Reise deren
+		Folgen für mein Vaterland wichtiger als für mich seyn werden, zwingt mich bester der Menschen
+		Sie zu beschwören daß Sie bey Herrn Reich alles anwenden mir das Geld das er <ul>für die
+			Soldaten</ul> versprochen, sogleich durch Ihre gütige Vermittlung zu übermachen und zwar unter <ul>dem
+		Couvert</ul> <ul>des
+			Herrn Merk in Darmstadt</ul> mit dem ich deswegen schon die gehörige Abrede genommen. Sollte
+		es auch unter der mir schmerzlichen Bedingung seyn, daß er das Stück schon auf Ostern bekannt
+		machen müßte. <line tab="1" />Ich brauche Geld nöthiger als das Leben und das zu einem
+		entscheidenden Augenblick der hernach nicht wiederkommt. Könnt’ ich auch für die andere Piece
+		etwas vorausbezahlt bekommen von der Ihnen Boje gesagt haben wird so geschäh mir <ul>auf ewig</ul>
+		eine Wohlthat. Ich bin auf der Hälfte des Weges der meine Laufbahn endet – und komme zu kurz.
+		Helfen Sie! <line
+			type="empty" />
+  <line type="break" /><align pos="right">Ihrem <line type="break" />aufs
+		Äusserste gebrachten <line type="break" />JMRLenz.</align>
+  <line type="empty" />
+  <line
+			type="break" />Richten Sie den Brief nur an Herrn Merk in Darmstadt. <sidenote pos="left"
+			page="1"
+			annotation="am linken Rande, vertikal">
+			<line tab="1" />könnte es aufs späteste in 14 Tagen da seyn. Verzeyhen Sie das erste und
+		letztemal daß mich die Noth zwingt in dem <ul>Grad unbescheiden</ul> zu seyn. Wie werd ichs in
+		meinem ganzen Leben gut machen?</sidenote>
   <page index="2" />
-  <line tab="1" />Ich habe Deinen 2ten Teil
-	Physiognomik nur flüchtig mit dem Herzog durchlauffen können, ihn bey manchen Stellen aufmerksam
-	gemacht, ihm vorgelesen und mich gefreut. Sobald ich Ruhe finde geh ich es mit geweyhter Seele
-	durch, jetzt bin ich auch selbst dazu unfähig. Du bist der Einzige dem ich diese Art meiner
-	Existenz klagen kann, und nicht einmal darinn finde ich Trost. Eine gänzliche Taubheit meiner
-	Nerven, die nur wenn ich arbeite, mich alle Stacheln des Schmerzens fühlen lassen. Sage mir ein
-	Wort insbesondere, das wird wohlthun: aber um alles in der Welt schone mich nicht. Das macht bey
-	mir alles nur schlimmer. Ich bin auf den Punkt verschwiegener unangenehmer Nachrichten
-	scharfsichtiger als Du glaubst. Wahrheit ist immer der einzige Trost <insertion pos="top">für mich</insertion>
-	gewesen. <page index="3" />
-  <line tab="1" />Wie ich itzt so klein so schwach gegen ehemals mich
-	fühle. Gieb mir mehr <insertion pos="top">wirkliche</insertion> Schmerzen damit mich die
-	imaginairen nicht unterkriegen. O Schmerzen Schmerzen Mann Gottes, nicht Trost ist mein Bedürfniß.
-	Diese Taubheit allein kann ich nicht ertragen. <line tab="1" />Du bist in Carlsruhe gewesen, wie
-	mir Herr von Edelsheim, Minister am dortigen Hofe, der die Trauerpost von der russischen
-	Großfürstin Tode hieher brachte, erzählt hat. Wie hat dirs dort gefallen? Und solltest Du nicht
-	den Weg über Strasb. genommen haben? Und solltest Du niemand dort gesehen und gesprochen haben? <line
-		tab="1" />Bode ist eben von hier abgereist der Uebersetzer von Tristram Schandy. Goethens Erwin
-	ist mit der Musik von der Herzogin Mutter Ietzt hier aufgeführt worden. Frage doch Kaysern ob er
-	mich ganz vergessen hat? Hier warten soviele auf das Familiengemählde. <line tab="1" />Wie wir mit
-	Wiel. stehen, soll das Publikum nächstens öffentlich erfahren. Wie wärs, wenn er frömmer wäre als
-	wir alle? Ein wunderbarer Mann, dessen Erkenntniß mir hier sehr wohlthut. Im Musäum (doch sags ihm
-	nicht) laß ich bald etwas über ihn einrücken. Ich bin ihm sehr gut und seiner Frau u. Kindern. <line
-		type="break" /><align pos="right">L.</align>
+  <line type="break" /><address>Herrn <line
+				type="break" />Herrn Leibarzt <line type="break" /><ul>Zimmermann</ul>
+  <line type="break" />
+		in <ul>
+				Hannover</ul></address>
+	</letterText>
+
+	<!-- sample 7/15: letter 161 (start line 2600, block #161) -->
+	<letterText letter="161">
+		<page index="1" />
+		<hand ref="9">
+			<line tab="1" />Mich freut’s liebster Mann wenn es Ihnen wohl gehet. Ihr Briefgen habe
+			erhalten und ihre aufträge sind besorgt bis auf H: Fibich den ich noch nicht gesehen habe.
+			Herr Prof. Koch sagt mir Sie hätten ein Buch von der Bibliothek, ich dachte Sie hätten alle
+			nach Hause geschickt: Er hat es aber doch nicht zurück begehrt. Ich denke Sie kommen bald
+			wieder wann nicht allenfalls eine beßere <aq>vocation</aq> Sie uns weg kapert. Viele<del>n</del>
+			Empfehlungen an meinen Liebsten Goethe, H. V. Knebel, Graf Stollberg und unbekannter weis an
+			Hn. Hofrath Wieland. Hetzler hat mir den 1ten Bogen von meinen Abhandlungen zugeschickt Sie
+			werden auf die Meße fertig. Lieben Sie mich <line type="break" /><align pos="right">Saltzmann</align>
+  <line
+				type="empty" />
+  <line type="break" />Strasburg den 16ten Apr: <ul>1776.</ul></hand>
+		<page index="2" />
+		<line type="empty" />
+		<line type="break" />
+		<hand ref="11">D 16. Apr. 76. <line type="empty" />
+  <line tab="1" />Laß mich mit ein paar Worten
+			dieß Blatt profaniren, meine Liebe zu Dir mag's wieder heiligen. Meine Seele frohlockt drob
+			daß Dirs wohl geht. Deine Grüße sind ausgericht. Alle grüßen Dich wieder und sind herzlich
+			froh daß sie drüber in die Höh springen möchten wann sie hören daß Du glücklich bist. <aq>
+			Mslle.</aq> König. Lauthin. Fibich. Zimmermann. Mechel. <aq>Spener. Sano.</aq> Prinz grüßen
+			Dich. <line
+				tab="1" />Hier ist ein Brief aus dem Philanthr. von Simon und Schweigh: es soll eine <aq>
+			Vocation</aq> drinn seyn für Herrn Lentz den man zum Schriftsteller fürs <aq>Philanth.</aq>
+			wünscht. Schreibst Du ihnen Antwort, so gieb ihnen meinen Gruß ich werd ihnen bald auch
+			schreiben. <line tab="1" />Wann ich die Woche das Pack aus Zürich nicht bekommen werde, so
+			schick ich Dir Deine verlangten Strasb. Manuscripte und machs mit den Briefen wie Du
+			verlangst. <line
+				tab="1" />Nicht mit meinem Namen aber desto mehr mit meinem Herzen ehre und liebe ich alle
+			verdienstvollen Männer. Insonders sag Dir wieder mit der wärmsten und immerbleibenden
+			Zärtlichkeit daß ich bin Dein Röderer. <line tab="1" />Hastu noch nicht 2 Briefe von mir
+			kriegt, der eine auf Darmstadt an Hn. Merk, der andere nach Weimar, in dem ich Dir sage daß
+			Fräulein von Waldner mit Herrn von Oberkirch den 1sten April um 12 Uhr in der Neuen Kirch <aq>
+			copulirt</aq> worden sind.</hand>
+	</letterText>
+
+	<!-- sample 8/15: letter 188 (start line 3052, block #188) -->
+	<letterText letter="188"><page index="1" />
+  <line tab="1" />Wie es zugeht lieber Lavater! daß ich
+		das bewußte Bild noch nicht erhalte, da Du es doch Rödern für mich zugeschickt haben willst,
+		begreiffe ich nicht, macht mir aber viele Herzensquaal. Das einzige worinn ich auf der Welt
+		(ausser eurer Freundschaft) einen Werth setze, das einzige das mich in einer selbstgewählten
+		Einsamkeit von der ganzen Weit vergessen, erhalten sollte, zum Besten manches guten Menschen
+		erhalten – soll ich denn durchaus auf äusserste gebracht seyn. Ich verlange nichts, fodere
+		nichts als einen Schatten – einen Schatten der mich allein an diese Welt binden kann die mich in
+		allen meinen Verhältnissen peinigt. Ich will nicht müssig gehen in meiner Einöde, aber ich muß
+		etwas haben das meine Kräfte aufrecht erhält, das mich dem grossen Ziel entgegenspornt um des
+		willen ich nur noch lebe. Ich weiß sehr wohl daß dies <ul>Schatten,</ul> daß es ein Traum, daß
+		es Betrug ist, aber laß – wenn es nur seine Wirkung <sidenote pos="left" page="1"
+			annotation="am linken Rand der ersten Seite, vertikal">thut. Und wenn die vorher bestimmten
+		Schläge durch die unsichtbaren Mächte die mich brauchen <insertion pos="top">wollen</insertion>,
+		geschehen sind: was ist darnach an dem Instrument gelegen! <del>Das vermuthlich zum Unglück
+		bestimmt war.</del> Wende um</sidenote>
+  <page index="2" />
+  <line tab="1" />Ich habe Deinen 2ten
+		Teil Physiognomik nur flüchtig mit dem Herzog durchlauffen können, ihn bey manchen Stellen
+		aufmerksam gemacht, ihm vorgelesen und mich gefreut. Sobald ich Ruhe finde geh ich es mit
+		geweyhter Seele durch, jetzt bin ich auch selbst dazu unfähig. Du bist der Einzige dem ich diese
+		Art meiner Existenz klagen kann, und nicht einmal darinn finde ich Trost. Eine gänzliche
+		Taubheit meiner Nerven, die nur wenn ich arbeite, mich alle Stacheln des Schmerzens fühlen
+		lassen. Sage mir ein Wort insbesondere, das wird wohlthun: aber um alles in der Welt schone mich
+		nicht. Das macht bey mir alles nur schlimmer. Ich bin auf den Punkt verschwiegener unangenehmer
+		Nachrichten scharfsichtiger als Du glaubst. Wahrheit ist immer der einzige Trost <insertion
+			pos="top">für mich</insertion> gewesen. <page index="3" />
+  <line tab="1" />Wie ich itzt so
+		klein so schwach gegen ehemals mich fühle. Gieb mir mehr <insertion pos="top">wirkliche</insertion>
+		Schmerzen damit mich die imaginairen nicht unterkriegen. O Schmerzen Schmerzen Mann Gottes,
+		nicht Trost ist mein Bedürfniß. Diese Taubheit allein kann ich nicht ertragen. <line tab="1" />Du
+		bist in Carlsruhe gewesen, wie mir Herr von Edelsheim, Minister am dortigen Hofe, der die
+		Trauerpost von der russischen Großfürstin Tode hieher brachte, erzählt hat. Wie hat dirs dort
+		gefallen? Und solltest Du nicht den Weg über Strasb. genommen haben? Und solltest Du niemand
+		dort gesehen und gesprochen haben? <line
+			tab="1" />Bode ist eben von hier abgereist der Uebersetzer von Tristram Schandy. Goethens
+		Erwin ist mit der Musik von der Herzogin Mutter Ietzt hier aufgeführt worden. Frage doch Kaysern
+		ob er mich ganz vergessen hat? Hier warten soviele auf das Familiengemählde. <line tab="1" />Wie
+		wir mit Wiel. stehen, soll das Publikum nächstens öffentlich erfahren. Wie wärs, wenn er frömmer
+		wäre als wir alle? Ein wunderbarer Mann, dessen Erkenntniß mir hier sehr wohlthut. Im Musäum
+		(doch sags ihm nicht) laß ich bald etwas über ihn einrücken. Ich bin ihm sehr gut und seiner
+		Frau u. Kindern. <line
+			type="break" /><align pos="right">L.</align>
   <page index="4" />
   <line type="empty" />
   <line
-		type="break" /><address>Herrn <line type="break" />Herrn <dul>JC. Lavater</dul>
+			type="break" /><address>Herrn <line type="break" />Herrn <dul>JC. Lavater</dul>
   <line
-			type="break" />Pfarrer am Waysenhause <line type="break" />zu <ul>Zürich</ul></address>
-</letterText>
+				type="break" />Pfarrer am Waysenhause <line type="break" />zu <ul>Zürich</ul></address>
+	</letterText>
 
-<!-- sample 9/15: letter 214 (start line 3486, block #214) -->
-<letterText letter="214"><page index="1" />
+	<!-- sample 9/15: letter 214 (start line 3486, block #214) -->
+	<letterText letter="214"><page index="1" />
   <line tab="1" />ich hab’ Euch versprochen es Euch sauer
-	zu machen, Klinger, ja Maler Müller und Wagner selbst, den recht sehr schätze. Nehmt Euch also in
-	Acht vor mir, parirt ja wohl und wenn Ihr Blöße findet, so stoßt hinein auf mich wie ihr wollt und
-	wie ihr könnt. Göthe hat ein Pasquill von mir, worin Euch allen die Köpfe gewaschen werden – bis
-	ihr gescheuter seyd </letterText>
+		zu machen, Klinger, ja Maler Müller und Wagner selbst, den recht sehr schätze. Nehmt Euch also
+		in Acht vor mir, parirt ja wohl und wenn Ihr Blöße findet, so stoßt hinein auf mich wie ihr
+		wollt und wie ihr könnt. Göthe hat ein Pasquill von mir, worin Euch allen die Köpfe gewaschen
+		werden – bis ihr gescheuter seyd </letterText>
 
-<!-- sample 10/15: letter 241 (start line 3915, block #241) -->
-<letterText letter="241"><page index="1" />An keinem Orte keine Antwort. <line type="empty" />
+	<!-- sample 10/15: letter 241 (start line 3915, block #241) -->
+	<letterText letter="241"><page index="1" />An keinem Orte keine Antwort. <line type="empty" />
   <line
-		type="break" />Herr Cästner mündliche Antwort, viele <aq>Compli.</aq> nebst Versicherung der
-	besten Besorgung. <line type="empty" />
+			type="break" />Herr Cästner mündliche Antwort, viele <aq>Compli.</aq> nebst Versicherung der
+		besten Besorgung. <line type="empty" />
   <line type="break" />Herr Herder hat um 12 noch nicht
-	geschrieben will bis weitere Gelegenheit versparen <line type="empty" />
+		geschrieben will bis weitere Gelegenheit versparen <line type="empty" />
   <line type="break" />Herrn
-	Göthe habe eigenhändig Ihren Brief gegeben, auch ohne Antwort. <line type="empty" />
+		Göthe habe eigenhändig Ihren Brief gegeben, auch ohne Antwort. <line type="empty" />
   <line
-		type="break" />Philip habe auf 3 mal nicht angetrofen und Bothenfrau, will – oder kann nicht
-	länger warten. <line type="empty" />
+			type="break" />Philip habe auf 3 mal nicht angetrofen und Bothenfrau, will – oder kann nicht
+		länger warten. <line type="empty" />
   <line type="break" />innliegend etwas, u. da es ein
-	Hofbedienter gebracht. <insertion pos="top">vermuthe</insertion> daß solches von Herrn Göthe sei u
-	etwan bei Durchl. Herzog geschrieben ist. <line type="empty" />
-  <line type="break" />Der Schneider
-	ist nicht fertig. Philip hat es vielleicht vergessen Dürfte ich Ihnen ersuchen, alle Ihre Commiss.
-	ohne <aq>Compliments</aq>
+		Hofbedienter gebracht. <insertion pos="top">vermuthe</insertion> daß solches von Herrn Göthe sei
+		u etwan bei Durchl. Herzog geschrieben ist. <line type="empty" />
+  <line type="break" />Der
+		Schneider ist nicht fertig. Philip hat es vielleicht vergessen Dürfte ich Ihnen ersuchen, alle
+		Ihre Commiss. ohne <aq>Compliments</aq>
   <line type="break" />
-  <line type="break" />an mich zu schicken. Jeder Tag
-	da ich die Bothenfrau vermuthe ist vor mich ein Freuden Tag. Seyn Sie deß versichert. Leben Sie
-	wohl. <page index="2" />
+  <line type="break" />an mich zu
+		schicken. Jeder Tag da ich die Bothenfrau vermuthe ist vor mich ein Freuden Tag. Seyn Sie deß
+		versichert. Leben Sie wohl. <page index="2" />
   <line type="empty" />
-  <line type="break" />Der Brief ist nach Göttingen <aq>
-	francirt</aq> kostet aber nur 3 g. also 1 g. zurück. <line type="empty" />
+  <line type="break" />Der
+		Brief ist nach Göttingen <aq>
+			francirt</aq> kostet aber nur 3 g. also 1 g. zurück. <line type="empty" />
   <line type="break" />Viele
-	Compl. von Herrn von Kalb <line type="empty" />
+		Compl. von Herrn von Kalb <line type="empty" />
   <line type="break" /><align pos="right">
-		<aq>Schenck</aq>
-	</align>
-</letterText>
+			<aq>Schenck</aq>
+		</align>
+	</letterText>
 
-<!-- sample 11/15: letter 267 (start line 4227, block #267) -->
-<letterText letter="267"><page index="1" />
+	<!-- sample 11/15: letter 267 (start line 4227, block #267) -->
+	<letterText letter="267"><page index="1" />
   <line tab="1" />Lieber Hafner! wenn Du oder Herr Otto
-	unter Euren Pappieren etwas habt, dessen Bekanntmachung ihr wünschtet (vorausgesetzt daß es eurem
-	eigenen höchsten Ideal von dem entspricht, was über die Sache gesagt werden könne <line tab="1" />so
-	dürft Ihrs nur mit einem Briefe gerade an Wieland begleiten (Herrn Hofrath Wieland zu Weymar) er
-	macht sich eine Freude daraus alles zu <ul>befördern</ul> was im Elsaß Aufmerksamkeit verdient.
-	Euer Zutrauen zu ihm kann unbegrenzt seyn, trauet dieses einem zu, der ihn gesehen, und nicht aus
-	litterarischpolitischen Absichten sein Freund worden ist. <line tab="1" />Eine Kleinigkeit um die
-	ich Euch aber bitten will insofern ich Euch nach unserer alten Freundschaft und als geborne
-	Teutsche ansehe. Diese wäre, aus Gefälligkeit gegen Wieland den Namen unsers Vaterlandes künftig
-	hin nicht mit einem weichen D. sondern mit einem harten T zu schreiben. Ich habe seine Gründe
-	drüber gehört und mich aus eigner Willkühr entschlossen <page index="2" />dem alten Schulmeister
-	Gottsched zum Trotz und einem Mann wie Wieland zu Liebe mein Vaterland nicht mehr zu beschimpfen
-	wenn ich es von Deut einem Niedersächsischen Wort das „eine Nichtswürdigkeit“ bedeutet herleite,
-	da unser Stifter Teut hieß und die älteste Schreibart diese kleine aber liebenswürdige Grille
-	Wielands rechtfertigt. <line tab="1" />Wenn jemand Recht hat, Brüder! wer wollte einen Augenblick
-	anstehen ihm Recht zu geben. <line tab="1" />Solltet Ihr sonst jemand wissen, der nicht aus
-	Eigennutz, sondern aus inniger Liebe zur lautersten Ehre, aus Begierde den Edelsten unsers
-	Vaterlandes auf eine edle Art bekannt zu werden, etwas das dem Elsaß Ehre machte, in den Merkur
-	wollte rücken lassen, der es auf die geschwindeste und einzig mögliche Art an <page index="3" />unsern
-	Höfen und in unsern besten Gesellschaften bekannt macht, so werdt Ihr mir einen Gefallen thun, mir
-	Nachrichten von ihm zu geben, damit ich meine Einladung an ihn selber wenden könne. Adressirt die
-	Briefe nur: an Herrn Hofrath Schlosser, in Emmedingen, abzugeben an Herrn Lenz. <sidenote
-		pos="left" page="2" annotation="am linken Rand der zweiten Seite, vertikal">
-		<line tab="1" />Sehr gut wäre es wenn Ihr zu allem was Ihr einschicktet, hinzusetztet: <ul>aus
-	dem Elsaß,</ul> es mögte mit Eurem Namen oder mit andern Buchstaben unterzeichnet sein. Ramond
-	wird vermuthlich schon vom Herrn Aktuarius erfahren haben, daß Ihre Durchl. die Herzoginn Mutter
-	sein Drama, nachdem sie mich darum gefragt, behalten haben. <line tab="1" />Ganze <ul>grosse</ul>
-	Dramen würde Wiel. schwerlich in den Merkur rücken können, wohl aber kleine. Ueberhaupt bitte ich,
-	Euch kurz zu fassen.</sidenote>
-  <line tab="1" />Wenn Du zu Herrn von Türkheim gehst so mach ihm von
-	mir viele der schönsten Empfehlungen, nicht bloß wie sie seine persönlichen Liebenswürdigkeiten,
-	sondern hauptsächlich seine patriotische Wärme für seine Vaterstadt verdienen. Melde mir welch
-	einen Gang der Bürgerfreund und die Teutsche und Französische Gesellschaft in seinem Hause nehmen.
-	Herrn Blessig empfiehl mich gleichfalls und schreib mir von seinen Neuigkeiten. Ein Gleiches bitte
-	den Herren Ramond u. Matthieu zu thun wovon ich dem erstem Glück wünschen lasse, falls er schon
-	abgestiegen ist von seinem <ul>hölzernen</ul> Pferde. Vermuthlich wirst Du bald hinauf steigen und
-	dann einen glücklichen Ritt. <line type="break" />E. den 13ten. <line type="break" /><align
-		pos="right">L.</align>
+		unter Euren Pappieren etwas habt, dessen Bekanntmachung ihr wünschtet (vorausgesetzt daß es
+		eurem eigenen höchsten Ideal von dem entspricht, was über die Sache gesagt werden könne <line
+			tab="1" />so dürft Ihrs nur mit einem Briefe gerade an Wieland begleiten (Herrn Hofrath
+		Wieland zu Weymar) er macht sich eine Freude daraus alles zu <ul>befördern</ul> was im Elsaß
+		Aufmerksamkeit verdient. Euer Zutrauen zu ihm kann unbegrenzt seyn, trauet dieses einem zu, der
+		ihn gesehen, und nicht aus litterarischpolitischen Absichten sein Freund worden ist. <line
+			tab="1" />Eine Kleinigkeit um die ich Euch aber bitten will insofern ich Euch nach unserer
+		alten Freundschaft und als geborne Teutsche ansehe. Diese wäre, aus Gefälligkeit gegen Wieland
+		den Namen unsers Vaterlandes künftig hin nicht mit einem weichen D. sondern mit einem harten T
+		zu schreiben. Ich habe seine Gründe drüber gehört und mich aus eigner Willkühr entschlossen <page
+			index="2" />dem alten Schulmeister Gottsched zum Trotz und einem Mann wie Wieland zu Liebe
+		mein Vaterland nicht mehr zu beschimpfen wenn ich es von Deut einem Niedersächsischen Wort das
+		„eine Nichtswürdigkeit“ bedeutet herleite, da unser Stifter Teut hieß und die älteste Schreibart
+		diese kleine aber liebenswürdige Grille Wielands rechtfertigt. <line tab="1" />Wenn jemand Recht
+		hat, Brüder! wer wollte einen Augenblick anstehen ihm Recht zu geben. <line tab="1" />Solltet
+		Ihr sonst jemand wissen, der nicht aus Eigennutz, sondern aus inniger Liebe zur lautersten Ehre,
+		aus Begierde den Edelsten unsers Vaterlandes auf eine edle Art bekannt zu werden, etwas das dem
+		Elsaß Ehre machte, in den Merkur wollte rücken lassen, der es auf die geschwindeste und einzig
+		mögliche Art an <page index="3" />unsern Höfen und in unsern besten Gesellschaften bekannt
+		macht, so werdt Ihr mir einen Gefallen thun, mir Nachrichten von ihm zu geben, damit ich meine
+		Einladung an ihn selber wenden könne. Adressirt die Briefe nur: an Herrn Hofrath Schlosser, in
+		Emmedingen, abzugeben an Herrn Lenz. <sidenote
+			pos="left" page="2" annotation="am linken Rand der zweiten Seite, vertikal">
+			<line tab="1" />Sehr gut wäre es wenn Ihr zu allem was Ihr einschicktet, hinzusetztet: <ul>aus
+		dem Elsaß,</ul> es mögte mit Eurem Namen oder mit andern Buchstaben unterzeichnet sein. Ramond
+		wird vermuthlich schon vom Herrn Aktuarius erfahren haben, daß Ihre Durchl. die Herzoginn Mutter
+		sein Drama, nachdem sie mich darum gefragt, behalten haben. <line tab="1" />Ganze <ul>grosse</ul>
+		Dramen würde Wiel. schwerlich in den Merkur rücken können, wohl aber kleine. Ueberhaupt bitte
+		ich, Euch kurz zu fassen.</sidenote>
+  <line tab="1" />Wenn Du zu Herrn von Türkheim gehst so mach
+		ihm von mir viele der schönsten Empfehlungen, nicht bloß wie sie seine persönlichen
+		Liebenswürdigkeiten, sondern hauptsächlich seine patriotische Wärme für seine Vaterstadt
+		verdienen. Melde mir welch einen Gang der Bürgerfreund und die Teutsche und Französische
+		Gesellschaft in seinem Hause nehmen. Herrn Blessig empfiehl mich gleichfalls und schreib mir von
+		seinen Neuigkeiten. Ein Gleiches bitte den Herren Ramond u. Matthieu zu thun wovon ich dem
+		erstem Glück wünschen lasse, falls er schon abgestiegen ist von seinem <ul>hölzernen</ul>
+		Pferde. Vermuthlich wirst Du bald hinauf steigen und dann einen glücklichen Ritt. <line
+			type="break" />E. den 13ten. <line type="break" /><align
+			pos="right">L.</align>
   <sidenote pos="left" page="3"
-		annotation="am linken Rand der dritten Seite, vertikal">
-		<line tab="1" />Es steht bei Euch, Eure Namen zu Euren Ausarbeitungen herzugeben, oder vorher zu
-	versuchen welch ein Glück sie bei Kennern machen. Der Himmel walte über Euch und regiere Euch.</sidenote>
+			annotation="am linken Rand der dritten Seite, vertikal">
+			<line tab="1" />Es steht bei Euch, Eure Namen zu Euren Ausarbeitungen herzugeben, oder vorher
+		zu versuchen welch ein Glück sie bei Kennern machen. Der Himmel walte über Euch und regiere
+		Euch.</sidenote>
   <page
-		index="4" />
+			index="4" />
   <line type="empty" />
-  <line type="break" /><address>Herrn <line type="break" />Herrn <ul>
-	Hafner</ul>
+  <line type="break" /><address>Herrn <line type="break" />
+		Herrn <ul>
+				Hafner</ul>
   <line type="break" />Candidaten der Theologie <line type="break" />zu Strasburg <line
-			type="break" />gegenüber der neuen Kirche</address>
-</letterText>
+				type="break" />gegenüber der neuen Kirche</address>
+	</letterText>
 
-<!-- sample 12/15: letter 294 (start line 4983, block #294) -->
-<letterText letter="294"><page index="1" /><align pos="right">Bern d. 7 August 1777 <line
-			type="break" /><gr>εν πιστει</gr>.</align>
+	<!-- sample 12/15: letter 294 (start line 4983, block #294) -->
+	<letterText letter="294"><page index="1" /><align pos="right">Bern d. 7 August 1777 <line
+				type="break" /><gr>εν πιστει</gr>.</align>
   <line type="empty" />
   <line type="empty" />
   <line
-		tab="1" />Lavater! ich bin hier in einem theuren Wirthshause und ohne Geld – und erwarte von Dir
-	– daß Du mir gleich nach Ansicht dieses eine Louisd’or und einen Dukaten zuschickest Schiebst Dus
-	einen Posttag auf, so gerath ich in Schulden und andern Händeln die noch schlimmer sind. Wie ich
-	hie hergekommen, frag nicht, alles das läßt sich im Briefe nicht füglich sagen. – Ich hoffe
-	Schlosser hat Dir für mich schon Geld von Weygandt zugeschickt; ists geschehn, so wieg ich Deinem
-	Arm desto weniger, der mich in dem Fall in dem ich itzt bin, ganz allein stützen kann <line
-		tab="1" />Ich werde nicht in Zürich bleiben können. Ausgenommen daß vor der Hand – meine
-	Wirthschaftsumstände dort richten werde und mir deshalb ein acht Tage Aufenthalt in Deinem Hause
-	ausbitten muß. Kanns aber nicht seyn so sags nur ohne Rückhalt, <ul>denn Du bist ohnehin geplagt
-	genug.</ul> Deine jetzige Hülfe aber muß ich haben, weil auf die Schleunigkeit derselben eine
-	unendliche Menge Nebenumstände beruhet, die für mich eben sowohl von den besten als von den
-	entsetzlichsten Folgen seyn könnten <line type="break" /><align pos="right">Lenz.</align>
+			tab="1" />Lavater! ich bin hier in einem theuren Wirthshause und ohne Geld – und erwarte von
+		Dir – daß Du mir gleich nach Ansicht dieses eine Louisd’or und einen Dukaten zuschickest
+		Schiebst Dus einen Posttag auf, so gerath ich in Schulden und andern Händeln die noch schlimmer
+		sind. Wie ich hie hergekommen, frag nicht, alles das läßt sich im Briefe nicht füglich sagen. –
+		Ich hoffe Schlosser hat Dir für mich schon Geld von Weygandt zugeschickt; ists geschehn, so wieg
+		ich Deinem Arm desto weniger, der mich in dem Fall in dem ich itzt bin, ganz allein stützen kann <line
+			tab="1" />Ich werde nicht in Zürich bleiben können. Ausgenommen daß vor der Hand – meine
+		Wirthschaftsumstände dort richten werde und mir deshalb ein acht Tage Aufenthalt in Deinem Hause
+		ausbitten muß. Kanns aber nicht seyn so sags nur ohne Rückhalt, <ul>denn Du bist ohnehin geplagt
+		genug.</ul> Deine jetzige Hülfe aber muß ich haben, weil auf die Schleunigkeit derselben eine
+		unendliche Menge Nebenumstände beruhet, die für mich eben sowohl von den besten als von den
+		entsetzlichsten Folgen seyn könnten <line type="break" /><align pos="right">Lenz.</align>
   <sidenote
-		pos="left" page="1" annotation="Am linken Rand, vertikal">Ich habe mich hinter Sitten von
-	Hohenthal getrennt, von dem ich kein Geld habe nehmen wollen.</sidenote>
+			pos="left" page="1" annotation="Am linken Rand, vertikal">Ich habe mich hinter Sitten von
+		Hohenthal getrennt, von dem ich kein Geld habe nehmen wollen.</sidenote>
   <line tab="1" />Meine
-	Adresse ist in der Krone zu Bern. Ich verlasse mich drauf, aufs späteste künftigen Donnerstag als
-	den 14ten eine Antwort von Dir zu haben, wie mir Pestalotz der Jüngere, der diesen Brief mitnimmt,
-	versichert hat. – <line tab="1" />Gegenwärtigen Zettel laß doch Bester – Kaisern – aber nicht dem
-	Römischen – <ul>aufs geschwindeste</ul> zukommen. Vielleicht will er meine Adresse, die ich ihm zu
-	geben vergessen, alsdenn bitte sie ihm zu sagen. <aq>a rivederti.</aq>
-</letterText>
+		Adresse ist in der Krone zu Bern. Ich verlasse mich drauf, aufs späteste künftigen Donnerstag
+		als den 14ten eine Antwort von Dir zu haben, wie mir Pestalotz der Jüngere, der diesen Brief
+		mitnimmt, versichert hat. – <line tab="1" />Gegenwärtigen Zettel laß doch Bester – Kaisern –
+		aber nicht dem Römischen – <ul>aufs geschwindeste</ul> zukommen. Vielleicht will er meine
+		Adresse, die ich ihm zu geben vergessen, alsdenn bitte sie ihm zu sagen. <aq>a rivederti.</aq>
+	</letterText>
 
-<!-- sample 13/15: letter 321 (start line 5467, block #321) -->
-<letterText letter="321"><page index="1" /><ink ref="2">
-		<align pos="right">Riga d. 2ten 8br 1779 <insertion pos="top">a. St.</insertion></align>
-	</ink>
+	<!-- sample 13/15: letter 321 (start line 5467, block #321) -->
+	<letterText letter="321"><page index="1" /><ink ref="2">
+			<align pos="right">Riga d. 2ten 8br 1779 <insertion pos="top">a. St.</insertion></align>
+		</ink>
   <line
-		type="break" />Theurester Bester! <line type="empty" />
+			type="break" />Theurester Bester! <line type="empty" />
   <line tab="1" />Verzeyhen Sie die Form
-	dieses Briefs, wie die Zumuthung die er enthält und setzen beydes auf die Rechnung des strengsten
-	Vertrauens nicht in Ihre Freundschaft und Güte für mich, die, wie ich aus Proben ersehen
-	unbeschränkt ist – sondern in Ihre Gerechtigkeit und Wahrheitsliebe. Ich bitte diese Worte nicht
-	nach dem Herkommen gedruckter Stutzernomenklatur – sondern diesmal nach der Bedeutung der
-	Einsamkeit und ihres Entschlusses auf immer zu nehmen. Also fort für diesmal mit allen äußern
-	Verhältnissen, die die schnelle Sprache dessen was eine besondere Lage der Umstände jetzt auf mich
-	wirken muß, nur höchst unfruchtbar aufhalten würden. <line tab="1" />Ich komme eben von einem
-	Besuch in Gesellschaft meines lieben grauen Vaters und eines jüngeren Bruders, der Sie in Weymar
-	gesehen, wo ich auf die sonderbarste Art von der Welt in die Enge gebracht bin. Die zärtesten
-	Sayten meines Herzens und möcht ich sagen, einer gewissen Art von Ehre deren System ich eben nicht
-	recht von mir geben kann, sind angeschlagen und – kurz ich bin diesmal in großer Verlegenheit – –
-	die vielleicht durch diesen Brief noch vergrössert wird; aber genug, ich kann mir nicht helfen. Es
-	ist lange vor meiner Ankunft in Riga von einer Besetzung des nur halb erledigten Rektorats der
-	Dohmschule (von dem Hr. D. Schlegel sich den Theologischen Theil vorbehält) die Rede gewesen. Mir
-	hatte man gleich bei meiner Ankunft ins Land verschiedene Vorschläge nach Petersburg gemacht, von
-	denen mein Herz, weiß ich aus was für Besorgnissen, zurücksteuerte, doch ohne sie ganz aufzugeben.
-	Ein Gönner meines Schwagers <page index="2" />ein Edelmann der es auch ohne Geburt seyn würde, den
-	soll ich sagen sein Herz oder sein Geschmak der auf Ambassaden bis nach Spanien, wohl hat
-	ausgebildet werden können, auch mir sehr anziehend machen – schon damals gemacht hatten, als er
-	von seinen ersten Reisen als blosser Cavalier durch Königsberg nach Hause zurückgieng; erscheint
-	in unsers Freund Hartknochs Laden. Außer dem Anzüglichen seiner Person, hielt ichs in Ansehung
-	meines Schwagers, der von dem Hause viel Güte genossen, für Pflicht, ihn – und zugleich dem Haupt
-	dieser Stadt, seinem Schwiegervater die Aufwartung zu machen. Ich beredte, weil er von einem
-	vorhabenden Besuch bey meinem Vater sprach, den Altgen mit dazu, ihm zuvorzukommen. Wir treffen
-	ihn nicht zu Hause, wohl aber den Hn. Bürgermeister, einen der thätigsten und ausgezeichnetsten
-	Patrioten der Stadt und – stellen Sie sich meine Verwirrung vor, als ganz unvorbereitet, ganz
-	überraschend für mich und vermuthlich für alle die gegenwärtig waren, mit der Naivität von der Sie
-	sich bey meinem Vater nur eine dunkle Vorstellung – auch Sie! machen können, er förmlich bey der
-	Schule für mich anspricht, und wenn ihnen ein Subjekt dazu fehlte, mich – unparteyisch – welch ein
-	Ausdruck – unparteyisch dazu empfielt. Herr Burgermeisters S. Miene die sich dabey sichtbar
-	veränderte, machte mir den Mann noch einmal so ehrwürdig, denn nun hatte ich wenigstens meiner
-	eignen Verlegenheit etwas zuzugesellen. Noch mehr aber seine langsame und geflissentlich <page
-		index="3" />überlegte Antwort: es sey deswegen an auswärtige Gelehrte geschrieben worden, von
-	denen zwey abgesagt, itzt steh man mit einem dritten in Traktaten habe aber auch zugleich an Sie –
-	geschrieben und wolle in dem Stück ganz und gar auf Ihre Empfehlung fussen. Itzt hätte mir wohl
-	werden sollen, und mir wards – aber nicht so ganz – ich gehe zu einem Freunde wo ich von andern in
-	das Fach hin einschlagenden Dingen sehr beunruhigt, aber ohne daß sie mich selbst angiengen, zu
-	sprechen hatte, komme zurück und will sehen, was unsers Hartknochs sehr üble Brust heute macht und
-	– find ihn an einer Post nach Leipzig die er expedirt, und mir Pappier und Feder hinlegt, wenn ich
-	auch an jemand schreiben wollte. – An wen anders als an Sie – – mich zu empfehlen? nicht doch –
-	Ihre Empfehlung zu erbitten, zu verbitten – auch nicht, kurz ich weiß selbst nicht was ich will,
-	was ich soll – – aber an wen anders kann, darf ich das schreiben als an Sie – Freund Goethe – hat
-	mich wohl vergessen – mag will wie ich sehe sich in keins meiner Angelegenheiten mehr mischen,
-	wird vielleicht durch jede Art meiner Zuschriften selber soll ich sagen beleidigt? – – doch gewiß
-	beunruhigt – und soll ich empfolen sein – wär ichs am liebsten von Ihnen. Guter Gott, aber Sie
-	kennen, wenn Sie mein Herz ja kennen, weder mein Geschick überhaupt noch zu einer solchen Stelle
-	in sonderheit. Soviel sag ich Ihnen frey und wills druken lassen, daß in <ul>meinem Vaterlande</ul>
-	mir eine solche Stelle die wünschenswertheste wäre. Und wem sollte sie es nicht seyn. Ich wollte
-	solang wenigstens an mir pressen <page index="4" />bis das was ich gutes und vortheilhaftes
-	draussen eingesogen, ausgedrükt wäre, mögte man hernach mit dem löchrichten Herzen machen was man
-	wollte. Bey alledem aber habe ich die Theologie – nicht gründlich studirt, kann auch keine grosse
-	Theologen auf die grosse Bühne der Welt schicken. Dafür aber hab ich mich ein wenig in der
-	Geschichte und Gesetzen meines Vaterlands umgesehen, die ich immer fleissiger mit Zuziehung der
-	erfahrensten Männer zu studieren gedenke, will dabey gern in dem bißgen Griechisch und modernen
-	Sprachen, was ich weiß, auch in der sogenannten schönen Kenntniß von Kunstwerken und Kunstsachen,
-	auch wenn der Adel, der fast den zahlreichsten Theil unsers Landes ausmacht und um Unterricht
-	verlegen ist, mit zu unsrer Bürgerschule gezogen werden soll, in besondern Stunden in dem
-	historischen Theil der alten und neuen Taktik Fortifikation u. s. f. soweit Unterricht geben, daß
-	er hernach praktischem Unterricht schneller nutzen kann, so auch in Staatsgeschichte und <ul>
-	Staatswirtschaft</ul> welches mir ein Hauptbedürfniß meines Vaterlands scheint – auch lateinische
-	Autoren lesen, und Redübungen mitbetreiben helfen, nach meinen Kräften – <line tab="1" />Wissen
-	Sie ein redlicheres, stärkeres und ausdaurenderes Subjekt für diese Anstalt deren Einrichtung so
-	wie die Stärke und Umfang seiner Nerven, Kräfte und erworbenen Anlagen Sie kennen, so bezeuge ich
-	hiemit vor Gott – den ich nicht leichtsinnig zum Zeugen nehmen mag – daß ich der Anstalt Glük
-	wünschen und mit dem Schmerz hier nicht haben nützen zu können mich auch a<tl></tl>hnen lernen
-	werde ohne einen Gedanken von <tl></tl>le den, Ihnen und Ihnen ähnlichen, mit voller warmer
-	Hochachtung gewiedmeten wegzugeben oder ärmer an <tl></tl>m Gefühl zu <sidenote pos="left"
-		page="4" annotation="am linken Rand, vertikal"> werden, mit dem ich auch schweigend mich
-	jederzeit und überall nennen werde <line type="break" /><align pos="right">Ihren <line
-				type="break" />gehorsamstergebensten <line type="break" />JMR Lenz.</align>
+		dieses Briefs, wie die Zumuthung die er enthält und setzen beydes auf die Rechnung des
+		strengsten Vertrauens nicht in Ihre Freundschaft und Güte für mich, die, wie ich aus Proben
+		ersehen unbeschränkt ist – sondern in Ihre Gerechtigkeit und Wahrheitsliebe. Ich bitte diese
+		Worte nicht nach dem Herkommen gedruckter Stutzernomenklatur – sondern diesmal nach der
+		Bedeutung der Einsamkeit und ihres Entschlusses auf immer zu nehmen. Also fort für diesmal mit
+		allen äußern Verhältnissen, die die schnelle Sprache dessen was eine besondere Lage der Umstände
+		jetzt auf mich wirken muß, nur höchst unfruchtbar aufhalten würden. <line tab="1" />Ich komme
+		eben von einem Besuch in Gesellschaft meines lieben grauen Vaters und eines jüngeren Bruders,
+		der Sie in Weymar gesehen, wo ich auf die sonderbarste Art von der Welt in die Enge gebracht
+		bin. Die zärtesten Sayten meines Herzens und möcht ich sagen, einer gewissen Art von Ehre deren
+		System ich eben nicht recht von mir geben kann, sind angeschlagen und – kurz ich bin diesmal in
+		großer Verlegenheit – – die vielleicht durch diesen Brief noch vergrössert wird; aber genug, ich
+		kann mir nicht helfen. Es ist lange vor meiner Ankunft in Riga von einer Besetzung des nur halb
+		erledigten Rektorats der Dohmschule (von dem Hr. D. Schlegel sich den Theologischen Theil
+		vorbehält) die Rede gewesen. Mir hatte man gleich bei meiner Ankunft ins Land verschiedene
+		Vorschläge nach Petersburg gemacht, von denen mein Herz, weiß ich aus was für Besorgnissen,
+		zurücksteuerte, doch ohne sie ganz aufzugeben. Ein Gönner meines Schwagers <page index="2" />ein
+		Edelmann der es auch ohne Geburt seyn würde, den soll ich sagen sein Herz oder sein Geschmak der
+		auf Ambassaden bis nach Spanien, wohl hat ausgebildet werden können, auch mir sehr anziehend
+		machen – schon damals gemacht hatten, als er von seinen ersten Reisen als blosser Cavalier durch
+		Königsberg nach Hause zurückgieng; erscheint in unsers Freund Hartknochs Laden. Außer dem
+		Anzüglichen seiner Person, hielt ichs in Ansehung meines Schwagers, der von dem Hause viel Güte
+		genossen, für Pflicht, ihn – und zugleich dem Haupt dieser Stadt, seinem Schwiegervater die
+		Aufwartung zu machen. Ich beredte, weil er von einem vorhabenden Besuch bey meinem Vater sprach,
+		den Altgen mit dazu, ihm zuvorzukommen. Wir treffen ihn nicht zu Hause, wohl aber den Hn.
+		Bürgermeister, einen der thätigsten und ausgezeichnetsten Patrioten der Stadt und – stellen Sie
+		sich meine Verwirrung vor, als ganz unvorbereitet, ganz überraschend für mich und vermuthlich
+		für alle die gegenwärtig waren, mit der Naivität von der Sie sich bey meinem Vater nur eine
+		dunkle Vorstellung – auch Sie! machen können, er förmlich bey der Schule für mich anspricht, und
+		wenn ihnen ein Subjekt dazu fehlte, mich – unparteyisch – welch ein Ausdruck – unparteyisch dazu
+		empfielt. Herr Burgermeisters S. Miene die sich dabey sichtbar veränderte, machte mir den Mann
+		noch einmal so ehrwürdig, denn nun hatte ich wenigstens meiner eignen Verlegenheit etwas
+		zuzugesellen. Noch mehr aber seine langsame und geflissentlich <page
+			index="3" />überlegte Antwort: es sey deswegen an auswärtige Gelehrte geschrieben worden, von
+		denen zwey abgesagt, itzt steh man mit einem dritten in Traktaten habe aber auch zugleich an Sie
+		– geschrieben und wolle in dem Stück ganz und gar auf Ihre Empfehlung fussen. Itzt hätte mir
+		wohl werden sollen, und mir wards – aber nicht so ganz – ich gehe zu einem Freunde wo ich von
+		andern in das Fach hin einschlagenden Dingen sehr beunruhigt, aber ohne daß sie mich selbst
+		angiengen, zu sprechen hatte, komme zurück und will sehen, was unsers Hartknochs sehr üble Brust
+		heute macht und – find ihn an einer Post nach Leipzig die er expedirt, und mir Pappier und Feder
+		hinlegt, wenn ich auch an jemand schreiben wollte. – An wen anders als an Sie – – mich zu
+		empfehlen? nicht doch – Ihre Empfehlung zu erbitten, zu verbitten – auch nicht, kurz ich weiß
+		selbst nicht was ich will, was ich soll – – aber an wen anders kann, darf ich das schreiben als
+		an Sie – Freund Goethe – hat mich wohl vergessen – mag will wie ich sehe sich in keins meiner
+		Angelegenheiten mehr mischen, wird vielleicht durch jede Art meiner Zuschriften selber soll ich
+		sagen beleidigt? – – doch gewiß beunruhigt – und soll ich empfolen sein – wär ichs am liebsten
+		von Ihnen. Guter Gott, aber Sie kennen, wenn Sie mein Herz ja kennen, weder mein Geschick
+		überhaupt noch zu einer solchen Stelle in sonderheit. Soviel sag ich Ihnen frey und wills druken
+		lassen, daß in <ul>meinem Vaterlande</ul> mir eine solche Stelle die wünschenswertheste wäre.
+		Und wem sollte sie es nicht seyn. Ich wollte solang wenigstens an mir pressen <page index="4" />bis
+		das was ich gutes und vortheilhaftes draussen eingesogen, ausgedrükt wäre, mögte man hernach mit
+		dem löchrichten Herzen machen was man wollte. Bey alledem aber habe ich die Theologie – nicht
+		gründlich studirt, kann auch keine grosse Theologen auf die grosse Bühne der Welt schicken.
+		Dafür aber hab ich mich ein wenig in der Geschichte und Gesetzen meines Vaterlands umgesehen,
+		die ich immer fleissiger mit Zuziehung der erfahrensten Männer zu studieren gedenke, will dabey
+		gern in dem bißgen Griechisch und modernen Sprachen, was ich weiß, auch in der sogenannten
+		schönen Kenntniß von Kunstwerken und Kunstsachen, auch wenn der Adel, der fast den zahlreichsten
+		Theil unsers Landes ausmacht und um Unterricht verlegen ist, mit zu unsrer Bürgerschule gezogen
+		werden soll, in besondern Stunden in dem historischen Theil der alten und neuen Taktik
+		Fortifikation u. s. f. soweit Unterricht geben, daß er hernach praktischem Unterricht schneller
+		nutzen kann, so auch in Staatsgeschichte und <ul>
+			Staatswirtschaft</ul> welches mir ein Hauptbedürfniß meines Vaterlands scheint – auch
+		lateinische Autoren lesen, und Redübungen mitbetreiben helfen, nach meinen Kräften – <line
+			tab="1" />Wissen Sie ein redlicheres, stärkeres und ausdaurenderes Subjekt für diese Anstalt
+		deren Einrichtung so wie die Stärke und Umfang seiner Nerven, Kräfte und erworbenen Anlagen Sie
+		kennen, so bezeuge ich hiemit vor Gott – den ich nicht leichtsinnig zum Zeugen nehmen mag – daß
+		ich der Anstalt Glük wünschen und mit dem Schmerz hier nicht haben nützen zu können mich auch a<tl></tl>hnen
+		lernen werde ohne einen Gedanken von <tl></tl>le den, Ihnen und Ihnen ähnlichen, mit voller
+		warmer Hochachtung gewiedmeten wegzugeben oder ärmer an <tl></tl>m Gefühl zu <sidenote
+			pos="left"
+			page="4" annotation="am linken Rand, vertikal"> werden, mit dem ich auch schweigend mich
+		jederzeit und überall nennen werde <line type="break" /><align pos="right">Ihren <line
+					type="break" />gehorsamstergebensten <line type="break" />JMR Lenz.</align>
+  <line
+				type="empty" />
+  <align pos="center">
+				<note>eingerahmt:</note>
+			</align>
+  <line type="break" />Mein Vater ist – für mich –
+		reich, so auch meine Geschwister. Daß also das nicht in Anschlag kommen darf.</sidenote>
+	</letterText>
+
+	<!-- sample 14/15: letter 347 (start line 6091, block #347) -->
+	<letterText letter="347"><page index="1" /><align pos="center">HochEdelgeborner Herr <line
+				type="break" />Insonders hochzuverehrender Herr Justizbürgermeister.</align>
   <line
 			type="empty" />
-  <align pos="center">
-			<note>eingerahmt:</note>
-		</align>
-  <line type="break" />Mein Vater ist – für mich – reich, so
-	auch meine Geschwister. Daß also das nicht in Anschlag kommen darf.</sidenote>
-</letterText>
-
-<!-- sample 14/15: letter 347 (start line 6091, block #347) -->
-<letterText letter="347"><page index="1" /><align pos="center">HochEdelgeborner Herr <line
-			type="break" />Insonders hochzuverehrender Herr Justizbürgermeister.</align>
-  <line type="empty" />
   <line
-		type="empty" />
+			type="empty" />
   <line type="empty" />
-  <line tab="1" />Die Abwesenheit des Hn. v. Liphardt hindert
-	mich selbst zu kommen, welches mir auf den ersten freyen Augenblick vorbehalte; da meine Eléven
-	itzt ganz allein meiner Aufsicht überlassen sind. <line tab="1" />Da ich eben an Hn. <aq>Nicolai</aq>
-	schreibe, so nehme mir die Freiheit, wenn Ew. HochEdelgebornen an ihn schreiben wollten, Ihnen
-	mein <aq>Couvert</aq> dazu anzubieten. Ich hoffe alsdenn nächstens, Ihnen von der Erfüllung seines
-	Versprechens etwas überbringen zu können, da ihn Dero Liebhaberey für seltene Manuscripte bekannt
-	ist. <line tab="1" />Mit vollkommenster Ehrerbietung nenne mich, nach gehorsamer Empfehlung <line
-		type="empty" />
+  <line tab="1" />Die Abwesenheit des Hn. v. Liphardt
+		hindert mich selbst zu kommen, welches mir auf den ersten freyen Augenblick vorbehalte; da meine
+		Eléven itzt ganz allein meiner Aufsicht überlassen sind. <line tab="1" />Da ich eben an Hn. <aq>
+		Nicolai</aq> schreibe, so nehme mir die Freiheit, wenn Ew. HochEdelgebornen an ihn schreiben
+		wollten, Ihnen mein <aq>Couvert</aq> dazu anzubieten. Ich hoffe alsdenn nächstens, Ihnen von der
+		Erfüllung seines Versprechens etwas überbringen zu können, da ihn Dero Liebhaberey für seltene
+		Manuscripte bekannt ist. <line tab="1" />Mit vollkommenster Ehrerbietung nenne mich, nach
+		gehorsamer Empfehlung <line
+			type="empty" />
   <line type="break" /><align pos="right">Ew. HochEdelgebornen <line type="break" />Meines
-	hochzuehrenden Herrn <line type="empty" />
+		hochzuehrenden Herrn <line type="empty" />
   <line type="empty" />
   <line type="break" />ganz
-	ergebenster Diener <line type="break" />J M R Lenz.</align>
+		ergebenster Diener <line type="break" />J M R Lenz.</align>
   <line type="empty" />
-  <line type="break" />Von
-	Hause den 28ten 10br. 1780. <page index="4" />
+  <line
+			type="break" />Von Hause den 28ten 10br. 1780. <page index="4" />
   <line type="empty" />
-  <line type="break" /><address>Sr.
-	HochEdelgebornen <line type="break" />dem Herrn Herrn K. F. Gadebusch <line type="break" />Hochachtbaren
-	Justiz-Bürgermeister der Kaiserlichen Stadt Derpt <line type="break" />in Dero Behausung.</address>
-</letterText>
+  <line
+			type="break" /><address>Sr. HochEdelgebornen <line type="break" />dem Herrn Herrn K. F.
+		Gadebusch <line type="break" />Hochachtbaren Justiz-Bürgermeister der Kaiserlichen Stadt Derpt <line
+				type="break" />in Dero Behausung.</address>
+	</letterText>
 
-<!-- sample 15/15: letter 374 (start line 6843, block #374) -->
-<letterText letter="374"><page index="1" /><align pos="right">d. Jenner 1792.</align>
+	<!-- sample 15/15: letter 374 (start line 6843, block #374) -->
+	<letterText letter="374"><page index="1" /><align pos="right">d. Jenner 1792.</align>
   <line
-		type="break" /><align pos="center">Hochwolgebohrner Herr <line type="break" />insonders
-	hochzuverehrender Gönner</align>
+			type="break" /><align pos="center">Hochwolgebohrner Herr <line type="break" />insonders
+		hochzuverehrender Gönner</align>
   <line type="empty" />
   <line type="empty" />
   <line type="empty" />
   <line
-		tab="1" />Ich habe Russische Zobelhändler aufgesucht, um sie aufzumuntern, eine Reise nach Dörpt
-	zu übernehmen, da ich weiß, daß der zahlreiche dasige Adel in der h.3. Köngismesse sich sonst mit
-	Pelzwerk von Frankreich aus Canada versieht und ich nicht begreiffe, warum ein solcher Handel
-	nicht mit Kaufleuten aus Moskau zu schliessen wäre. Allein ich ward krank über diese Jagd und da
-	mir das Ausgehen durch heftige Schmerzen gewehrt blieb, so glaubte wenigstens durch einige Zeilen
-	der Erinnemng genug zu thun, welche von Ew. Hochwolgeb. ersten Bekanntschaft auf der Schule in
-	fremde Länder mitnahm und wo ich nicht irre auf einem Conzert im Löwensternschen Hause so
-	überraschend angenehm in einem Jahrmarkt zu erneuren die Ehre hatte. Vielleicht reiset einer
-	unsrer hiesigen holländischen Kaufleute hinüber und nimmt diese Waare mit sich; es war mir
-	hauptsächlich daran gelegen, dem Liefländischen Adel welcher wie man mir gesagt, von der Akademie
-	der Wissenschaften Winke erhalten, daß die Monarchinn entweder in Dörpt oder in Pleskau, wo die
-	Ewst und Welika sich mit der Toropa vereinigen eine hohe Schule errichten wolle, einheimischen
-	Adel in den Landessprachen und Rechten unterrichten zu lassen, eh er die Fremde besucht, etwa <ul>zur
-	Einweyhung</ul> eines neuen Gebäudes, wie der <ul>Domantische</ul> Zauberpallast eines
-	verwünschten Prinzen in Pieskau seyn soll, Vorschub zu thun. Man sprach von einer Drukerey, die
-	aus Oberpalen hieher versetzt werden sollte, und in der That wäre Herr Past. Hupel, der sich so
-	verdient ums Vaterland gemacht, nach der Beschreibung Hn. Bakmeister in Petersb. von der alten
-	Akademie zu Derpt, der einzige Gelehrte der <ul>werth</ul> wäre, an der <ul>Stiftung</ul> einer
-	Universität Teil zu nehmen, da es ihm, wenn er sich etwa im Sommer oder Wintersemester dort
-	aufhalten wollte, an einem Adjunkt in Oberpalen oder auch in Pieskau oder Derpt nicht fehlen
-	sollte. <page index="2" />
-  <line tab="1" />Es ist hier ein Fürst Gholizin der in Liefland Güter hat
-	und von seiner Bekanntschaft weiß ich zwey liebenswürdige Gelehrte aus der Schweitz, die
-	vielleicht gegen vortheilhafte Anträge aus Liefland nicht unempfindlich seyn würden. Im
-	Vorbeigehen <aq>„oserois je bien demander, mon cher Baron, si Vous aviez quelques Iiaisons avec
-	une certaine Dame Douairière, Soeur de Ia Generale Kurganoffsky de Ia flotte à S. Petersbourg. Sa
-	Soeur, comme elle ne doit pas ignorer, s’est donné une superbe maison et je crois que Me. d’A **
-	feroit très bien, de lui confier une ou deux de ses filles, dont on m’a dit, qu’une avoit un
-	promis, Officier au corps des Cadets, et que j’ai eû I’honneur de voir chez Me. de K**. Le
-	scrupule comme si son fief de Ia couronne courroit risque en eloignant une de ses filles,
-	cesseroit bien vite parceque ces sortes de donations sont pour Ia vie de Ia Douairière. De plus,
-	ce jeune officier dont depuis mon sejour ici je n’ai Ia moindre nouvelle, se trouvera probablement
-	encore au corps, oú une 20taine de <ul>Livoniens</ul> sont élevés aux depens de I’Imperatrice. Ces
-	Livoniens en sort<ul>ant du</ul> corps, pourro<ul>ient con</ul>tinuer leurs études <ul>à Plesc</ul>ou,
-	et Mons. de Pr<ul>attje se</ul> faire un merite distingué, de les accompagner.“</aq>
-  <line tab="1" />Verzeihen
-	Ew. Hochwolgeb. daß ich alle Mißverständnisse zwischen Rußland und Liefland auf die Rechnung alter
-	Chronikenschreiber und Schulfüchse setze. Sie waren nicht viel besser als die Romanschreiber, die
-	bei den häuffigen Pressen in Deutschland sich wohl oft der seltsamen Anwendungen ihrer
-	Rittergeschichten von der runden Tafel nicht versehen würden. Die Schwürigkeiten der Sprache, die
-	durch Sitten, Gebräuche, Speisen sich gern möchten <ul>errathen</ul> lassen, wenn sie sich Feier
-	in der <page index="3" />Aussprache zu begehen scheuen, machen das einzige Mißverständniß. Die
-	Russische Geistlichkeit in Petersburg versteht sich sehr wohl mit der deutschen und wenn
-	Drukereyen in beiden Sprachen oder die Uebersetzung des nehmlichen Buchs in beyde – den Weg
-	öfneten, so würde man bei dem Russen des nehmlichen Nervensystems und Blutumlaufs, auch die
-	nehmlichen Gesinnungen antreffen. <line tab="1" />Ich befinde mich ein wenig in einer kritischen
-	Lage, welche meinen lieben Brüdern und Schwestern nicht unbekannt seyn kann. Man hält mich hier
-	überall für reich – da ich doch einen Vater habe, der bereits über dem Grabe schwebt, eine Wittwe
-	als Tochter mit ihren Kindern bei sich hat oder in Petersburg unterstützt und von den starken
-	Familien meiner übrigen wohlversorgten Geschwister gleichfalls in Anspruch genommen wird. – Es ist
-	schwürig, mit meinen Geschwistern Briefwechsel zu führen, denn da ein Prof. in Giessen mir die
-	Ehre erwiesen mich mit dem Romanschreiber – der aber in andem Aemtern dabei steht – Hn. Göthe in
-	eine Liste zu setzen, so suchen und finden sie in allen meinen Briefen nichts als unverständliche
-	Worte Poesie und Roman. Der Himmel wolle ihnen das wohlbekommen lassen und den Buchhandel in
-	Liefland vermehren, damit sie auch den berühmten Rousseau vom Fuß der Pedemontischen Gebirge zur
-	Ehre unsrer Nation in unsrer Sprache lesen können. Meine ziemlich ernsthafte Krankheit setzt
-	dismal allen launigten Nebenausschielenden Anspielungen Grenzen, unser Leben ist freilich auf
-	diesem Erdball nur allzuoft wunderbarer, als es sich das Hirn der Dichter und Leser von Gedichten
-	vorstellen mag. – – Ew. Hochwolgeb. Wollen mir meine Geschwätzigkeit als einem Kranken und zum
-	Jahrmarkte verzeihen da man gern viel spricht und ich hoffe, daß auch mein Bruder und Geschwister
-	das Glük haben werden, denenseihen aufzuwarten. Man spricht von neuen Magazinen die einige reiche
-	Entrepreneure von Metallgruben an verschiedenen Plätzen des Reichs errichten werden, welches <page
-		index="4" />da man in Liefland nur Branntwein nach Permien und Casan schikt, leicht zu einem
-	solidem Handel mit Brod und Gerstensaft Gelegenheit geben könnte, woran es in den Berggruben zu
-	mangeln scheint. Der Russische Tressenhandel würde z. B. nebst Kupfer zu Branntweinkesseln und
-	Eisen zu andern Kesseln, gegen Lieferungen an Grütze, Malz u. s. f. über Pleskau, Toropez und
-	Smolensk durch Agenten sehr wohl geführt werden, und manche Weitläuftigkeiten erspahren. Ich will
-	vom Leinwand und Strumpfhandel schweigen, der auch aus benachbarten Ländern geführt wird, und da
-	fast halb Rußland barfuß geht, bei Vereinigung der Düna mit dem Dnepr und der Moskwa mit vielem
-	Vortheil, nebst dasigen Lächsen und gesalzenem Fleisch gegen Sibirische Fische geführt werden
-	könnte, die man auf dem Wasser lebend erhalten kann. Sollten die Engländer mehr Bley und Zinn
-	einführen, daß mehr Küchengeräth angeschafft werden könnte und sich etwa ihres Plüsch und
-	Manchesterhandels wegen in Absicht der Geistlichen mit der <ul>Krone</ul> in Verhandlungen
-	einlassen, so würde der innere Handel auf den Liefländischen Märkten bald mehr Vergnügen machen,
-	als selbst der entfernte. Ich breche ab um Ew. Hochwohlgeb. als ein Kranker die aufrichtige
-	Achtung zu bezeugen, welche mir Ihr persönliches Bezeigen eingeflößt. Den Liphartischen Häusern
-	bezeige meine Ehrerbietung gleichfalls, und den jungen von Löwenstern bitte gelegentlich
-	beizubringen, daß ihr ehmaliger Hofmeister im Hause des D. <ul>Büsching</ul> in Berlin schon vor
-	mehrern Jahren den Schritt gethan, den wir alle einmal machen werden und welchem in diesen Tagen
-	auch bisweilen nahe war. <line type="break" /><align pos="right">Ew. Hochwolgebornen <line
-			type="break" />gehorsamer Diener <line type="break" />JMR Lenz.</align>
+			tab="1" />Ich habe Russische Zobelhändler aufgesucht, um sie aufzumuntern, eine Reise nach
+		Dörpt zu übernehmen, da ich weiß, daß der zahlreiche dasige Adel in der h.3. Köngismesse sich
+		sonst mit Pelzwerk von Frankreich aus Canada versieht und ich nicht begreiffe, warum ein solcher
+		Handel nicht mit Kaufleuten aus Moskau zu schliessen wäre. Allein ich ward krank über diese Jagd
+		und da mir das Ausgehen durch heftige Schmerzen gewehrt blieb, so glaubte wenigstens durch
+		einige Zeilen der Erinnemng genug zu thun, welche von Ew. Hochwolgeb. ersten Bekanntschaft auf
+		der Schule in fremde Länder mitnahm und wo ich nicht irre auf einem Conzert im Löwensternschen
+		Hause so überraschend angenehm in einem Jahrmarkt zu erneuren die Ehre hatte. Vielleicht reiset
+		einer unsrer hiesigen holländischen Kaufleute hinüber und nimmt diese Waare mit sich; es war mir
+		hauptsächlich daran gelegen, dem Liefländischen Adel welcher wie man mir gesagt, von der
+		Akademie der Wissenschaften Winke erhalten, daß die Monarchinn entweder in Dörpt oder in
+		Pleskau, wo die Ewst und Welika sich mit der Toropa vereinigen eine hohe Schule errichten wolle,
+		einheimischen Adel in den Landessprachen und Rechten unterrichten zu lassen, eh er die Fremde
+		besucht, etwa <ul>zur
+			Einweyhung</ul> eines neuen Gebäudes, wie der <ul>Domantische</ul> Zauberpallast eines
+		verwünschten Prinzen in Pieskau seyn soll, Vorschub zu thun. Man sprach von einer Drukerey, die
+		aus Oberpalen hieher versetzt werden sollte, und in der That wäre Herr Past. Hupel, der sich so
+		verdient ums Vaterland gemacht, nach der Beschreibung Hn. Bakmeister in Petersb. von der alten
+		Akademie zu Derpt, der einzige Gelehrte der <ul>werth</ul> wäre, an der <ul>Stiftung</ul> einer
+		Universität Teil zu nehmen, da es ihm, wenn er sich etwa im Sommer oder Wintersemester dort
+		aufhalten wollte, an einem Adjunkt in Oberpalen oder auch in Pieskau oder Derpt nicht fehlen
+		sollte. <page index="2" />
+  <line tab="1" />Es ist hier ein Fürst Gholizin der in Liefland Güter
+		hat und von seiner Bekanntschaft weiß ich zwey liebenswürdige Gelehrte aus der Schweitz, die
+		vielleicht gegen vortheilhafte Anträge aus Liefland nicht unempfindlich seyn würden. Im
+		Vorbeigehen <aq>„oserois je bien demander, mon cher Baron, si Vous aviez quelques Iiaisons avec
+		une certaine Dame Douairière, Soeur de Ia Generale Kurganoffsky de Ia flotte à S. Petersbourg.
+		Sa Soeur, comme elle ne doit pas ignorer, s’est donné une superbe maison et je crois que Me. d’A
+		** feroit très bien, de lui confier une ou deux de ses filles, dont on m’a dit, qu’une avoit un
+		promis, Officier au corps des Cadets, et que j’ai eû I’honneur de voir chez Me. de K**. Le
+		scrupule comme si son fief de Ia couronne courroit risque en eloignant une de ses filles,
+		cesseroit bien vite parceque ces sortes de donations sont pour Ia vie de Ia Douairière. De plus,
+		ce jeune officier dont depuis mon sejour ici je n’ai Ia moindre nouvelle, se trouvera
+		probablement encore au corps, oú une 20taine de <ul>Livoniens</ul> sont élevés aux depens de
+		I’Imperatrice. Ces Livoniens en sort<ul>ant du</ul> corps, pourro<ul>ient con</ul>tinuer leurs
+		études <ul>à Plesc</ul>ou, et Mons. de Pr<ul>attje se</ul> faire un merite distingué, de les
+		accompagner.“</aq>
+  <line tab="1" />Verzeihen Ew. Hochwolgeb. daß ich alle Mißverständnisse
+		zwischen Rußland und Liefland auf die Rechnung alter Chronikenschreiber und Schulfüchse setze.
+		Sie waren nicht viel besser als die Romanschreiber, die bei den häuffigen Pressen in Deutschland
+		sich wohl oft der seltsamen Anwendungen ihrer Rittergeschichten von der runden Tafel nicht
+		versehen würden. Die Schwürigkeiten der Sprache, die durch Sitten, Gebräuche, Speisen sich gern
+		möchten <ul>errathen</ul> lassen, wenn sie sich Feier in der <page index="3" />Aussprache zu
+		begehen scheuen, machen das einzige Mißverständniß. Die Russische Geistlichkeit in Petersburg
+		versteht sich sehr wohl mit der deutschen und wenn Drukereyen in beiden Sprachen oder die
+		Uebersetzung des nehmlichen Buchs in beyde – den Weg öfneten, so würde man bei dem Russen des
+		nehmlichen Nervensystems und Blutumlaufs, auch die nehmlichen Gesinnungen antreffen. <line
+			tab="1" />Ich befinde mich ein wenig in einer kritischen Lage, welche meinen lieben Brüdern
+		und Schwestern nicht unbekannt seyn kann. Man hält mich hier überall für reich – da ich doch
+		einen Vater habe, der bereits über dem Grabe schwebt, eine Wittwe als Tochter mit ihren Kindern
+		bei sich hat oder in Petersburg unterstützt und von den starken Familien meiner übrigen
+		wohlversorgten Geschwister gleichfalls in Anspruch genommen wird. – Es ist schwürig, mit meinen
+		Geschwistern Briefwechsel zu führen, denn da ein Prof. in Giessen mir die Ehre erwiesen mich mit
+		dem Romanschreiber – der aber in andem Aemtern dabei steht – Hn. Göthe in eine Liste zu setzen,
+		so suchen und finden sie in allen meinen Briefen nichts als unverständliche Worte Poesie und
+		Roman. Der Himmel wolle ihnen das wohlbekommen lassen und den Buchhandel in Liefland vermehren,
+		damit sie auch den berühmten Rousseau vom Fuß der Pedemontischen Gebirge zur Ehre unsrer Nation
+		in unsrer Sprache lesen können. Meine ziemlich ernsthafte Krankheit setzt dismal allen launigten
+		Nebenausschielenden Anspielungen Grenzen, unser Leben ist freilich auf diesem Erdball nur
+		allzuoft wunderbarer, als es sich das Hirn der Dichter und Leser von Gedichten vorstellen mag. –
+		– Ew. Hochwolgeb. Wollen mir meine Geschwätzigkeit als einem Kranken und zum Jahrmarkte
+		verzeihen da man gern viel spricht und ich hoffe, daß auch mein Bruder und Geschwister das Glük
+		haben werden, denenseihen aufzuwarten. Man spricht von neuen Magazinen die einige reiche
+		Entrepreneure von Metallgruben an verschiedenen Plätzen des Reichs errichten werden, welches <page
+			index="4" />da man in Liefland nur Branntwein nach Permien und Casan schikt, leicht zu einem
+		solidem Handel mit Brod und Gerstensaft Gelegenheit geben könnte, woran es in den Berggruben zu
+		mangeln scheint. Der Russische Tressenhandel würde z. B. nebst Kupfer zu Branntweinkesseln und
+		Eisen zu andern Kesseln, gegen Lieferungen an Grütze, Malz u. s. f. über Pleskau, Toropez und
+		Smolensk durch Agenten sehr wohl geführt werden, und manche Weitläuftigkeiten erspahren. Ich
+		will vom Leinwand und Strumpfhandel schweigen, der auch aus benachbarten Ländern geführt wird,
+		und da fast halb Rußland barfuß geht, bei Vereinigung der Düna mit dem Dnepr und der Moskwa mit
+		vielem Vortheil, nebst dasigen Lächsen und gesalzenem Fleisch gegen Sibirische Fische geführt
+		werden könnte, die man auf dem Wasser lebend erhalten kann. Sollten die Engländer mehr Bley und
+		Zinn einführen, daß mehr Küchengeräth angeschafft werden könnte und sich etwa ihres Plüsch und
+		Manchesterhandels wegen in Absicht der Geistlichen mit der <ul>Krone</ul> in Verhandlungen
+		einlassen, so würde der innere Handel auf den Liefländischen Märkten bald mehr Vergnügen machen,
+		als selbst der entfernte. Ich breche ab um Ew. Hochwohlgeb. als ein Kranker die aufrichtige
+		Achtung zu bezeugen, welche mir Ihr persönliches Bezeigen eingeflößt. Den Liphartischen Häusern
+		bezeige meine Ehrerbietung gleichfalls, und den jungen von Löwenstern bitte gelegentlich
+		beizubringen, daß ihr ehmaliger Hofmeister im Hause des D. <ul>Büsching</ul> in Berlin schon vor
+		mehrern Jahren den Schritt gethan, den wir alle einmal machen werden und welchem in diesen Tagen
+		auch bisweilen nahe war. <line type="break" /><align pos="right">Ew. Hochwolgebornen <line
+				type="break" />gehorsamer Diener <line type="break" />JMR Lenz.</align>
   <line type="break" />Moskau,
-	d. 14ten Jenner 1792. <line type="empty" />
-  <line type="break" />Hn. Postmeister Peuker wird dieser
-	Brief wo möglich zur Bestellung ergebenst empfohlen. <line type="empty" />
-  <line type="break" /><address>
-		<line type="empty" />
-		<line type="break" />
-		<align pos="center">
-			<aq>á Monsieur <line type="break" />Monsieur le Baron de Stiernhielm <line type="break" />possesseur
-	des terres <line type="break" />á Wasola</aq>
-		</align>
-	</address>
-</letterText>
-</document>
+		d. 14ten Jenner 1792. <line type="empty" />
+  <line type="break" />Hn. Postmeister Peuker wird
+		dieser Brief wo möglich zur Bestellung ergebenst empfohlen. <line type="empty" />
+  <line
+			type="break" /><address>
+			<line type="empty" />
+			<line type="break" />
+			<align pos="center">
+				<aq>á Monsieur <line type="break" />Monsieur le Baron de Stiernhielm <line type="break" />possesseur
+		des terres <line type="break" />á Wasola</aq>
+			</align>
+		</address>
+	</letterText>
+</examples>
