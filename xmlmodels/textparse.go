@@ -18,10 +18,10 @@ type LineType int
 const (
 	Continuation LineType = iota
 	First
-	Fist     = First // backward-compatible alias for historical typo
-	Semantic         // Indent=0 , still type="break"
-	Indent           // Indent>0, type dosent matter
-	Empty            // no line content, after that, an empty line
+	Fist              = First // backward-compatible alias for historical typo
+	Semantic LineType = iota  // Indent=0 , still type="break"
+	Indent                    // Indent>0, type dosent matter
+	Empty                     // no line content, after that, an empty line
 )
 
 type Token struct {

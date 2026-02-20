@@ -1,0 +1,125 @@
+{{ define "brief" }}
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brief {{ .Number }}</title>
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+<main class="brief-page">
+  <header class="brief-head">
+    <h1>Brief {{ .Number }}</h1>
+    <nav class="brief-nav">
+      {{ if gt .Prev 0 }}
+        <a class="brief-nav-btn" href="/brief/{{ .Prev }}">← Brief {{ .Prev }}</a>
+      {{ else }}
+        <span class="brief-nav-btn is-disabled">← Kein früherer</span>
+      {{ end }}
+      {{ if gt .Next 0 }}
+        <a class="brief-nav-btn" href="/brief/{{ .Next }}">Brief {{ .Next }} →</a>
+      {{ else }}
+        <span class="brief-nav-btn is-disabled">Kein späterer →</span>
+      {{ end }}
+    </nav>
+  </header>
+
+  <section class="brief-grid">
+    {{ range $i, $p := .Pages }}
+      {{ if gt $i 0 }}
+        <div class="grid-row row-divider">
+          <div class="grid-full page-divider-line"></div>
+        </div>
+      {{ end }}
+
+      {{ if $p.TopNotes }}
+        <div class="grid-row row-top">
+          <div class="grid-left"></div>
+          <div class="grid-mid notes-band">
+            {{ range $p.TopNotes }}
+              <section class="sidenote {{ .PosClass }}">
+                {{ if .Annotation }}<p class="sidenote-annotation">{{ .Annotation }}</p>{{ end }}
+                {{ range .Lines }}
+                  {{ if eq .Type "empty" }}
+                    <div class="{{ .ClassName }}"></div>
+                  {{ else }}
+                    <div class="{{ .ClassName }}">{{ .HTML }}</div>
+                  {{ end }}
+                {{ end }}
+              </section>
+            {{ end }}
+          </div>
+          <div class="grid-right">{{ if gt $i 0 }}<div class="page-marker">S. {{ $p.Number }}</div>{{ end }}</div>
+        </div>
+      {{ end }}
+
+      <div class="grid-row row-page">
+        <aside class="grid-left notes-col">
+          {{ range $p.LeftNotes }}
+            <section class="sidenote {{ .PosClass }}">
+              {{ if .Annotation }}<p class="sidenote-annotation">{{ .Annotation }}</p>{{ end }}
+              {{ range .Lines }}
+                {{ if eq .Type "empty" }}
+                  <div class="{{ .ClassName }}"></div>
+                {{ else }}
+                  <div class="{{ .ClassName }}">{{ .HTML }}</div>
+                {{ end }}
+              {{ end }}
+            </section>
+          {{ end }}
+        </aside>
+
+        <div class="grid-mid page-lines">
+          {{ range $p.Lines }}
+            {{ if eq .Type "empty" }}
+              <div class="{{ .ClassName }}"></div>
+            {{ else }}
+              <div class="{{ .ClassName }}">{{ .HTML }}</div>
+            {{ end }}
+          {{ end }}
+        </div>
+
+        <aside class="grid-right notes-col">
+          {{ if and (gt $i 0) (not $p.TopNotes) }}<div class="page-marker">S. {{ $p.Number }}</div>{{ end }}
+          {{ range $p.RightNotes }}
+            <section class="sidenote {{ .PosClass }}">
+              {{ if .Annotation }}<p class="sidenote-annotation">{{ .Annotation }}</p>{{ end }}
+              {{ range .Lines }}
+                {{ if eq .Type "empty" }}
+                  <div class="{{ .ClassName }}"></div>
+                {{ else }}
+                  <div class="{{ .ClassName }}">{{ .HTML }}</div>
+                {{ end }}
+              {{ end }}
+            </section>
+          {{ end }}
+        </aside>
+      </div>
+
+      {{ if $p.BottomNotes }}
+        <div class="grid-row row-bottom">
+          <div class="grid-left"></div>
+          <div class="grid-mid notes-band">
+            {{ range $p.BottomNotes }}
+              <section class="sidenote {{ .PosClass }}">
+                {{ if .Annotation }}<p class="sidenote-annotation">{{ .Annotation }}</p>{{ end }}
+                {{ range .Lines }}
+                  {{ if eq .Type "empty" }}
+                    <div class="{{ .ClassName }}"></div>
+                  {{ else }}
+                    <div class="{{ .ClassName }}">{{ .HTML }}</div>
+                  {{ end }}
+                {{ end }}
+              </section>
+            {{ end }}
+          </div>
+          <div class="grid-right"></div>
+        </div>
+      {{ end }}
+    {{ end }}
+  </section>
+</main>
+</body>
+</html>
+{{ end }}

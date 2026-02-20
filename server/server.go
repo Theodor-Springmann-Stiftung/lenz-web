@@ -12,6 +12,7 @@ type Server struct {
 	server *echo.Echo
 	cfg    app.Config
 	tmpl   *template.Template
+	app    *app.App
 }
 
 func NewServer(app *app.App) (*Server, error) {
@@ -19,10 +20,12 @@ func NewServer(app *app.App) (*Server, error) {
 		server: echo.New(),
 		cfg:    app.Config(),
 		tmpl:   app.Templates(),
+		app:    app,
 	}
 
 	// INFO: Endpoint mapping here:
 	MapStatic(s.server)
+	MapEndpoints(s.server, s)
 
 	return s, nil
 }
