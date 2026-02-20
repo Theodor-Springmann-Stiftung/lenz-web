@@ -34,10 +34,12 @@ type Token struct {
 }
 
 type Line struct {
-	Type   LineType
-	Indent int
-	Text   string
-	Tokens []Token
+	Type     LineType
+	Indent   int
+	AlignCtx bool
+	TabCtx   bool
+	Text     string
+	Tokens   []Token
 }
 
 type Page struct {
@@ -90,8 +92,8 @@ func (a *lineAccumulator) ensureLine() {
 		return
 	}
 	a.startLine(a.implicitType, 0)
-	if a.implicitType == First {
-		a.implicitType = Continuation
+	if a.implicitType == First || a.implicitType == Continuation {
+		a.implicitType = Semantic
 	}
 }
 
@@ -107,6 +109,7 @@ func (a *lineAccumulator) closeLine() {
 			Synth: true,
 		})
 	}
+	a.applyContextFlags()
 	a.curLine.Text = lineTextFromTokens(a.curLine.Tokens)
 	a.appendLine(*a.curLine)
 	a.hasAnyLine = true
@@ -121,11 +124,11 @@ func (a *lineAccumulator) handleLineMarker(se xml.StartElement) {
 	if emitEmpty {
 		a.startLine(Empty, 0)
 		a.closeLine()
-		a.implicitType = Continuation
+		a.implicitType = Semantic
 		return
 	}
 	a.startLine(lt, indent)
-	a.implicitType = Continuation
+	a.implicitType = Semantic
 }
 
 func (a *lineAccumulator) appendStart(name string, attrs map[string]string) {
@@ -226,6 +229,26 @@ func lineTextFromTokens(tokens []Token) string {
 		}
 	}
 	return b.String()
+}
+
+func (a *lineAccumulator) applyContextFlags() {
+	if a.curLine == nil {
+		return
+	}
+	for _, tok := range a.curLine.Tokens {
+		if tok.Type != StartElement {
+			continue
+		}
+		switch tok.Name {
+		case "align":
+			a.curLine.AlignCtx = true
+		case "tab":
+			a.curLine.TabCtx = true
+		}
+		if a.curLine.AlignCtx && a.curLine.TabCtx {
+			return
+		}
+	}
 }
 
 func parseBlockLines(dec *xml.Decoder, endLocalName string) ([]Line, error) {

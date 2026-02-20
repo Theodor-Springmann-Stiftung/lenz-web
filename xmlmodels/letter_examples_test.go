@@ -276,3 +276,11 @@ func linePairHasValidSyntheticCarry(prev, next Line) bool {
 	}
 	return true
 }
+
+func hasLeadingASCIISpace(s string) bool {
+	return len(s) > 0 && isASCIISpaceByte(s[0])
+}
+
+func hasTrailingASCIISpace(s string) bool {
+	return len(s) > 0 && isASCIISpaceByte(s[len(s)-1])
+}

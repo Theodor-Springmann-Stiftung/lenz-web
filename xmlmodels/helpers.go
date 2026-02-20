@@ -3,6 +3,7 @@ package xmlmodels
 import (
 	"encoding/xml"
 	"strconv"
+	"strings"
 )
 
 func isASCIISpaceByte(b byte) bool {
@@ -41,14 +42,6 @@ func isOnlyASCIISpace(s string) bool {
 	return true
 }
 
-func hasLeadingASCIISpace(s string) bool {
-	return len(s) > 0 && isASCIISpaceByte(s[0])
-}
-
-func hasTrailingASCIISpace(s string) bool {
-	return len(s) > 0 && isASCIISpaceByte(s[len(s)-1])
-}
-
 func attrsToMap(attrs []xml.Attr) map[string]string {
 	if len(attrs) == 0 {
 		return nil
@@ -60,21 +53,8 @@ func attrsToMap(attrs []xml.Attr) map[string]string {
 	return m
 }
 
-func isInline(name string) bool {
-	switch name {
-	// BASE + note + specials + inline-block things treated as inline for stack correctness
-	case "aq", "b", "del", "dul", "tul", "er", "gr", "hb", "ink", "it", "pe", "ru", "tl", "ul",
-		"note",
-		"fn", "nr", "subst", "insertion", "hand",
-		"align", "tab":
-		return true
-	default:
-		return false
-	}
-}
-
+// INFO: list of tags ignored
 func isTransparentWrapper(name string) bool {
-	// IMPORTANT: address subtree is NOT skipped; wrapper tokens are ignored only.
 	return name == "tabs" || name == "address"
 }
 
@@ -90,7 +70,7 @@ func parseLineMarker(se xml.StartElement) (LineType, int, bool) {
 				indent = n
 			}
 		case "type":
-			typ = trimASCIISpace(a.Value)
+			typ = strings.ToLower(trimASCIISpace(a.Value))
 		}
 	}
 	if typ == "empty" {
@@ -99,8 +79,7 @@ func parseLineMarker(se xml.StartElement) (LineType, int, bool) {
 	if indent > 0 {
 		return Indent, indent, false
 	}
-	if typ == "break" {
-		return Semantic, 0, false
-	}
-	return Continuation, 0, false
+
+	// INFO: we don't check for break here, it's the default
+	return Semantic, 0, false
 }

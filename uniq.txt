@@ -1,39 +1,38 @@
 IGNORE:
-address
+address 
 tabs
 
 BASE:
-aq
-b // im Druck
-del
-dul
-tul
-er
-gr
-hb
-ink // wechsel der Tinte ref="2"
-it // im Druck
-pe
-ru
-tl // Textverlust
-ul
-note
-fn[@index='1'] & anchor // keine ref? irgendwie nur die anchors in den footnotes? 
+aq --- Sans-Serif
+b --- bold
+del --- deletion, can be bascaded for double deletion del del
+dul - double underline
+tul - triple underline
+er - erased text
+gr -- greek -- no style changes
+hb -- hebrew -- no style changes 
+ink // wechsel der Tinte ref="2" -- different color (bleu?)
+it -- italic
+pe -- different color (blue-grey)
+ru -- russioan -- nos style changes
+tl -- text loss
+ul -- underline
+note -- smaller, bold and sans-serif in grey
+fn[@index='1'] & anchor // keine ref? irgendwie nur die anchors in den footnotes?  -- no style change for now
 
 
 INLINE-SONDERFÄLLE:
-nr[@extent='1-4|8|30'] oder ohne default = 1
-subst (+kinder) = Überschreibungen
-insertion
-del in subst
-hand
+nr[@extent='1-4|8|30'] oder ohne default = 1 one mioddot before, one after. content = extent emount of spaces
+subst (+kinder) = Überschreibungen -- subst no style for now
+insertion  -- no style for now
+hand no style for now
 
 INLINE-BLOCK:
-align center|right
-tab 2|12|8
+align pos= center|right align context fivides the line in 3: normal text right aligned center text center and left text left (can be inside the same line)
+tab value= 2|12|8 opens a tab context: value="1-2" means divide this context into two and place the content of this into the first compartment, value="4-8" means divide this context into 8 and place the content of this into the fourth compartment.
 
 BLOCK:
 letterText (wie line type="break" falls kein line)
-line (Fälle: empty, tab 1-2|4-8, break)
+line (Fälle: empty, tab 1-2|4-8, break) tab is number of indents
 page[@index='1-14']
 sidenote[@pos='left|right|(bottom|top [left|right])' and @page='1-14' and @annotation='[.*]'
