@@ -1,0 +1,9 @@
+{{ define "letterlist" }}
+<div class="letter-list">
+  {{ range . }}
+    <a class="letter-list-item" href="/brief/{{ .Number }}">
+      {{ template "letterhead" . }}
+    </a>
+  {{ end }}
+</div>
+{{ end }}

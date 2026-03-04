@@ -19,5 +19,7 @@ func MapStatic(e *echo.Echo) {
 }
 
 func MapEndpoints(e *echo.Echo, s *Server) {
+	e.GET("/", s.Home)
+	e.GET("/briefe", s.Home)
 	e.GET("/brief/:number", s.Brief)
 }

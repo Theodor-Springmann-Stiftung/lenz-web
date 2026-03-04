@@ -1,8 +1,31 @@
 {{ define "home" }}{{ template "layout" . }}{{ end }}
 
-{{ define "title" }}Home{{ end }}
+{{ define "title" }}Lenz-Briefe{{ end }}
 
 {{ define "body" }}
-  <h1>Home</h1>
-  <p>{{ .Message }}</p>
+<main class="letters-home">
+  <section class="letters-intro">
+    <h1>Lenz-Briefe</h1>
+    <p>Digitale Edition der Briefe von Jakob Michael Reinhold Lenz</p>
+  </section>
+
+  <nav class="letters-nav" aria-label="Jahrgruppen">
+    <a class="letters-nav-item {{ if .ShowAll }}is-active{{ end }}" href="/briefe?range=all">Alle</a>
+    {{ range .Ranges }}
+      {{ if .Letters }}
+        <a class="letters-nav-item {{ if eq $.SelectedRange .Label }}is-active{{ end }}" href="/briefe?range={{ .Label }}">{{ .Label }}</a>
+      {{ end }}
+    {{ end }}
+  </nav>
+
+  <section class="letters-ranges">
+    {{ range .ActiveRanges }}
+      <div class="letters-range">
+        <h2>{{ .Label }}</h2>
+        <div class="letters-count">({{ len .Letters }} {{ if eq (len .Letters) 1 }}Brief{{ else }}Briefe{{ end }})</div>
+        {{ template "letterlist" .Letters }}
+      </div>
+    {{ end }}
+  </section>
+</main>
 {{ end }}

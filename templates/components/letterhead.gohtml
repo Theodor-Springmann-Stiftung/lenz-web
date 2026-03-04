@@ -1,0 +1,27 @@
+{{ define "letterhead" }}
+<div class="letterhead">
+  <div class="letterhead-meta">
+    {{ if .DateText }}
+      <div class="letterhead-date">{{ .DateText }}</div>
+    {{ end }}
+    <div class="letterhead-badges">
+      {{ if .IsDraft }}
+        <span class="letter-badge" title="Entwurf"><i class="ri-draft-line"></i></span>
+      {{ end }}
+      {{ if .HasOriginal }}
+        <span class="letter-badge" title="Der Brieftext wurde anhand des Originals kritisch geprüft."><i class="ri-file-list-2-line"></i></span>
+      {{ else }}
+        <span class="letter-badge" title="Der Brieftext wurde sekundär überliefert."><i class="ri-file-copy-2-line"></i></span>
+      {{ end }}
+    </div>
+  </div>
+
+  {{ range .Pairs }}
+    <div class="letterhead-row">
+      <div class="letterhead-side">{{ .Sent }}</div>
+      <div class="letterhead-arrow"><i class="ri-arrow-right-long-line"></i></div>
+      <div class="letterhead-side">{{ .Received }}</div>
+    </div>
+  {{ end }}
+</div>
+{{ end }}

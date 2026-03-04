@@ -4,23 +4,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Brief {{ .Number }}</title>
+  <title>LKB - {{ .Number }}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
   <link rel="stylesheet" href="/public/style.css">
 </head>
 <body>
 <main class="brief-page">
-  <header class="brief-head">
-    <h1>Brief {{ .Number }}</h1>
+  <header class="brief-head brief-head-letter">
+    <div class="brief-head-left">
+      {{ template "letterhead" .Heading }}
+    </div>
     <nav class="brief-nav">
       {{ if gt .Prev 0 }}
-        <a class="brief-nav-btn" href="/brief/{{ .Prev }}">← Brief {{ .Prev }}</a>
+        <a class="brief-nav-btn" href="/brief/{{ .Prev }}"><i class="ri-arrow-left-long-line"></i></a>
       {{ else }}
-        <span class="brief-nav-btn is-disabled">← Kein früherer</span>
+        <span class="brief-nav-btn is-disabled"><i class="ri-arrow-left-long-line"></i></span>
       {{ end }}
+      <a class="brief-nav-btn brief-nav-mid" href="/">LKB</a>
       {{ if gt .Next 0 }}
-        <a class="brief-nav-btn" href="/brief/{{ .Next }}">Brief {{ .Next }} →</a>
+        <a class="brief-nav-btn" href="/brief/{{ .Next }}"><i class="ri-arrow-right-long-line"></i></a>
       {{ else }}
-        <span class="brief-nav-btn is-disabled">Kein späterer →</span>
+        <span class="brief-nav-btn is-disabled"><i class="ri-arrow-right-long-line"></i></span>
       {{ end }}
     </nav>
   </header>

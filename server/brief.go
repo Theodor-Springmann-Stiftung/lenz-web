@@ -15,10 +15,11 @@ import (
 )
 
 type briefPageModel struct {
-	Number int
-	Prev   int
-	Next   int
-	Pages  []briefRenderPage
+	Number  int
+	Prev    int
+	Next    int
+	Heading letterHeadModel
+	Pages   []briefRenderPage
 }
 
 type briefRenderPage struct {
@@ -57,7 +58,9 @@ func (s *Server) Brief(c *echo.Context) error {
 		return c.String(http.StatusNotFound, "brief not found")
 	}
 
+	meta := s.app.Library().Metas.Item(num)
 	model := renderBrief(*letter)
+	model.Heading = buildLetterHead(s.app.Library(), meta)
 	model.Prev, model.Next = briefNeighbors(s.app, num)
 	var out bytes.Buffer
 	if err := s.tmpl.ExecuteTemplate(&out, "brief", model); err != nil {

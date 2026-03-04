@@ -1,18 +1,100 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Linux Libertine";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/public/fonts/LinLibertine_R_G.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Linux Libertine";
+  font-style: italic;
+  font-weight: 400;
+  src: url("/public/fonts/LinLibertine_RI_G.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Linux Libertine";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/public/fonts/LinLibertine_RB_G.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Linux Libertine";
+  font-style: italic;
+  font-weight: 700;
+  src: url("/public/fonts/LinLibertine_RBI_G.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Linux Biolinum";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/public/fonts/LinBiolinum_R_G.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Linux Biolinum";
+  font-style: italic;
+  font-weight: 400;
+  src: url("/public/fonts/LinBiolinum_RI_G.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Linux Biolinum";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/public/fonts/LinBiolinum_RB_G.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Playfair";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/public/fonts/PlayfairDisplay-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Playfair";
+  font-style: italic;
+  font-weight: 400;
+  src: url("/public/fonts/PlayfairDisplay-Italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Playfair";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/public/fonts/PlayfairDisplay-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Playfair";
+  font-style: italic;
+  font-weight: 700;
+  src: url("/public/fonts/PlayfairDisplay-BoldItalic.ttf") format("truetype");
+}
+
 :root {
   --bg: #fff;
   --ink: #2a2824;
   --muted: #7f7a72;
   --rule: #d8d4cc;
+  --font-serif: "Linux Libertine", ui-serif, serif;
+  --font-sans: "Linux Biolinum", "Merriweather Sans", ui-sans-serif, sans-serif;
+  --font-sansugly: Arial, "Linux Biolinum", "Merriweather Sans", ui-sans-serif, sans-serif;
+  --font-didone: "Playfair", ui-serif, serif;
 }
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: 1.125rem;
+  padding: 1rem;
 }
 
 html {
@@ -39,6 +121,20 @@ html {
   background: #fff;
 }
 
+.brief-head-letter {
+  align-items: flex-end;
+  border-bottom: 1px solid #d7d2c8;
+  margin-bottom: 0.8rem;
+}
+
+.brief-head-left {
+  flex: 1 1 auto;
+}
+
+.brief-nav-mid {
+  font-variant: small-caps;
+}
+
 .brief-head h1 {
   margin: 0;
   font-size: 1rem;
@@ -54,11 +150,9 @@ html {
 
 .brief-nav-btn {
   text-decoration: none;
-  border: 1px solid var(--rule);
-  border-radius: 999px;
   color: var(--ink);
   font-size: 0.86rem;
-  padding: 0.2rem 0.5rem;
+  padding: 0;
 }
 
 .brief-nav-btn.is-disabled { opacity: 0.35; pointer-events: none; }
@@ -141,7 +235,7 @@ html {
   padding: 0;
   font-size: 0.78rem;
   color: #8d867b;
-  font-family: "Times New Roman", Georgia, serif;
+  font-family: var(--font-serif);
   font-style: italic;
 }
 
@@ -188,49 +282,150 @@ html {
 .line-indent-11 { text-indent: 6.38rem; }
 .line-indent-12 { text-indent: 6.96rem; }
 
-.line-align-ctx { text-align: right; }
-.line-align-ctx .tag-align.align-center { display: inline-block; width: 100%; text-align: center; }
-.line-align-ctx .tag-align.align-right { display: inline-block; width: 100%; text-align: right; }
+.line-align-ctx {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  align-items: baseline;
+  overflow: visible;
+}
 
-.line-tab-ctx .tag-tab {
+.line-align-ctx > * {
+  grid-column: 1;
+  justify-self: start;
+}
+
+.line-align-ctx .tag-align.align-left {
+  grid-column: 1;
+  text-align: left;
+}
+
+.line-align-ctx .tag-align.align-center,
+.line .tag-align.align-center {
+  grid-column: 2;
+  text-align: center;
+}
+
+.line-align-ctx .tag-align.align-right,
+.line .tag-align.align-right {
+  grid-column: 3;
+  text-align: right;
+}
+
+.line-tab-ctx .tag-tab,
+.line-indent .tag-tab,
+.line .tag-tab {
   display: inline-block;
   min-width: 3.6ch;
   border-left: 1px dotted #cdbfae;
   padding-left: 0.34rem;
 }
 
+.line-tab-ctx .tag-tab[data-tab="1"],
+.line-indent .tag-tab[data-tab="1"],
+.line .tag-tab[data-tab="1"] {
+  min-width: 5ch;
+}
+
+.line .tag-tab[data-tab="2"] { min-width: 8ch; }
+.line .tag-tab[data-tab="3"] { min-width: 11ch; }
+.line .tag-tab[data-tab="4"] { min-width: 14ch; }
+.line .tag-tab[data-tab="5"] { min-width: 17ch; }
+.line .tag-tab[data-tab="6"] { min-width: 20ch; }
+.line .tag-tab[data-tab="7"] { min-width: 23ch; }
+.line .tag-tab[data-tab="8"] { min-width: 26ch; }
+
 .tag-aq,
-.tag-note { font-family: "Trebuchet MS", "Helvetica Neue", Arial, sans-serif; }
+.tag-note { font-family: var(--font-sansugly); }
 
 .tag-b { font-weight: 700; }
-.tag-del { text-decoration: line-through; }
+.tag-del {
+  text-decoration: line-through;
+  position: relative;
+}
 .tag-dul { text-decoration: underline; text-decoration-style: double; }
 .tag-tul { text-decoration: underline; text-decoration-style: wavy; text-decoration-thickness: 2px; }
 .tag-it { font-style: italic; }
 .tag-ul { text-decoration: underline; }
 .tag-note { font-size: 0.9em; font-weight: 700; color: var(--muted); }
 .tag-note {
-  font-family: "Times New Roman", Georgia, serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   color: #8d867b;
 }
-.tag-ink { color: #2d5e8a; }
-.tag-pe { color: #4e667f; }
-.tag-tl { background: #f5e4d6; color: #8c5a41; padding: 0 0.12rem; border-radius: 2px; }
+.tag-ink { color: #1e3a8a; }
+.tag-pe { color: #57534e; }
+.tag-tl {
+  background: #f5e4d6;
+  color: #8c5a41;
+  padding: 0 0.12rem;
+  border-radius: 2px;
+}
+.tag-tl::before {
+  content: "◌";
+  color: #475569;
+  font-family: var(--font-sans);
+  margin-right: 0.08rem;
+}
 .tag-nr { color: #6f675d; }
+.tag-subst,
+.tag-ru,
+.tag-gr,
+.tag-hb,
+.tag-fn,
+.tag-generic { display: inline; }
+
+.tag-hand {
+  display: inline;
+  font-family: var(--font-didone);
+  font-size: 0.9em;
+  color: #000027;
+}
+
+.tag-er {
+  --tag-er-rgb: 0, 0, 39;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(var(--tag-er-rgb), 0.5),
+    transparent 1px,
+    transparent 6px
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  color: transparent;
+  text-shadow: 0 0 rgb(var(--tag-er-rgb));
+}
+
+.tag-align.align-right {
+  display: block;
+  text-align: right;
+}
+
+.tag-align.align-center {
+  display: block;
+  text-align: center;
+}
+
+.line .tag-align,
+.line .tag-align * {
+  text-indent: 0 !important;
+}
 
 .tag-insertion {
   position: relative;
-  padding-left: 0.1rem;
+  white-space: nowrap;
 }
 
 .tag-insertion::before {
-  content: "\2038";
-  font-size: 0.78em;
-  vertical-align: super;
-  color: #9a8b76;
-  margin-right: 0.06rem;
+  content: "⌞";
+  color: #475569;
+  margin-right: -0.2em;
+}
+
+.tag-insertion::after {
+  content: "⌟";
+  color: #475569;
+  margin-left: -0.4ch;
 }
 
 @media (max-width: 960px) {
@@ -246,4 +441,103 @@ html {
   .notes-band {
     text-align: left;
   }
+}
+
+.letters-home {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.letters-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.letters-nav-item {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.05rem 0.1rem;
+  font-size: 0.85rem;
+  color: #5f584f;
+}
+
+.letters-nav-item:hover {
+  color: #2a2824;
+}
+
+.letters-nav-item.is-active {
+  color: #2a2824;
+  text-decoration: underline;
+  text-underline-offset: 0.18rem;
+}
+
+.letters-intro h1 {
+  font-size: 1.9rem;
+  margin-bottom: 0.2rem;
+}
+
+.letters-intro p {
+  color: #6e675f;
+  margin-bottom: 1.5rem;
+}
+
+.letters-range {
+  padding-left: 0;
+  margin-bottom: 1.8rem;
+}
+
+.letters-range h2 {
+  font-size: 1.25rem;
+}
+
+.letters-count {
+  font-size: 0.95rem;
+  color: #6e675f;
+  margin: 0.25rem 0 0.8rem;
+}
+
+.letter-list-item {
+  display: block;
+  margin-bottom: 0.75rem;
+  padding: 0.15rem 0;
+}
+
+.letter-list-item:hover {
+  background: transparent;
+}
+
+.letterhead-date {
+  font-style: italic;
+}
+
+.letterhead-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.letterhead-badges {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.letter-badge {
+  padding: 0;
+  font-size: 0.72rem;
+  color: #6e675f;
+}
+
+.letter-badge i {
+  vertical-align: middle;
+}
+
+.letterhead-row {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.letterhead-arrow {
+  color: #8b847a;
 }
